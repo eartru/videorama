@@ -1,0 +1,31 @@
+USE [videorama]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetTopNProducts]    Script Date: 11/11/2018 17:58:09 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE Procedure GetTopNProducts
+( @NbProducts int )  
+as  
+begin  
+   select TOP(@NbProducts) p.idProduct, p.title, COUNT(rd.idProduct) as quantity
+   from product p
+   INNER JOIN rentDetail rd on p.idProduct = rd.idProduct 
+   GROUP BY p.idProduct, p.title
+   ORDER BY COUNT(rd.idProduct) desc
+End
+
+CREATE Procedure GetProductsByType
+( @IdType int )  
+as  
+begin  
+   select * from product where idType = @IdType
+End
+GO
+
+
+
