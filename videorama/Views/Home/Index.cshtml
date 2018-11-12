@@ -3,17 +3,17 @@
 }
 @model videorama.ViewModels.AccueilViewModel
 
-<div class="jumbotron">
+<div class="row">
     <h2>Bienvenue, </h2>
 </div>
 <div class="row">
     <div class="col-md-7">
-        <h2>Nouveautés !</h2>
+        <h3>Nouveautés !</h3>
         @foreach (var item in Model.NewProducts)
         {
             <ul class="list-unstyled">
                 <li class="media">
-                    <img class="mr-3" src="~@Html.DisplayFor(modelItem => item.Picture)" alt="~@Html.DisplayFor(modelItem => item.Picture)">
+                    <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
                     <div class="media-body">
                         <h5 class="mt-0 mb-1">@Html.DisplayFor(modelItem => item.Title)</h5>
                         @Html.DisplayFor(modelItem => item.Synopsis) ...
