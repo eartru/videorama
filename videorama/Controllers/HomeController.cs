@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using videorama.ViewModels;
 using Videorama.Models;
 
 namespace videorama.Controllers
@@ -13,8 +14,23 @@ namespace videorama.Controllers
         {
             int nbProducts = 5;
             ProductsDb dbProducts = new ProductsDb();
+            int idCustomer = 1;
+            RentDb dbRent = new RentDb();
             ModelState.Clear();
-            return View(dbProducts.GetTopNProducts(nbProducts));
+            AccueilViewModel vm = new AccueilViewModel
+            {
+                Product = dbProducts.GetTopNProducts(nbProducts),
+                NewProducts = dbProducts.GetNewProducts(),
+                Rent = dbRent.GetRentByCustomer(idCustomer),
+        };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult Index(AccueilViewModel MV)
+        {
+            int SelectedValue = MV.SelectedTop;
+            return View(MV);
         }
 
         public ActionResult About()

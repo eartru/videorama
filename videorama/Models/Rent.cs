@@ -12,9 +12,9 @@ namespace Videorama.Models
         private bool inProgress;
         private Bill bill;
 
-        private int IdRent { get; set; }
-        private List<Product> Products { get; set; }
-        private bool InProgress { get; set; }
-        private Bill Bill { get; set; }
+        public int IdRent { get; set; }
+        public List<Product> Products { get; set; }
+        public bool InProgress { get; set; }
+        public Bill Bill { get; set; }
     }
 }

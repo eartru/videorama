@@ -94,5 +94,34 @@ namespace Videorama.Models
             }
             return productsList;
         }
+
+        // ********** VIEW NEW PRODUCTS ********************
+        public List<Product> GetNewProducts()
+        {
+            connection();
+            List<Product> productsList = new List<Product>();
+
+            SqlCommand cmd = new SqlCommand("GetNewProducts", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                productsList.Add(
+                    new Product
+                    {
+                        IdProduct = Convert.ToInt32(dr["IdProduct"]),
+                        Title = Convert.ToString(dr["Title"]),
+                        Synopsis = Convert.ToString(dr["Synopsis"]).Substring(0,255),
+                        Picture = Convert.ToString(dr["Picture"])
+                    });
+            }
+            return productsList;
+        }
     }
 }

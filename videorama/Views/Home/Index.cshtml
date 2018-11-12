@@ -1,28 +1,37 @@
 ﻿@{
     ViewBag.Title = "Accueil";
 }
-@model IEnumerable<Videorama.Models.Product>
+@model videorama.ViewModels.AccueilViewModel
 
 <div class="jumbotron">
     <h2>Bienvenue, </h2>
 </div>
-
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-7">
         <h2>Nouveautés !</h2>
-        <p>
-            blabla
-        </p>
+        @foreach (var item in Model.NewProducts)
+        {
+            <ul class="list-unstyled">
+                <li class="media">
+                    <img class="mr-3" src="~@Html.DisplayFor(modelItem => item.Picture)" alt="~@Html.DisplayFor(modelItem => item.Picture)">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        @Html.DisplayFor(modelItem => item.Synopsis) ...
+                    </div>
+                </li>
+            </ul>
+        }
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
         <table class="table">
             <tr>
                 <th>
+         
                     Top 5 des DVD loués
                 </th>
             </tr>
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.Product)
             {
                 <tr>
                     <td>
@@ -35,10 +44,24 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-7">
         <p>
             Mes locations en cours
         </p>
+        <table class="table">
+            <tr>
+                <th>Titre</th>
+            </tr>
+
+            @foreach (var item in Model.Rent)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                </tr>
+            }
+        </table>
         <p><a class="btn btn-default" href="#">Voir plus &raquo;</a></p>
     </div>
 </div>
