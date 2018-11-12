@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Accueil";
+}
+@model IEnumerable<Videorama.Models.Product>
+
+<div class="jumbotron">
+    <h2>Bienvenue, </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Nouveautés !</h2>
+        <p>
+            blabla
+        </p>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <tr>
+                <th>
+                    Top 5 des DVD loués
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            Mes locations en cours
+        </p>
+        <p><a class="btn btn-default" href="#">Voir plus &raquo;</a></p>
+    </div>
+</div>
