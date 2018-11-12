@@ -73,6 +73,7 @@ create table person
 create table product
 (	idProduct INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	title VARCHAR(255) NOT NULL,
+	synopsis VARCHAR(2000),
 	releaseDate DATE NOT NULL,
 	price DECIMAL(9,2) NOT NULL,
 	stock INT NOT NULL,

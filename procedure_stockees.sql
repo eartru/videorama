@@ -25,6 +25,24 @@ as
 begin  
    select * from product where idType = @IdType
 End
+
+CREATE Procedure  GetRentByCustomer
+( @IdCustomer int )  
+as  
+begin  
+   Select p.title from rent r
+   INNER JOIN rentDetail rd on r.idRent = rd.idRent 
+   INNER JOIN product p on rd.idProduct = p.idProduct
+   where idCustomer = @IdCustomer AND inProgress = 1
+End
+
+ALTEr Procedure GetNewProducts  
+as  
+begin  
+	Select top 3 idProduct, title, synopsis, picture from product
+	ORDER BY idProduct DESC 
+END
+
 GO
 
 
