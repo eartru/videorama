@@ -4,64 +4,72 @@
 @model videorama.ViewModels.AccueilViewModel
 
 <div class="row">
-    <h2>Bienvenue, </h2>
+    <h2>Bienvenue, user</h2>
+    <hr size=2 align=left width="60%"/>
 </div>
 <div class="row">
     <div class="col-md-7">
-        <h3>Nouveautés !</h3>
+        <h3>Les nouveautés</h3>
         @foreach (var item in Model.NewProducts)
         {
             <ul class="list-unstyled">
                 <li class="media">
-                    <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
+                    <div class="media-left">
+                        <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
+                    </div>
                     <div class="media-body">
-                        <h5 class="mt-0 mb-1">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <a>
+                            <h5 class="mt-0">@Html.ActionLink(item.Title, "Details", "Products", new { id = item.IdProduct }, null)</h5>
+                        </a>
                         @Html.DisplayFor(modelItem => item.Synopsis) ...
                     </div>
                 </li>
             </ul>
         }
     </div>
-    <div class="col-md-5">
-        <table class="table">
-            <tr>
-                <th>
-         
-                    Top 5 des DVD loués
-                </th>
-            </tr>
-
-            @foreach (var item in Model.Product)
-            {
+    <div class="col-md-4">
+        <div class="top-table">
+            <table class="table">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
+                    <th><h4>Top 5 des DVD loués</h4></th>
                 </tr>
-            }
-        </table>
+                @foreach (var item in Model.Product)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-7">
-        <p>
-            Mes locations en cours
-        </p>
-        <table class="table">
-            <tr>
-                <th>Titre</th>
-            </tr>
-
-            @foreach (var item in Model.Rent)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                </tr>
-            }
-        </table>
-        <p><a class="btn btn-default" href="#">Voir plus &raquo;</a></p>
+        <div class="card">
+            <div class="card-header">
+                <h3>Locations en cours</h3>
+            </div>
+            <div class="card-body">
+                @foreach (var item in Model.Rent.Take(3))
+                {
+                    <div class="align-card">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="" alt="image">
+                            <div class="card-body">
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Title)</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1">
+        <a href="" class="btn btn-primary">Voir plus</a>
     </div>
 </div>
