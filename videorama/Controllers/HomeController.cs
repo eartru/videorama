@@ -46,5 +46,12 @@ namespace videorama.Controllers
 
             return View();
         }
+
+        public ActionResult Search(string SearchString)
+        {
+            System.Diagnostics.Debug.WriteLine("iciiiiiiii !");
+            System.Diagnostics.Debug.WriteLine(SearchString);
+            return View();
+        }
     }
 }
