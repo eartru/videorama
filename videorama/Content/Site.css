@@ -6,6 +6,16 @@
     padding-top: 5px;
 }
 
+.card {
+    padding-top: 20px;
+}
+
+.align-card {
+    float: left;
+    padding: 2px;
+    overflow: auto;
+}
+
 .sidebar {
     background-color: #4688C9;
 }
@@ -14,11 +24,26 @@
     color: white;
 }
 
+.top-table {
+    padding-top: 25px;
+    padding-left: 50px;
+}
+
+h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 #img_new {
     margin-left: auto;
     margin-right: auto;
-    width: 120px;
+    width: 100px;
+    height: 130px;
     padding-top: 5px;
+}
+
+.media-body {
+    text-align: justify;
 }
 
 #nav_bar {
