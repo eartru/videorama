@@ -88,5 +88,11 @@ namespace videorama.Controllers
                 return View();
             }
         }
+
+        // GET: Products serach result
+        public ActionResult ProductsSearchresult(List<Product> listProduct)
+        {
+            return View("PrductsList");
+        }
     }
 }

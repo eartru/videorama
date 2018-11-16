@@ -18,7 +18,7 @@
             <div>
                 @using (Html.BeginForm("Search", "Home", FormMethod.Post))
                 {
-                    <select class="custom-select">
+                    <select class="custom-select" name="selectType">
                         <option value="1" selected>Film</option>
                         <option value="2">Série</option>
                         <option value="3">Dessins animés</option>

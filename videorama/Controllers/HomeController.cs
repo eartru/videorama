@@ -12,6 +12,10 @@ namespace videorama.Controllers
     {
         public ActionResult Index()
         {
+            var exemploList = new SelectList(new[] { "Exemplo1:", "Exemplo2", "Exemplo3" });
+            ViewBag.ExemploList = exemploList;
+
+            System.Diagnostics.Debug.WriteLine("indexxxxxxxxxxxx");
             int nbProducts = 5;
             ProductsDb dbProducts = new ProductsDb();
             int idCustomer = 1;
@@ -51,6 +55,17 @@ namespace videorama.Controllers
         {
             System.Diagnostics.Debug.WriteLine("iciiiiiiii !");
             System.Diagnostics.Debug.WriteLine(SearchString);
+           /* string selectType;
+            selectType = Request.Form["selectType"];*/
+
+           /* ProductsDb dbProducts = new ProductsDb();
+            
+           
+            List<Product> listProduct;
+            listProduct = dbProducts.SearchProductByNameAndType(int.Parse(Request.Form["selectType"]), SearchString);
+            
+            return RedirectToAction("ProductsSearchresult", "Products", new { listProduct = listProduct });*/
+
             return View();
         }
     }
