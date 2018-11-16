@@ -92,7 +92,9 @@ namespace videorama.Controllers
         // GET: Products serach result
         public ActionResult ProductsSearchresult(List<Product> listProduct)
         {
-            return View("PrductsList");
+            System.Diagnostics.Debug.WriteLine("hellooooooooo !");
+            System.Diagnostics.Debug.WriteLine(listProduct);
+            return View("~/Views/Products/PrductsList.cshtml");
         }
     }
 }

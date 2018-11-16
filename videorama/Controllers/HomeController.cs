@@ -55,18 +55,18 @@ namespace videorama.Controllers
         {
             System.Diagnostics.Debug.WriteLine("iciiiiiiii !");
             System.Diagnostics.Debug.WriteLine(SearchString);
-           /* string selectType;
-            selectType = Request.Form["selectType"];*/
+            string selectType;
+            selectType = Request.Form["selectType"];
 
-           /* ProductsDb dbProducts = new ProductsDb();
+            ProductsDb dbProducts = new ProductsDb();
             
            
             List<Product> listProduct;
             listProduct = dbProducts.SearchProductByNameAndType(int.Parse(Request.Form["selectType"]), SearchString);
             
-            return RedirectToAction("ProductsSearchresult", "Products", new { listProduct = listProduct });*/
+            return RedirectToAction("ProductsSearchresult", "Products", new { listProduct = listProduct });
 
-            return View();
+            //return View();
         }
     }
 }
