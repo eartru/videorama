@@ -32,7 +32,7 @@ CREATE Procedure  GetRentByCustomer
 ( @IdCustomer int )  
 as  
 begin  
-   Select p.title from rent r
+   Select p.idProduct, p.title, p.picture from rent r
    INNER JOIN rentDetail rd on r.idRent = rd.idRent 
    INNER JOIN product p on rd.idProduct = p.idProduct
    where idCustomer = @IdCustomer AND inProgress = 1

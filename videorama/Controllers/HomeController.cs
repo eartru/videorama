@@ -12,10 +12,6 @@ namespace videorama.Controllers
     {
         public ActionResult Index()
         {
-            var exemploList = new SelectList(new[] { "Exemplo1:", "Exemplo2", "Exemplo3" });
-            ViewBag.ExemploList = exemploList;
-
-            System.Diagnostics.Debug.WriteLine("indexxxxxxxxxxxx");
             int nbProducts = 5;
             ProductsDb dbProducts = new ProductsDb();
             int idCustomer = 1;
