@@ -7,10 +7,10 @@ namespace Videorama.Models
 {
     public class Type
     {
-        public int idType;
-        public string typeName;
+        private int idType;
+        private string typeName;
 
-        private int IdType { get; set; }
-        private string TypeName { get; set; }
+        public int IdType { get; set; }
+        public string TypeName { get; set; }
     }
 }

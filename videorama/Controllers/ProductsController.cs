@@ -14,6 +14,9 @@ namespace videorama.Controllers
         {
             ProductsDb dbProducts = new ProductsDb();
             ModelState.Clear();
+            List<Tuple<Product, Videorama.Models.Type>> list = dbProducts.GetProductsByType(type);
+            string typeName = list[0].Item2.TypeName;
+            ViewData["type"] = typeName;
             return View(dbProducts.GetProductsByType(type));
         }
 
