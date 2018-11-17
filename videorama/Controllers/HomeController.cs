@@ -57,8 +57,6 @@ namespace videorama.Controllers
             
             
             return RedirectToAction("ProductsSearchResult", "Products", new { type = selectType, name = SearchString });
-
-            //return View();
         }
     }
 }

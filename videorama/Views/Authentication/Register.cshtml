@@ -1,6 +1,41 @@
 ﻿@{
-    ViewBag.Title = "Insciption";
-}
-<h2>@ViewBag.Title.</h2>
 
-<p>Use this area to provide additional information.</p>
+    Layout = "~/Views/Shared/_LayoutAuthentication.cshtml";
+}
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Inscrivez-vous</h2>
+
+<div>
+    @using (Html.BeginForm("SaveRegister", "Authentication", FormMethod.Post))
+    {
+        @Html.Label("FirstName", "Prénom")
+        @Html.TextBox("FirstName", null, new { required = "required" })
+
+        @Html.Label("Name", "Nom")
+        @Html.TextBox("Name", null, new { required = "required" })
+
+        @Html.Label("Email")
+        @Html.TextBox("Email", null, new { required = "required" })
+
+        @Html.Label("Password", "Mot de passe")
+        @Html.Password("Password", null, new { required = "required" })
+
+        @Html.Label("Adress", "Adresse")
+        @Html.TextBox("Adress", null, new { required = "required" })
+
+        @Html.Label("PostalCode", "Code postal")
+        @Html.TextBox("PostalCode", null, new { required = "required" })
+
+        @Html.Label("Town", "Région")
+        @Html.TextBox("Town", null, new { required = "required" })
+
+        @Html.Label("Country", "Pays")
+        @Html.TextBox("Country", null, new { required = "required" })
+        <input class="btn btn-outline-secondary" type="submit" value="OK" />
+    }
+</div>
+

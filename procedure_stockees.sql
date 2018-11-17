@@ -38,7 +38,7 @@ begin
    where idCustomer = @IdCustomer AND inProgress = 1
 End
 
-CREATE Procedure GetNewProducts  
+CREATE Procedure GetNewProducts
 as  
 begin  
 	Select top 3 idProduct, title, synopsis, picture from product
@@ -51,6 +51,14 @@ as
 begin  
    select * from product where idType = @IdType
    and title like '%' + @Name + '%'
+End
+
+CREATE Procedure [PutCustomer]
+( @FristName char, @Name char, @Email char,  @Password char, @Adress char, @PostalCode char, @Town char, @Country char)  
+as  
+begin  
+	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @Name, @Password, @Email, 'false');
+	INSERT INTO customer(firstname, lastname, addressCustomer, postalCode, town, country) VALUES ( @FristName, @Name, @Adress, @PostalCode, @Town, @Country);
 End
 
 GO
