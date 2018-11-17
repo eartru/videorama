@@ -137,7 +137,7 @@ namespace Videorama.Models
             connection();
             List<Product> productsList = new List<Product>();
 
-            SqlCommand cmd = new SqlCommand("GetProductByNmeAndType", con);
+            SqlCommand cmd = new SqlCommand("GetProductByNameAndType", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdType", type);
             cmd.Parameters.AddWithValue("@Name", name);
