@@ -90,11 +90,16 @@ namespace videorama.Controllers
         }
 
         // GET: Products serach result
-        public ActionResult ProductsSearchresult(List<Product> listProduct)
+        public ActionResult ProductsSearchResult(int type, string name)
         {
             System.Diagnostics.Debug.WriteLine("hellooooooooo !");
-            System.Diagnostics.Debug.WriteLine(listProduct);
-            return View("~/Views/Products/PrductsList.cshtml");
+            ModelState.Clear();
+
+            ProductsDb dbProducts = new ProductsDb();
+            List<Product> listProductFound;
+            listProductFound = dbProducts.SearchProductByNameAndType(type, name);
+
+            return View(listProductFound);
         }
     }
 }

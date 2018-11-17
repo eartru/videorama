@@ -58,13 +58,9 @@ namespace videorama.Controllers
             string selectType;
             selectType = Request.Form["selectType"];
 
-            ProductsDb dbProducts = new ProductsDb();
             
-           
-            List<Product> listProduct;
-            listProduct = dbProducts.SearchProductByNameAndType(int.Parse(Request.Form["selectType"]), SearchString);
             
-            return RedirectToAction("ProductsSearchresult", "Products", new { listProduct = listProduct });
+            return RedirectToAction("ProductsSearchResult", "Products", new { type = selectType, name = SearchString });
 
             //return View();
         }
