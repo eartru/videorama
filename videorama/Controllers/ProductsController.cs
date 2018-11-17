@@ -91,5 +91,18 @@ namespace videorama.Controllers
                 return View();
             }
         }
+
+        // GET: Products serach result
+        public ActionResult ProductsSearchResult(int type, string name)
+        {
+            System.Diagnostics.Debug.WriteLine("hellooooooooo !");
+            ModelState.Clear();
+
+            ProductsDb dbProducts = new ProductsDb();
+            List<Product> listProductFound;
+            listProductFound = dbProducts.SearchProductByNameAndType(type, name);
+
+            return View(listProductFound);
+        }
     }
 }
