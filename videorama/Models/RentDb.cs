@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using videorama.ViewModels;
 
 namespace Videorama.Models
 {
@@ -62,6 +63,56 @@ namespace Videorama.Models
                     });
             }
             return rentsList;
+        }
+
+        public BillViewModel GetRentDetailsForBill(int idCustomer, int idRent)
+        {
+            connection();
+            BillViewModel rentDetails = new BillViewModel();
+
+            SqlCommand cmd = new SqlCommand("GetRentDetailsForBill", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
+            cmd.Parameters.AddWithValue("@IdRent", idRent);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            rentDetails.Customer = new Customer
+            {
+                LastName = Convert.ToString(dt.Rows[0]["LastName"]),
+                FirstName = Convert.ToString(dt.Rows[0]["FirstName"]),
+                Address = Convert.ToString(dt.Rows[0]["AddressCustomer"]),
+                PostalCode = Convert.ToString(dt.Rows[0]["PostalCode"]),
+                Town = Convert.ToString(dt.Rows[0]["Town"]),
+                Country = Convert.ToString(dt.Rows[0]["Country"])
+            };
+            rentDetails.Rent = new Rent
+            {
+                IdRent = Convert.ToInt32(dt.Rows[0]["IdRent"]),
+                RentDate = Convert.ToDateTime(dt.Rows[0]["RentDate"])
+            };
+            List<Product> listProducts = new List<Product>();
+
+            double total = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                listProducts.Add(
+                    new Product
+                    {
+                        Title = Convert.ToString(dr["Title"]),
+                        Price = Convert.ToDouble(dr["Price"])
+                    }
+                );
+                total += Convert.ToDouble(dr["Price"]);
+            }
+            rentDetails.Products = listProducts;
+            rentDetails.Total = total;
+
+            return rentDetails;
         }
     }
 }

@@ -1,0 +1,57 @@
+﻿@model videorama.ViewModels.BillViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Facture</title>
+    @Styles.Render("~/Content/bill.css")
+</head>
+<body>
+    <div>
+        <div class="bill-box">
+            <table cellpadding="0" cellspacing="0">
+                <tr class="top">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td class="title">
+                                    <img src="~/Content/Images/logo.png">
+                                </td>
+                                <td>
+                                    Facture n° @Model.Rent.IdRent<br>
+                                    Éditée le @Model.Rent.RentDate.ToShortDateString()
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="information">
+                    <td></td>
+                    <td class="info-td">
+                        @Model.Customer.FirstName @Model.Customer.LastName<br>
+                        @Model.Customer.Address<br>
+                        @Model.Customer.PostalCode @Model.Customer.Town, @Model.Customer.Country
+                    </td>
+                </tr>
+                <tr class="heading">
+                    <td>DVD</td>
+                    <td>Prix</td>
+                </tr>
+                @foreach (var item in Model.Products)
+                {
+                    <tr class="item">
+                        <td>@Html.DisplayFor(model => item.Title)</td>
+                        <td>@Html.DisplayFor(model => item.Price) €</td>
+                    </tr>
+                }
+            </table>
+            <div class="total">@Model.Total €</div>
+        </div>
+    </div>
+</body>
+</html>
