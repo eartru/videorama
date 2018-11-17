@@ -53,6 +53,21 @@ begin
    and title like '%' + @Name + '%'
 End
 
+CREATE Procedure GetRentDetailsForBill
+( @IdCustomer int, @IdRent int )  
+as  
+begin  
+   select r.idRent, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
+	c.country, r.rentDate, p.title, p.price  
+	from rent r 
+	inner join rentDetail rd on r.idRent = rd.idRent
+	inner join product p on p.idProduct = rd.idProduct
+	inner join customer c on c.idUser = r.idCustomer
+	where r.idCustomer = @IdCustomer
+	and r.idRent = @IdRent
+End
+
+
 GO
 
 
