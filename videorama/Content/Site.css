@@ -108,16 +108,20 @@ textarea {
 /*
     Css for the left navbar
 */
+#sidebar {
+    background-color: #4688C9;
+
+}
+
+#sidebar_second {
+    background-color: #fff;
+    margin-top: 20px;
+}
+
 @media only screen and (max-width: 768px) {
     #sidebar_second {
         display: flex;
         flex-direction: row;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    #sidebar_second {
-        position: fixed;
     }
 }
 
@@ -127,4 +131,17 @@ textarea {
 .search-bar {
     display: inline-flex;
     align-items: baseline;
+}
+
+.row-content-layout {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row-content-layout > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
 }

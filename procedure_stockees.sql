@@ -45,6 +45,14 @@ begin
 	ORDER BY idProduct DESC 
 END
 
+CREATE Procedure [GetProductByNameAndType]
+( @IdType int, @Name char )  
+as  
+begin  
+   select * from product where idType = @IdType
+   and title like '%' + @Name + '%'
+End
+
 GO
 
 
