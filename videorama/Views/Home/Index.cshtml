@@ -57,9 +57,9 @@
                 {
                     <div class="align-card">
                         <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="" alt="image">
-                            <div class="card-body">
-                                <p class="card-text">@Html.DisplayFor(modelItem => item.Title)</p>
+                            <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
+                            <div class="card-body fit">
+                                <p class="card-text">@Html.ActionLink(item.Title, "Details", "Products", new { id = item.IdProduct }, null)</p>
                             </div>
                         </div>
                     </div>
@@ -70,6 +70,6 @@
 </div>
 <div class="row">
     <div class="col-md-1">
-        <a href="" class="btn btn-primary">Voir plus</a>
+        <a href=@Url.Action("MyRents", "Rents", new { id = 1 }) class="btn btn-primary">Voir plus</a>
     </div>
 </div>
