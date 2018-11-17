@@ -171,8 +171,13 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\harry_potter_coupe_de_feu.jpg" />
+    <Content Include="Content\Images\harry_potter_ecole_des_sorciers.jpg" />
+    <Content Include="Content\Images\harry_potter_prince_sang_mele.jpg" />
+    <Content Include="Content\Images\harry_potter_prisonnier_azkaban.jpg" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\seigneur_des_anneaux.jpg" />
+    <Content Include="Content\Images\visuel_non_disponible.jpeg" />
     <Content Include="Content\simple-sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

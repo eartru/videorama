@@ -23,7 +23,9 @@ CREATE Procedure GetProductsByType
 ( @IdType int )  
 as  
 begin  
-   select * from product where idType = @IdType
+	select * from product p
+	inner join productType pt on p.idType = pt.idType  
+	where p.idType = @IdType
 End
 
 CREATE Procedure  GetRentByCustomer
@@ -36,7 +38,7 @@ begin
    where idCustomer = @IdCustomer AND inProgress = 1
 End
 
-ALTEr Procedure GetNewProducts  
+CREATE Procedure GetNewProducts  
 as  
 begin  
 	Select top 3 idProduct, title, synopsis, picture from product

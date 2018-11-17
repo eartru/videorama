@@ -6,7 +6,11 @@
     padding-top: 5px;
 }
 
-.card {
+.card-body.fit{
+    width: 120px;
+}
+
+.card-top {
     padding-top: 20px;
 }
 

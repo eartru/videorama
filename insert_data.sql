@@ -3,8 +3,8 @@ INSERT INTO videoramaUser VALUES('admin', 'admin', 'admin@test.fr', 1);
 INSERT INTO customer VALUES(1, 'Paul', 'Lupin', '30 rue du champs', '38120', 'Saint Egreve', 'France');
 
 INSERT INTO productType VALUES ( 'Film');
-INSERT INTO productType VALUES ( 'Série');
-INSERT INTO productType VALUES ( 'Dessin Animé');
+INSERT INTO productType VALUES ( 'SÃ©rie');
+INSERT INTO productType VALUES ( 'Dessin AnimÃ©');
 INSERT INTO product (title, releaseDate, price, stock, picture, idType, synopsis) VALUES('Harry Potter', '05/12/2001', 5.99, 10, '', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.');
 INSERT INTO product (title, releaseDate, price, stock, picture, idType, synopsis) VALUES('Friends saison 1', '09/09/1994', 2.99, 10, '', 2, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.');
 INSERT INTO product (title, releaseDate, price, stock, picture, idType, synopsis) VALUES('Friends saison 2', '05/09/1995', 2.99, 10, '', 2, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.');
@@ -17,7 +17,7 @@ INSERT INTO category VALUES('Science fiction');
 INSERT INTO category VALUES('Fantastique');
 
 INSERT INTO profession VALUES('Acteur');
-INSERT INTO profession VALUES('Réalisateur');
+INSERT INTO profession VALUES('RÃ©alisateur');
 INSERT INTO profession VALUES('Producteur');
 INSERT INTO profession VALUES('Auteur');
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -66,10 +65,10 @@ namespace Videorama.Models
         }
 
         // ********** VIEW PRODUCT DETAILS BY TYPE ********************
-        public List<Product> GetProductsByType(int type)
+        public List<Tuple<Product, Type>> GetProductsByType(int type)
         {
             connection();
-            List<Product> productsList = new List<Product>();
+            List<Tuple<Product, Type>> productsList = new List<Tuple<Product, Type>>();
 
             SqlCommand cmd = new SqlCommand("GetProductsByType", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -84,13 +83,20 @@ namespace Videorama.Models
             foreach (DataRow dr in dt.Rows)
             {
                 productsList.Add(
-                    new Product
+                    new Tuple<Product, Type>(new Product
                     {
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                        Stock = Convert.ToInt32(dr["Stock"])
-                    });
+                        Stock = Convert.ToInt32(dr["Stock"]),
+                        Picture = Convert.ToString(dr["Picture"]) == "" ? 
+                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg"): Convert.ToString(dr["Picture"]),
+                        IdType = Convert.ToInt32(dr["IdTYpe"])
+                    }, new Type
+                    {
+                        IdType = Convert.ToInt32(dr["IdType"]),
+                        TypeName = Convert.ToString(dr["TypeName"]),
+                    }));
             }
             return productsList;
         }
@@ -118,7 +124,8 @@ namespace Videorama.Models
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         Synopsis = Convert.ToString(dr["Synopsis"]).Substring(0,255),
-                        Picture = Convert.ToString(dr["Picture"])
+                        Picture = Convert.ToString(dr["Picture"]) == "" ?
+                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
                     });
             }
             return productsList;
