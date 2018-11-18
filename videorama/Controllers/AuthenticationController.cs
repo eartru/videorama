@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using videorama.Models;
+using videorama.ViewModels;
 using Videorama.Models;
 
 namespace videorama.Controllers
@@ -15,28 +16,22 @@ namespace videorama.Controllers
         {
             return View();
         }
-        
-        // POST: Show form to create a new account
-        public ActionResult SaveRegister(string UserName, string FirstName, string Name, string Email, string Password, string Adress, string PostalCode, string Town, string Country)
-        {
-            if (Request.HttpMethod == "POST")
-            {
-                CustomerDb dbCustomer = new CustomerDb();
-                Customer customer = new Customer(UserName, FirstName, Name, Email, Password, Adress, PostalCode, Town, Country);
-                bool listProductFound;
-                listProductFound = dbCustomer.AddCustomer(customer);
 
-                if (listProductFound)
-                {
-                    return RedirectToAction("Login", "Authentication");
-                } else
-                {
-                    return RedirectToAction("Register", "Authentication");
-                }
-                
-            }
-            else { 
-                return View("Error");
+        // POST: Show form to create a new account
+        [HttpPost]
+        public ActionResult SaveRegister(RegisterViewModel model)
+        {
+            CustomerDb dbCustomer = new CustomerDb();
+            //Customer customer = new Customer(model.Customer.Username, model.Customer.FirstName, model.Customer.LastName, model.Customer.Email, model.Customer.Password, model.Customer.Address, model.Customer.PostalCode, model.Customer.Town, model.Customer.Country);
+            bool listProductFound;
+            listProductFound = dbCustomer.AddCustomer(model.Customer);
+
+            if (listProductFound)
+            {
+                return RedirectToAction("Login", "Authentication");
+            } else
+            {
+                return RedirectToAction("Register", "Authentication");
             }
         }
 
@@ -46,29 +41,22 @@ namespace videorama.Controllers
             return View();
         }
 
-        
+
 
         // POST: Show form to create a new account
+        [HttpPost]
         public ActionResult CheckLogin(string UserName, string Password)
         {
-            if (Request.HttpMethod == "POST")
-            {
-                UserDb dbUser = new UserDb();
-                User userFound;
-                userFound = dbUser.GetUserByUserNameAndPassword(UserName, Password);
+            UserDb dbUser = new UserDb();
+            User userFound;
+            userFound = dbUser.GetUserByUserNameAndPassword(UserName, Password);
 
-                if (userFound.IdUser != 0)
-                {
-                    return RedirectToAction("Index", "Home");
-                } else
-                {
-                    return RedirectToAction("Login", "Authentication");
-                }
-               
-            }
-            else
+            if (userFound.IdUser != 0)
             {
-                return View("Error");
+                return RedirectToAction("Index", "Home");
+            } else
+            {
+                return RedirectToAction("Login", "Authentication");
             }
         }
     }

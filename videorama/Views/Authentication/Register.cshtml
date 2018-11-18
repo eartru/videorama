@@ -1,4 +1,5 @@
-﻿@{
+﻿@model videorama.ViewModels.RegisterViewModel
+@{
 
     Layout = "~/Views/Shared/_LayoutAuthentication.cshtml";
     ViewBag.Title = "Inscription";
@@ -9,32 +10,34 @@
 <div>
     @using (Html.BeginForm("SaveRegister", "Authentication", FormMethod.Post))
     {
-        @Html.Label("UserName", "Nom d'utilisateur")
-        @Html.TextBox("UserName", null, new { required = "required" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.Label("FirstName", "Prénom")
-        @Html.TextBox("FirstName", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.Username, "Nom d'utilisateur")
+        @Html.TextBoxFor(m => m.Customer.Username, null, new { required = "required" })
 
-        @Html.Label("Name", "Nom")
-        @Html.TextBox("Name", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.FirstName, "Prénom")
+        @Html.TextBoxFor(m => m.Customer.FirstName)
 
-        @Html.Label("Email")
-        @Html.TextBox("Email", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.LastName, "Nom")
+        @Html.TextBoxFor(m => m.Customer.LastName, null, new { required = "required" })
 
-        @Html.Label("Password", "Mot de passe")
-        @Html.Password("Password", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.Email)
+        @Html.TextBoxFor(m => m.Customer.Email, null, new { required = "required" })
 
-        @Html.Label("Adress", "Adresse")
-        @Html.TextBox("Adress", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.Password, "Mot de passe")
+        @Html.PasswordFor(m => m.Customer.Password, new { required = "required" })
 
-        @Html.Label("PostalCode", "Code postal")
-        @Html.TextBox("PostalCode", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.Address, "Adresse")
+        @Html.TextBoxFor(m => m.Customer.Address, null, new { required = "required" })
 
-        @Html.Label("Town", "Région")
-        @Html.TextBox("Town", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.PostalCode, "Code postal")
+        @Html.TextBoxFor(m => m.Customer.PostalCode, null, new { required = "required" })
 
-        @Html.Label("Country", "Pays")
-        @Html.TextBox("Country", null, new { required = "required" })
+        @Html.LabelFor(m => m.Customer.Town, "Région")
+        @Html.TextBoxFor(m => m.Customer.Town, null, new { required = "required" })
+
+        @Html.LabelFor(m => m.Customer.Country, "Pays")
+        @Html.TextBoxFor(m => m.Customer.Country, null, new { required = "required" })
         <input class="btn btn-outline-secondary" type="submit" value="OK" />
     }
 
