@@ -58,9 +58,17 @@ CREATE Procedure [PutCustomer]
 as  
 begin  
 	DECLARE @new_parent_id INT
-	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @Name, @Password, @Email, 'false');	
+	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @Name, HashBytes('SHA1', @Password), @Email, 'false');	
 	SELECT @new_parent_id = SCOPE_IDENTITY()
 	INSERT INTO customer(idUser, firstname, lastname, addressCustomer, postalCode, town, country) VALUES ( @new_parent_id, @FristName, @Name, @Adress, @PostalCode, @Town, @Country);
+End
+
+CREATE Procedure [GetUserByUserNameAndPassword]
+( @UserName varchar(50), @Password varchar(255) )  
+as  
+begin  
+   select * from videoramaUser where username = @UserName
+   and passwordUser = HashBytes('SHA1', @Password)
 End
 
 GO
