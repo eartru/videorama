@@ -8,7 +8,7 @@
 <h2>Connectez-vous</h2>
 
 <div>
-    @using (Html.BeginForm("CheckLogin", "Authentication", FormMethod.Post))
+    @using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
     {
         @Html.LabelFor(m => m.User.Username, "Nom d'utilisateur")
         @Html.TextBoxFor(m => m.User.Username, null, new { required = "required" })

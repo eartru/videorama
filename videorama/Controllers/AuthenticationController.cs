@@ -20,7 +20,7 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult SaveRegister(AuthenticationViewModel model)
+        public ActionResult Register(AuthenticationViewModel model)
         {
             CustomerDb dbCustomer = new CustomerDb();
             bool listProductFound;
@@ -45,7 +45,7 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult CheckLogin(AuthenticationViewModel model, string returnUrl)
+        public ActionResult Login(AuthenticationViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
