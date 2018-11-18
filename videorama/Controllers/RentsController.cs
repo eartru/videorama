@@ -16,7 +16,14 @@ namespace videorama.Controllers
         // GET: Rents/MyRents
         public ActionResult MyRents(int id)
         {
-            return View();
+            RentDb dbRent = new RentDb();
+            ModelState.Clear();
+            RentsViewModel vm = new RentsViewModel
+            {
+                Products = dbRent.GetRentByCustomer(id),
+                IdRent = dbRent.GetRentIdByCustomer(id)
+            };
+            return View(vm);
         }
 
         // GET: Rents/Details/5
@@ -33,7 +40,7 @@ namespace videorama.Controllers
             RentDb dbProducts = new RentDb();
             ModelState.Clear();
             BillViewModel model = dbProducts.GetRentDetailsForBill(idC, idR);
-            return new Rotativa.ViewAsPdf("ViewPDF", model) { FileName = "facture_" + DateTime.Today.ToShortDateString().ToString() + ".pdf" };
+            return new Rotativa.ViewAsPdf("ViewPDF", model) { FileName = "facture" + idR + "_" + DateTime.Today.ToShortDateString().ToString() + ".pdf" };
         }
         
         // POST: Rents/Create

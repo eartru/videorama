@@ -36,10 +36,10 @@ namespace Videorama.Models
         }
 
         // ********** VIEW RENTS BY CUSTOMER ********************
-        public List<Product> GetRentByCustomer(int idCustomer)
+        public List<Tuple<Rent, Product>> GetRentByCustomer(int idCustomer)
         {
             connection();
-            List<Product> rentsList = new List<Product>();
+            List<Tuple<Rent, Product>> rentsList = new List<Tuple<Rent, Product>>();
 
             SqlCommand cmd = new SqlCommand("GetRentByCustomer", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -54,15 +54,42 @@ namespace Videorama.Models
             foreach (DataRow dr in dt.Rows)
             {
                 rentsList.Add(
+                    new Tuple<Rent, Product>(new Rent
+                    {
+                        IdRent = Convert.ToInt32(dr["IdRent"]),
+                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
+                    },
                     new Product
                     {
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         Picture = Convert.ToString(dr["Picture"]) == "" ?
                         Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
-                    });
+                    }));
             }
             return rentsList;
+        }
+
+        public List<int> GetRentIdByCustomer(int idCustomer)
+        {
+            connection();
+            List<int> idRentList = new List<int>();
+
+            SqlCommand cmd = new SqlCommand("GetRentIdByCustomer", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                idRentList.Add(Convert.ToInt32(dr["IdRent"]));
+            }
+            return idRentList;
         }
 
         public BillViewModel GetRentDetailsForBill(int idCustomer, int idRent)
