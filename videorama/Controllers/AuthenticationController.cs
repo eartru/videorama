@@ -26,9 +26,42 @@ namespace videorama.Controllers
                 bool listProductFound;
                 listProductFound = dbCustomer.AddCustomer(customer);
 
-                return RedirectToAction("Index", "Home");
+                if (listProductFound)
+                {
+                    return RedirectToAction("Login", "Authentication");
+                } else
+                {
+                    return View("Error");
+                }
+                
             }
             else { 
+                return View("Error");
+            }
+        }
+
+        // GET: Show form to login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        
+
+        // POST: Show form to create a new account
+        public ActionResult CheckLogin(string UserName, string Password)
+        {
+            if (Request.HttpMethod == "POST")
+            {
+                CustomerDb dbCustomer = new CustomerDb();
+                /*Customer customer = new Customer(UserName, Password);
+                bool listProductFound;
+                listProductFound = dbCustomer.AddCustomer(customer);*/
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
                 return View("Error");
             }
         }

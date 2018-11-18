@@ -49,12 +49,8 @@ namespace videorama.Controllers
 
         public ActionResult Search(string SearchString)
         {
-            System.Diagnostics.Debug.WriteLine("iciiiiiiii !");
-            System.Diagnostics.Debug.WriteLine(SearchString);
             string selectType;
-            selectType = Request.Form["selectType"];
-
-            
+            selectType = Request.Form["selectType"];           
             
             return RedirectToAction("ProductsSearchResult", "Products", new { type = selectType, name = SearchString });
         }
