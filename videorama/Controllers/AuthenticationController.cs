@@ -19,10 +19,9 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult SaveRegister(RegisterViewModel model)
+        public ActionResult SaveRegister(AuthenticationViewModel model)
         {
             CustomerDb dbCustomer = new CustomerDb();
-            //Customer customer = new Customer(model.Customer.Username, model.Customer.FirstName, model.Customer.LastName, model.Customer.Email, model.Customer.Password, model.Customer.Address, model.Customer.PostalCode, model.Customer.Town, model.Customer.Country);
             bool listProductFound;
             listProductFound = dbCustomer.AddCustomer(model.Customer);
 
@@ -45,11 +44,11 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult CheckLogin(string UserName, string Password)
+        public ActionResult CheckLogin(AuthenticationViewModel model)
         {
             UserDb dbUser = new UserDb();
             User userFound;
-            userFound = dbUser.GetUserByUserNameAndPassword(UserName, Password);
+            userFound = dbUser.GetUserByUserNameAndPassword(model.User);
 
             if (userFound.IdUser != 0)
             {

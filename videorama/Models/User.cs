@@ -13,38 +13,11 @@ namespace Videorama.Models
         private string password;
         private bool isAdmin;
 
-        public User() { }
-
-        public User(string username, string email, string password, bool isAdmin = false)
-        {
-            this.username = username;
-            this.email = email;
-            this.password = password;
-            this.isAdmin = isAdmin;
-        }
-
         public int IdUser { get; set; }
-        //public string Username { get; set; }
-        //public string Email { get; set; }
-        //public string Password { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public bool IsAdmin { get; set; }
 
-        public string Username
-        {
-            get { return username; }
-            set { username = value; }
-        }
-
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
     }
 }

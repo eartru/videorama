@@ -7,10 +7,9 @@ using Videorama.Models;
 
 namespace videorama.ViewModels
 {
-    public class RegisterViewModel
+    public class AuthenticationViewModel
     {
-        internal CustomerDb dbProducts;
-
         public Customer Customer { get; set; }
+        public User User { get; set; }
     }
 }
