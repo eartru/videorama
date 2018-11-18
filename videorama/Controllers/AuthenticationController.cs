@@ -17,12 +17,12 @@ namespace videorama.Controllers
         }
         
         // POST: Show form to create a new account
-        public ActionResult SaveRegister(string FirstName, string Name, string Email, string Password, string Adress, string PostalCode, string Town, string Country)
+        public ActionResult SaveRegister(string UserName, string FirstName, string Name, string Email, string Password, string Adress, string PostalCode, string Town, string Country)
         {
             if (Request.HttpMethod == "POST")
             {
                 CustomerDb dbCustomer = new CustomerDb();
-                Customer customer = new Customer(FirstName, Name, Email, Password, Adress, PostalCode, Town, Country);
+                Customer customer = new Customer(UserName, FirstName, Name, Email, Password, Adress, PostalCode, Town, Country);
                 bool listProductFound;
                 listProductFound = dbCustomer.AddCustomer(customer);
 
@@ -31,7 +31,7 @@ namespace videorama.Controllers
                     return RedirectToAction("Login", "Authentication");
                 } else
                 {
-                    return View("Error");
+                    return RedirectToAction("Register", "Authentication");
                 }
                 
             }

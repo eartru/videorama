@@ -21,6 +21,7 @@ namespace videorama.Models
             SqlCommand cmd = new SqlCommand("PutCustomer", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
+            cmd.Parameters.AddWithValue("@UserName", customer.Username);
             cmd.Parameters.AddWithValue("@FristName", customer.FirstName);
             cmd.Parameters.AddWithValue("@Name", customer.LastName);
             cmd.Parameters.AddWithValue("@Password", customer.Password);

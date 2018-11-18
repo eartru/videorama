@@ -9,7 +9,7 @@
 <div>
     @using (Html.BeginForm("CheckLogin", "Authentication", FormMethod.Post))
     {
-        @Html.Label("UserName")
+        @Html.Label("UserName", "Nom d'utilisateur")
         @Html.TextBox("UserName", null, new { required = "required" })
 
         @Html.Label("Password", "Mot de passe")

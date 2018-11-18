@@ -16,7 +16,7 @@ namespace Videorama.Models
         private List<Rent> rents;
         private List<Bill> bills;
 
-        public Customer(string firstName, string name, string email, string password, string address, string postalCode, string town, string country) : base(email, password)
+        public Customer(string username, string firstName, string name, string email, string password, string address, string postalCode, string town, string country) : base(username, email, password)
         {
             this.firstName = firstName;
             this.lastName = name;

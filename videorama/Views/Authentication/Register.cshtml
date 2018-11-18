@@ -9,6 +9,9 @@
 <div>
     @using (Html.BeginForm("SaveRegister", "Authentication", FormMethod.Post))
     {
+        @Html.Label("UserName", "Nom d'utilisateur")
+        @Html.TextBox("UserName", null, new { required = "required" })
+
         @Html.Label("FirstName", "Prénom")
         @Html.TextBox("FirstName", null, new { required = "required" })
 
