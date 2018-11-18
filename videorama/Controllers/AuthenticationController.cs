@@ -53,12 +53,18 @@ namespace videorama.Controllers
         {
             if (Request.HttpMethod == "POST")
             {
-                CustomerDb dbCustomer = new CustomerDb();
-                /*Customer customer = new Customer(UserName, Password);
-                bool listProductFound;
-                listProductFound = dbCustomer.AddCustomer(customer);*/
+                UserDb dbUser = new UserDb();
+                User userFound;
+                userFound = dbUser.GetUserByUserNameAndPassword(UserName, Password);
 
-                return RedirectToAction("Index", "Home");
+                if (userFound.IdUser != 0)
+                {
+                    return RedirectToAction("Index", "Home");
+                } else
+                {
+                    return RedirectToAction("Login", "Authentication");
+                }
+               
             }
             else
             {

@@ -34,5 +34,7 @@
         @Html.TextBox("Country", null, new { required = "required" })
         <input class="btn btn-outline-secondary" type="submit" value="OK" />
     }
+
+    <p>Déjà un compte ? @Html.ActionLink("Connectez-vous !", "Login", "Authentication")</p>
 </div>
 

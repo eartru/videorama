@@ -24,7 +24,7 @@ namespace Videorama.Models
             this.postalCode = postalCode;
             this.town = town;
             this.country = country;
-            
+
         }
 
         /*public string FirstName { get; set; }

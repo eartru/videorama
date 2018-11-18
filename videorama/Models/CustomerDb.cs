@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using Videorama.Models;
@@ -22,7 +20,7 @@ namespace videorama.Models
             connection();
             SqlCommand cmd = new SqlCommand("PutCustomer", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            string var = customer.FirstName;
+
             cmd.Parameters.AddWithValue("@FristName", customer.FirstName);
             cmd.Parameters.AddWithValue("@Name", customer.LastName);
             cmd.Parameters.AddWithValue("@Password", customer.Password);
@@ -33,13 +31,25 @@ namespace videorama.Models
             cmd.Parameters.AddWithValue("@Country", customer.Country);
 
             con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
 
-            if (i >= 1)
+            try
+            {
+                cmd.ExecuteNonQuery();
                 return true;
-            else
+            }
+            catch (SqlException ex)
+            {
                 return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            
+
         }
+        
+        
     }
 }

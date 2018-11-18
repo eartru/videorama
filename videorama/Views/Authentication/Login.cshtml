@@ -4,7 +4,7 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Inscrivez-vous</h2>
+<h2>Connectez-vous</h2>
 
 <div>
     @using (Html.BeginForm("CheckLogin", "Authentication", FormMethod.Post))
@@ -17,5 +17,9 @@
 
         <input class="btn btn-outline-secondary" type="submit" value="OK" />
     }
+
+    <p>Pas encore de compte ? @Html.ActionLink("Inscrivez-vous !", "Register", "Authentication")</p>
+
+
 </div>
 

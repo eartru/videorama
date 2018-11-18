@@ -13,6 +13,8 @@ namespace Videorama.Models
         private string password;
         private bool isAdmin;
 
+        public User() { }
+
         public User(string email, string password, bool isAdmin = false)
         {
             this.email = email;
