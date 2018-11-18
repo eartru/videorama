@@ -16,7 +16,7 @@
         @Html.TextBoxFor(m => m.Customer.Username, null, new { required = "required" })
 
         @Html.LabelFor(m => m.Customer.FirstName, "Prénom")
-        @Html.TextBoxFor(m => m.Customer.FirstName)
+        @Html.TextBoxFor(m => m.Customer.FirstName, null, new { required = "required" })
 
         @Html.LabelFor(m => m.Customer.LastName, "Nom")
         @Html.TextBoxFor(m => m.Customer.LastName, null, new { required = "required" })
