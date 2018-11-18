@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using videorama.Models;
 using videorama.ViewModels;
 using Videorama.Models;
@@ -44,19 +45,45 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult CheckLogin(AuthenticationViewModel model)
+        public ActionResult CheckLogin(AuthenticationViewModel model, string returnUrl)
         {
-            UserDb dbUser = new UserDb();
-            User userFound;
-            userFound = dbUser.GetUserByUserNameAndPassword(model.User);
+            if (ModelState.IsValid)
+            {
+                UserDb dbUser = new UserDb();
+                User userFound;
+                userFound = dbUser.GetUserByUserNameAndPassword(model.User);
 
-            if (userFound.IdUser != 0)
-            {
-                return RedirectToAction("Index", "Home");
-            } else
-            {
-                return RedirectToAction("Login", "Authentication");
+                if (userFound.IdUser != 0)
+                {
+                    FormsAuthentication.SetAuthCookie(userFound.IdUser.ToString(), false);
+                    if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        string currentUserId = User.Identity.Name;
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        string currentUserId = User.Identity.Name;
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("Utilisateur.Prenom", "Prénom et/ou mot de passe incorrect(s)");
+                    return View(model);
+                }
             }
+            else
+            {
+                return View(model);
+            }
+            
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect("/");
         }
     }
 }

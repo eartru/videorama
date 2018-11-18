@@ -11,5 +11,6 @@ namespace videorama.ViewModels
     {
         public Customer Customer { get; set; }
         public User User { get; set; }
+        public bool Authentifie { get; set; }
     }
 }
