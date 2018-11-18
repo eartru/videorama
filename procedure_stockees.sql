@@ -46,7 +46,7 @@ begin
 END
 
 CREATE Procedure [GetProductByNameAndType]
-( @IdType int, @Name char )  
+( @IdType int, @Name varchar(50) )  
 as  
 begin  
    select * from product where idType = @IdType
@@ -54,11 +54,13 @@ begin
 End
 
 CREATE Procedure [PutCustomer]
-( @FristName char, @Name char, @Email char,  @Password char, @Adress char, @PostalCode char, @Town char, @Country char)  
+( @FristName varchar(50), @Name varchar(50), @Email varchar(50),  @Password varchar(255), @Adress varchar(255), @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))  
 as  
 begin  
-	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @Name, @Password, @Email, 'false');
-	INSERT INTO customer(firstname, lastname, addressCustomer, postalCode, town, country) VALUES ( @FristName, @Name, @Adress, @PostalCode, @Town, @Country);
+	DECLARE @new_parent_id INT
+	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @Name, @Password, @Email, 'false');	
+	SELECT @new_parent_id = SCOPE_IDENTITY()
+	INSERT INTO customer(idUser, firstname, lastname, addressCustomer, postalCode, town, country) VALUES ( @new_parent_id, @FristName, @Name, @Adress, @PostalCode, @Town, @Country);
 End
 
 GO
