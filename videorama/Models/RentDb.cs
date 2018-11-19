@@ -36,10 +36,10 @@ namespace Videorama.Models
         }
 
         // ********** VIEW RENTS BY CUSTOMER ********************
-        public List<Tuple<Rent, Product>> GetRentByCustomer(int idCustomer)
+        public List<Rent> GetRentByCustomer(int idCustomer)
         {
             connection();
-            List<Tuple<Rent, Product>> rentsList = new List<Tuple<Rent, Product>>();
+            List<Rent> rentsList = new List<Rent>();
 
             SqlCommand cmd = new SqlCommand("GetRentByCustomer", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -53,19 +53,22 @@ namespace Videorama.Models
 
             foreach (DataRow dr in dt.Rows)
             {
-                rentsList.Add(
-                    new Tuple<Rent, Product>(new Rent
-                    {
-                        IdRent = Convert.ToInt32(dr["IdRent"]),
-                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
-                    },
+                List<Product> listP = new List<Product>();
+                listP.Add(
                     new Product
                     {
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         Picture = Convert.ToString(dr["Picture"]) == "" ?
                         Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
-                    }));
+                    });
+                rentsList.Add(
+                    new Rent
+                    {
+                        IdRent = Convert.ToInt32(dr["IdRent"]),
+                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"]),
+                        Products = listP
+                    });
             }
             return rentsList;
         }
