@@ -53,6 +53,7 @@ begin
    and title like '%' + @Name + '%'
 End
 
+
 CREATE Procedure [PutCustomer]
 ( @UserName varchar(50), @FristName varchar(50), @Name varchar(50), @Email varchar(50),  @Password varchar(255), @Adress varchar(255), @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))  
 as  
@@ -69,6 +70,20 @@ as
 begin  
    select * from videoramaUser where username = @UserName
    and passwordUser = HashBytes('SHA1', @Password)
+End
+
+CREATE Procedure GetRentDetailsForBill
+( @IdCustomer int, @IdRent int )  
+as  
+begin  
+   select r.idRent, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
+	c.country, r.rentDate, p.title, p.price  
+	from rent r 
+	inner join rentDetail rd on r.idRent = rd.idRent
+	inner join product p on p.idProduct = rd.idProduct
+	inner join customer c on c.idUser = r.idCustomer
+	where r.idCustomer = @IdCustomer
+	and r.idRent = @IdRent
 End
 
 GO

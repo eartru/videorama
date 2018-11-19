@@ -1,0 +1,19 @@
+﻿@model Videorama.Models.Rent
+
+@{
+    ViewBag.Title = "MyRents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h2>Mes locations</h2>
+    <hr size=2 align=left width="60%" />
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- idC (customer) à mettre dynamic quand idUser sera connu 
+            et idR (rent) dynamic quand le bouton sera dans la page Rents/Detail/x -->
+        <a href=@Url.Action("DownloadBill", "Rents", new { idC = 1, idR = 1 }) class="btn btn-primary">Télécharger la facture</a>
+    </div>
+</div>
