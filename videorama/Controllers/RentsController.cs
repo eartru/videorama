@@ -18,12 +18,7 @@ namespace videorama.Controllers
         {
             RentDb dbRent = new RentDb();
             ModelState.Clear();
-            RentsViewModel vm = new RentsViewModel
-            {
-                Products = dbRent.GetRentByCustomer(id),
-                IdRent = dbRent.GetRentIdByCustomer(id)
-            };
-            return View(vm);
+            return View(dbRent.GetDistinctRentByCustomer(id));
         }
 
         // GET: Rents/Details/5

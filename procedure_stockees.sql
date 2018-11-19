@@ -40,14 +40,15 @@ begin
    order by r.idRent
 End
 
-CREATE Procedure  GetRentIdByCustomer
-( @IdCustomer int )  
+CREATE Procedure  GetRentProducts
+( @IdRent int )  
 as  
 begin  
-    select r.idRent
-	from rent r
-    where idCustomer = @IdCustomer AND inProgress = 1
-    order by r.idRent
+    select p.idProduct, p.title, p.picture
+	from rent r 
+	INNER JOIN rentDetail rd on r.idRent = rd.idRent 
+   INNER JOIN product p on rd.idProduct = p.idProduct
+    where r.idRent = @IdRent
 End
 
 CREATE Procedure GetNewProducts  
