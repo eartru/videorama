@@ -22,16 +22,25 @@ namespace videorama.Controllers
         [HttpPost]
         public ActionResult Register(AuthenticationViewModel model)
         {
-            CustomerDb dbCustomer = new CustomerDb();
-            bool listProductFound;
-            listProductFound = dbCustomer.AddCustomer(model.Customer);
+            if (ModelState.IsValid)
+            {
+                CustomerDb dbCustomer = new CustomerDb();
+                bool listProductFound;
+                listProductFound = dbCustomer.AddCustomer(model.Customer);
 
-            if (listProductFound)
-            {
-                return RedirectToAction("Login", "Authentication");
-            } else
-            {
+                if (listProductFound)
+                {
+                    return RedirectToAction("Login", "Authentication");
+                }
+                else
+                {
+
+                }
                 return RedirectToAction("Register", "Authentication");
+            }
+            else
+            {
+                return View(model);
             }
         }
 
@@ -55,15 +64,14 @@ namespace videorama.Controllers
 
                 if (userFound.IdUser != 0)
                 {
-                    FormsAuthentication.SetAuthCookie(userFound.IdUser.ToString(), false);
+                    FormsAuthentication.SetAuthCookie(userFound.Username, false);
+
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
-                        string currentUserId = User.Identity.Name;
                         return Redirect(returnUrl);
                     }
                     else
                     {
-                        string currentUserId = User.Identity.Name;
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -77,7 +85,7 @@ namespace videorama.Controllers
             {
                 return View(model);
             }
-            
+
         }
 
         public ActionResult Logout()
