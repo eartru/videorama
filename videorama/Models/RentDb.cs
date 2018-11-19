@@ -70,12 +70,12 @@ namespace Videorama.Models
             return rentsList;
         }
 
-        public List<int> GetRentIdByCustomer(int idCustomer)
+        public List<Rent> GetDistinctRentByCustomer(int idCustomer)
         {
             connection();
-            List<int> idRentList = new List<int>();
+            List<Rent> rentsList = new List<Rent>();
 
-            SqlCommand cmd = new SqlCommand("GetRentIdByCustomer", con);
+            SqlCommand cmd = new SqlCommand("GetDistinctRentByCustomer", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
@@ -87,9 +87,43 @@ namespace Videorama.Models
 
             foreach (DataRow dr in dt.Rows)
             {
-                idRentList.Add(Convert.ToInt32(dr["IdRent"]));
+                rentsList.Add(
+                    new Rent
+                    {
+                        IdRent = Convert.ToInt32(dr["IdRent"]),
+                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
+                    });
             }
-            return idRentList;
+            return rentsList;
+        }
+
+        public List<Product> GetRentProducts(int idRent)
+        {
+            connection();
+            List<Product> productsList = new List<Product>();
+
+            SqlCommand cmd = new SqlCommand("GetRentProducts", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdRent", idRent);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                productsList.Add(
+                    new Product
+                    {
+                        IdProduct = Convert.ToInt32(dr["IdProduct"]),
+                        Title = Convert.ToString(dr["Title"]),
+                        Picture = Convert.ToString(dr["Picture"]) == "" ?
+                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
+                    });
+            }
+            return productsList;
         }
 
         public BillViewModel GetRentDetailsForBill(int idCustomer, int idRent)

@@ -1,4 +1,4 @@
-﻿@model videorama.ViewModels.RentsViewModel
+﻿@model IEnumerable<Videorama.Models.Rent>
 
 @{
     ViewBag.Title = "MyRents";
@@ -7,49 +7,44 @@
 
 <div class="row">
     <h2>Mes locations</h2>
-    <hr size=2 align=left width="60%" />
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        @foreach (var item in Model.IdRent)
+        @foreach (var item in Model)
         {
-            <table class="table">
+            <table class="table no-margin">
                 <tr>
-                    <th>
-                        N° de location
-                    </th>
-                    <th>
-                        Produit
-                    </th>
-                    <th>
-                        Date de retour
-                    </th>
-                    <th>
-                        Facture
-                    </th>
+                    <td>
+                        <b>Location n° @Html.DisplayFor(modelItem => item.IdRent)</b>
+                    </td>
+                    <td>
+                        <b>Date de retour: 
+                        @Html.DisplayFor(modelItem => item.ReturnBackDate)</b>
+                    </td>
+                    <td>
+                        <a href=@Url.Action("DownloadBill", "Rents",
+                        new { idC = 1, idR = item.IdRent }) class="btn btn-primary">Télécharger la facture</a>
+                    </td>
                     <th></th>
                 </tr>
-
-                @foreach (var items in Model.Products)
+            </table>
+            <table class="table table-products">
+                <tr>
+                    <td><b>Produits</b></td>
+                </tr>
+                @{ Videorama.Models.RentDb dbRent = new Videorama.Models.RentDb();
+                    List<Videorama.Models.Product> list = dbRent.GetRentProducts(item.IdRent);
+                }
+                @foreach (var product in list)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => items.Item1.IdRent)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => items.Item2.Title)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => items.Item1.ReturnBackDate)
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Title)
+                    </td>
+                </tr>
                 }
             </table>
-            <a href=@Url.Action("DownloadBill", "Rents",
-            new { idC = 1, idR = item }) class="btn btn-primary">Télécharger</a>
         }
-        <!-- idC (customer) à mettre dynamic quand idUser sera connu
-    et idR (rent) dynamic quand le bouton sera dans la page Rents/Detail/x -->
     </div>
 </div>
