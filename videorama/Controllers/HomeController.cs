@@ -8,7 +8,6 @@ using Videorama.Models;
 
 namespace videorama.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -50,10 +49,16 @@ namespace videorama.Controllers
 
         public ActionResult Search(string SearchString)
         {
+            System.Diagnostics.Debug.WriteLine("iciiiiiiii !");
+            System.Diagnostics.Debug.WriteLine(SearchString);
             string selectType;
-            selectType = Request.Form["selectType"];           
+            selectType = Request.Form["selectType"];
+
+            
             
             return RedirectToAction("ProductsSearchResult", "Products", new { type = selectType, name = SearchString });
+
+            //return View();
         }
     }
 }

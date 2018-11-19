@@ -50,7 +50,7 @@ begin
     order by r.idRent
 End
 
-CREATE Procedure GetNewProducts
+CREATE Procedure GetNewProducts  
 as  
 begin  
 	Select top 3 idProduct, title, synopsis, picture from product
@@ -58,30 +58,11 @@ begin
 END
 
 CREATE Procedure [GetProductByNameAndType]
-( @IdType int, @Name varchar(50) )  
+( @IdType int, @Name char )  
 as  
 begin  
    select * from product where idType = @IdType
    and title like '%' + @Name + '%'
-End
-
-
-CREATE Procedure [PutCustomer]
-( @UserName varchar(50), @FristName varchar(50), @Name varchar(50), @Email varchar(50),  @Password varchar(255), @Adress varchar(255), @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))  
-as  
-begin  
-	DECLARE @new_parent_id INT
-	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @UserName, HashBytes('SHA1', @Password), @Email, 'false');	
-	SELECT @new_parent_id = SCOPE_IDENTITY()
-	INSERT INTO customer(idUser, firstname, lastname, addressCustomer, postalCode, town, country) VALUES ( @new_parent_id, @FristName, @Name, @Adress, @PostalCode, @Town, @Country);
-End
-
-CREATE Procedure [GetUserByUserNameAndPassword]
-( @UserName varchar(50), @Password varchar(255) )  
-as  
-begin  
-   select * from videoramaUser where username = @UserName
-   and passwordUser = HashBytes('SHA1', @Password)
 End
 
 CREATE Procedure GetRentDetailsForBill
@@ -97,6 +78,7 @@ begin
 	where r.idCustomer = @IdCustomer
 	and r.idRent = @IdRent
 End
+
 
 GO
 

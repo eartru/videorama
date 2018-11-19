@@ -95,6 +95,7 @@ namespace videorama.Controllers
         // GET: Products serach result
         public ActionResult ProductsSearchResult(int type, string name)
         {
+            System.Diagnostics.Debug.WriteLine("hellooooooooo !");
             ModelState.Clear();
 
             ProductsDb dbProducts = new ProductsDb();
