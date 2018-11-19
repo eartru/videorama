@@ -13,7 +13,7 @@ namespace videorama.ViewModels
 
         public IEnumerable<Product> Product { get; set; }
         public IEnumerable<Product> NewProducts { get; set; }
-        public IEnumerable<Product> Rent { get; set; }
+        public IEnumerable<Tuple<Rent,Product>> Rent { get; set; }
         public int SelectedTop { get; set; }
         List<SelectListItem> items = new List<SelectListItem>();
 

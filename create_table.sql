@@ -44,6 +44,7 @@ create table bill
 create table rent 
 (	idRent INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	rentDate DATE NOT NULL,
+	returnBackDate DATE NOT NULL,
 	inProgress BIT NOT NULL,
 	idBill INT,
 	idCustomer INT,
