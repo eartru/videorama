@@ -5,21 +5,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Liste des @ViewData["type"]</h2>
-
-<div class="row">
-    <div class="col-md-12">
-        @foreach (var item in Model)
-        {
-            <div class="align-card">
-                <div class="card" style="width: 18rem;">
-                    <img id="img_new" src="..@String.Format("{0}",item.Item1.Picture)" alt="image">
-                    <div class="card-body fit">
-                        @Html.ActionLink(item.Item1.Title, "Details", "Products",
-                            new { id = item.Item1.IdProduct }, null)
+<div class="container-fluid">
+    <h2>Liste des @ViewData["type"]</h2>
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var item in Model)
+            {
+                <div class="align-card">
+                    <div class="card" style="width: 18rem;">
+                        <img id="img_new" src="..@String.Format("{0}",item.Item1.Picture)" alt="image">
+                        <div class="card-body fit">
+                            @Html.ActionLink(item.Item1.Title, "Details", "Products",
+                                new { id = item.Item1.IdProduct }, null)
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>

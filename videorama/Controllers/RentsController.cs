@@ -35,7 +35,7 @@ namespace videorama.Controllers
             RentDb dbProducts = new RentDb();
             ModelState.Clear();
             BillViewModel model = dbProducts.GetRentDetailsForBill(idC, idR);
-            return new Rotativa.ViewAsPdf("ViewPDF", model) { FileName = "facture" + idR + "_" + DateTime.Today.ToShortDateString().ToString() + ".pdf" };
+            return new Rotativa.ViewAsPdf("ViewPDF", model);
         }
         
         // POST: Rents/Create
