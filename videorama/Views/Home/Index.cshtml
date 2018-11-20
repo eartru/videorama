@@ -3,73 +3,75 @@
 }
 @model videorama.ViewModels.AccueilViewModel
 
-<div class="row">
-    <h2>Bienvenue, user</h2>
-    <hr size=2 align=left width="60%"/>
-</div>
-<div class="row">
-    <div class="col-md-7">
-        <h3>Les nouveautés</h3>
-        @foreach (var item in Model.NewProducts)
-        {
-            <ul class="list-unstyled">
-                <li class="media">
-                    <div class="media-left">
-                        <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
-                    </div>
-                    <div class="media-body">
-                        <a>
-                            <h5 class="mt-0">@Html.ActionLink(item.Title, "Details", "Products", new { id = item.IdProduct }, null)</h5>
-                        </a>
-                        @Html.DisplayFor(modelItem => item.Synopsis) ...
-                    </div>
-                </li>
-            </ul>
-        }
+<div class="container-fluid">
+    <div class="row">
+        <h2>Bienvenue, user</h2>
+        <hr size=2 align=left width="60%" />
     </div>
-    <div class="col-md-4">
-        <div class="top-table">
-            <table class="table">
-                <tr>
-                    <th><h4>Top 5 des DVD loués</h4></th>
-                </tr>
-                @foreach (var item in Model.Product)
-                {
+    <div class="row">
+        <div class="col-md-7">
+            <h3>Les nouveautés</h3>
+            @foreach (var item in Model.NewProducts)
+            {
+                <ul class="list-unstyled">
+                    <li class="media">
+                        <div class="media-left">
+                            <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
+                        </div>
+                        <div class="media-body">
+                            <a>
+                                <h5 class="mt-0">@Html.ActionLink(item.Title, "Details", "Products", new { id = item.IdProduct }, null)</h5>
+                            </a>
+                            @Html.DisplayFor(modelItem => item.Synopsis) ...
+                        </div>
+                    </li>
+                </ul>
+            }
+        </div>
+        <div class="col-md-4">
+            <div class="top-table">
+                <table class="table">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
+                        <th><h4>Top 5 des DVD loués</h4></th>
                     </tr>
-                }
-            </table>
+                    @foreach (var item in Model.Product)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-7">
-        <div class="card card-top">
-            <div class="card-header">
-                <h3>Locations en cours</h3>
-            </div>
-            <div class="card-body">
-                @foreach (var item in Model.Rent.Take(3))
-                {
-                    <div class="align-card">
-                        <div class="card" style="width: 18rem;">
-                            <img id="img_new" src="..@String.Format("{0}",item.Item2.Picture)" alt="image">
-                            <div class="card-body fit">
-                                <p class="card-text">@Html.ActionLink(item.Item2.Title, "Details", "Products", new { id = item.Item2.IdProduct }, null)</p>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card card-top">
+                <div class="card-header">
+                    <h3>Locations en cours</h3>
+                </div>
+                <div class="card-body">
+                    @foreach (var item in Model.Rent.Take(3))
+                    {
+                        <div class="align-card">
+                            <div class="card" style="width: 18rem;">
+                                <img id="img_new" src="..@String.Format("{0}",item.Item2.Picture)" alt="image">
+                                <div class="card-body fit">
+                                    <p class="card-text">@Html.ActionLink(item.Item2.Title, "Details", "Products", new { id = item.Item2.IdProduct }, null)</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-1">
-        <a href=@Url.Action("MyRents", "Rents", new { id = 1 }) class="btn btn-primary">Voir plus</a>
+    <div class="row">
+        <div class="col-md-1">
+            <a href=@Url.Action("MyRents", "Rents", new { id = 1 }) class="btn btn-primary">Voir plus</a>
+        </div>
     </div>
 </div>
