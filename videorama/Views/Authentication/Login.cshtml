@@ -8,7 +8,7 @@
 <div class="col-12">
     <h2>Connectez-vous</h2>
 
-    @using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
+    @using (Html.BeginForm("Login", "Authentication", new { ReturnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post))
     {
         <div class="form-group">
             @Html.LabelFor(m => m.User.Username, "Nom d'utilisateur")
