@@ -69,8 +69,6 @@ namespace videorama.Controllers
                     Session["UserName"] = userFound.Username;
                     Session["IsAdmin"] = userFound.IsAdmin;
 
-                    var id = Convert.ToInt32(Session["IdUser"]);
-
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
