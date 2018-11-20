@@ -8,7 +8,6 @@ using Videorama.Models;
 
 namespace videorama.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
