@@ -50,8 +50,6 @@ namespace videorama.Controllers
             return View();
         }
 
-
-
         // POST: Show form to create a new account
         [HttpPost]
         public ActionResult Login(AuthenticationViewModel model, string returnUrl)
@@ -65,6 +63,13 @@ namespace videorama.Controllers
                 if (userFound.IdUser != 0)
                 {
                     FormsAuthentication.SetAuthCookie(userFound.Username, false);
+
+                    // Set data to Session
+                    Session["IdUser"] = userFound.IdUser;
+                    Session["UserName"] = userFound.Username;
+                    Session["IsAdmin"] = userFound.IsAdmin;
+
+                    var id = Convert.ToInt32(Session["IdUser"]);
 
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
@@ -91,6 +96,7 @@ namespace videorama.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session.Abandon();
             return Redirect("/");
         }
     }
