@@ -57,22 +57,27 @@ namespace videorama.Controllers
         // GET: Admin/Delete/5
         public ActionResult DeleteCustomer(int id)
         {
-            return View();
+            CustomerDb dbCustomer = new CustomerDb();
+            ModelState.Clear();
+            return View(dbCustomer.GetCustomerDetail(id));
         }
 
         // POST: Admin/Delete/5
         [HttpPost]
         public ActionResult DeleteCustomer(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
+            CustomerDb dbCustomer = new CustomerDb();
+            bool customerValid;
+            customerValid = dbCustomer.DeleteCustomer(id);
+
+            if (customerValid)
             {
-                return View();
+                return RedirectToAction("Customers");
+            }
+            else
+            {
+                return RedirectToAction("DeleteCustomer", id);
             }
         }
     }

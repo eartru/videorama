@@ -146,5 +146,30 @@ namespace videorama.Models
             }
         }
 
+        public bool DeleteCustomer(int idCustomer)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("DeleteCustomer", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
+
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
     }
 }
