@@ -47,6 +47,16 @@ as
     where r.idRent = @IdRent
 GO
 
+CREATE Procedure  GetDistinctRentByCustomer
+( @IdRent int )  
+as  
+    select distinct r.idRent, r.returnBackDate
+	from rent r 
+	INNER JOIN rentDetail rd on r.idRent = rd.idRent 
+   INNER JOIN product p on rd.idProduct = p.idProduct
+    where r.idCustomer = @IdRent
+GO
+
 CREATE Procedure GetNewProducts
 as  
 	Select top 3 idProduct, title, synopsis, picture from product
