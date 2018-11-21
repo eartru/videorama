@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -24,5 +25,6 @@ namespace Videorama.Models
         public string Country { get; set; }
         public List<Rent> Rents { get; set; }
         public List<Bill> Bills { get; set; }
+
     }
 }
