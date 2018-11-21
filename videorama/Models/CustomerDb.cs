@@ -2,6 +2,8 @@
 using System.Data.SqlClient;
 using System.Configuration;
 using Videorama.Models;
+using System.Collections.Generic;
+using System;
 
 namespace videorama.Models
 {
@@ -50,7 +52,70 @@ namespace videorama.Models
             
 
         }
-        
-        
+
+        public List<Customer> GetCustomers()
+        {
+            connection();
+            List<Customer> customersList = new List<Customer>();
+
+            SqlCommand cmd = new SqlCommand("GetCustomers", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                customersList.Add(
+                    new Customer
+                    {
+                        IdUser = Convert.ToInt32(dr["IdUser"]),
+                        FirstName = Convert.ToString(dr["Firstname"]),
+                        LastName = Convert.ToString(dr["Lastname"]),
+                        Address = Convert.ToString(dr["AddressCustomer"]),
+                        PostalCode = Convert.ToString(dr["PostalCode"]),
+                        Town = Convert.ToString(dr["Town"]),
+                        Country = Convert.ToString(dr["Country"]),
+                        Email = Convert.ToString(dr["Email"])
+                    });
+            }
+            return customersList;
+        }
+
+        public Customer GetCustomerDetail(int idCustomer)
+        {
+            connection();
+            Customer customer = new Customer();
+
+            SqlCommand cmd = new SqlCommand("GetCustomerDetail", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                new Customer
+                {
+                    IdUser = Convert.ToInt32(dr["IdUser"]),
+                    FirstName = Convert.ToString(dr["Firstname"]),
+                    LastName = Convert.ToString(dr["Lastname"]),
+                    Address = Convert.ToString(dr["AddressCustomer"]),
+                    PostalCode = Convert.ToString(dr["PostalCode"]),
+                    Town = Convert.ToString(dr["Town"]),
+                    Country = Convert.ToString(dr["Country"]),
+                    Email = Convert.ToString(dr["Email"])
+                };
+            }
+            return customer;
+        }
+
     }
 }

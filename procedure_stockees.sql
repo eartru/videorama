@@ -85,6 +85,22 @@ begin
    and passwordUser = HashBytes('SHA1', @Password)
 End
 
+CREATE Procedure GetCustomers
+as  
+begin  
+   select c.*, u.email from customer c
+   inner join videoramaUser u on c.idUser = u.idUser 
+End
+
+CREATE Procedure GetCustomerDetail
+( @IdCustomer int)
+as  
+begin  
+   select c.*, u.email from customer c
+   inner join videoramaUser u on c.idUser = u.idUser 
+   where c.idUser = @IdCustomer
+End
+
 CREATE Procedure GetRentDetailsForBill
 ( @IdCustomer int, @IdRent int )  
 as  
