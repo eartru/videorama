@@ -1,4 +1,12 @@
-﻿.logo {
+﻿.table-products{
+    margin-left: 20px;
+}
+
+.no-margin {
+    margin: unset;
+}
+
+.logo {
     display: block;
     margin-left: auto;
     margin-right: auto;

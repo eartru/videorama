@@ -36,10 +36,10 @@ namespace Videorama.Models
         }
 
         // ********** VIEW RENTS BY CUSTOMER ********************
-        public List<Product> GetRentByCustomer(int idCustomer)
+        public List<Tuple<Rent, Product>> GetRentByCustomer(int idCustomer)
         {
             connection();
-            List<Product> rentsList = new List<Product>();
+            List<Tuple<Rent, Product>> rentsList = new List<Tuple<Rent, Product>>();
 
             SqlCommand cmd = new SqlCommand("GetRentByCustomer", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -54,6 +54,67 @@ namespace Videorama.Models
             foreach (DataRow dr in dt.Rows)
             {
                 rentsList.Add(
+                    new Tuple<Rent, Product>(new Rent
+                    {
+                        IdRent = Convert.ToInt32(dr["IdRent"]),
+                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
+                    },
+                    new Product
+                    {
+                        IdProduct = Convert.ToInt32(dr["IdProduct"]),
+                        Title = Convert.ToString(dr["Title"]),
+                        Picture = Convert.ToString(dr["Picture"]) == "" ?
+                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
+                    }));
+            }
+            return rentsList;
+        }
+
+        public List<Rent> GetDistinctRentByCustomer(int idCustomer)
+        {
+            connection();
+            List<Rent> rentsList = new List<Rent>();
+
+            SqlCommand cmd = new SqlCommand("GetDistinctRentByCustomer", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                rentsList.Add(
+                    new Rent
+                    {
+                        IdRent = Convert.ToInt32(dr["IdRent"]),
+                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
+                    });
+            }
+            return rentsList;
+        }
+
+        public List<Product> GetRentProducts(int idRent)
+        {
+            connection();
+            List<Product> productsList = new List<Product>();
+
+            SqlCommand cmd = new SqlCommand("GetRentProducts", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdRent", idRent);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                productsList.Add(
                     new Product
                     {
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
@@ -62,7 +123,7 @@ namespace Videorama.Models
                         Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
                     });
             }
-            return rentsList;
+            return productsList;
         }
 
         public BillViewModel GetRentDetailsForBill(int idCustomer, int idRent)

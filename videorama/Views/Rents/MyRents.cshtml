@@ -1,19 +1,56 @@
-﻿@model Videorama.Models.Rent
+﻿@model IEnumerable<Videorama.Models.Rent>
 
 @{
     ViewBag.Title = "MyRents";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <h2>Mes locations</h2>
-    <hr size=2 align=left width="60%" />
-</div>
+<div class="container">
+    <div class="row">
+        <h2>Mes locations</h2>
+    </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <!-- idC (customer) à mettre dynamic quand idUser sera connu 
-            et idR (rent) dynamic quand le bouton sera dans la page Rents/Detail/x -->
-        <a href=@Url.Action("DownloadBill", "Rents", new { idC = 1, idR = 1 }) class="btn btn-primary">Télécharger la facture</a>
+    <div class="row">
+        <div class="col-md-8">
+            @foreach (var item in Model)
+            {
+                <table class="table no-margin">
+                    <tr>
+                        <td>
+                            <b>Location n° @Html.DisplayFor(modelItem => item.IdRent)</b>
+                        </td>
+                        <td>
+                            <b>
+                                Date de retour:
+                                @Html.DisplayFor(modelItem => item.ReturnBackDate)
+                            </b>
+                        </td>
+                        <td>
+                            <a href=@Url.Action("DownloadBill", "Rents",
+                        new { idC = 1, idR = item.IdRent }) target="_blank" class="btn btn-primary">
+                                Voir la facture
+                            </a>
+                        </td>
+                        <th></th>
+                    </tr>
+                </table>
+                <table class="table table-products">
+                    <tr>
+                        <td><b>Produits</b></td>
+                    </tr>
+                    @{ Videorama.Models.RentDb dbRent = new Videorama.Models.RentDb();
+                        List<Videorama.Models.Product> list = dbRent.GetRentProducts(item.IdRent);
+                    }
+                    @foreach (var product in list)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => product.Title)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
     </div>
 </div>
