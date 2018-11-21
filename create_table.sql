@@ -35,7 +35,7 @@ create table customer
 	town VARCHAR(50) NOT NULL,
 	country VARCHAR(50) NOT NULL,
 	CONSTRAINT PK_customerId PRIMARY KEY CLUSTERED (idUser ASC),
-	CONSTRAINT FK_CustomerId FOREIGN KEY (idUser) REFERENCES videoramaUser(idUser) );
+	CONSTRAINT FK_CustomerId FOREIGN KEY (idUser) REFERENCES videoramaUser(idUser) ON DELETE CASCADE);
 
 create table bill
 (	idBill INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -49,7 +49,7 @@ create table rent
 	idBill INT,
 	idCustomer INT,
 	CONSTRAINT FK_RentBillId FOREIGN KEY (idBill) REFERENCES bill(idBill),
-	CONSTRAINT FK_RentCustomerId FOREIGN KEY (idCustomer) REFERENCES customer(idUser) );
+	CONSTRAINT FK_RentCustomerId FOREIGN KEY (idCustomer) REFERENCES customer(idUser) ON DELETE CASCADE );
 
 create table productType
 (	idType INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
@@ -87,7 +87,7 @@ create table rentDetail
 	idProduct INT NOT NULL,
 	CONSTRAINT PK_RentDetailId PRIMARY KEY (idRent,idProduct),
 	CONSTRAINT FK_RentDetailIdProduct FOREIGN KEY (idProduct) REFERENCES product(idProduct),
-	CONSTRAINT FK_RentDetailIdRent FOREIGN KEY (idRent) REFERENCES rent(idRent));
+	CONSTRAINT FK_RentDetailIdRent FOREIGN KEY (idRent) REFERENCES rent(idRent) ON DELETE CASCADE);
 
 create table productCategory
 (	idProduct INT NOT NULL,
@@ -100,5 +100,5 @@ create table casting
 (	idProduct INT NOT NULL,
 	idPerson INT NOT NULL,
 	CONSTRAINT PK_castingId PRIMARY KEY (idProduct,idPerson),
-	CONSTRAINT FK_castingIdProduct FOREIGN KEY (idProduct) REFERENCES product(idProduct),
+	CONSTRAINT FK_castingIdProduct FOREIGN KEY (idProduct) REFERENCES product(idProduct) ON DELETE CASCADE,
 	CONSTRAINT FK_castingIdPerson FOREIGN KEY (idPerson) REFERENCES person(idPerson));

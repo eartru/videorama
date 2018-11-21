@@ -105,7 +105,7 @@ as
 begin  
    select c.*, u.email from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
-End
+GO
 
 CREATE Procedure GetCustomerDetail
 ( @IdCustomer int)
@@ -114,7 +114,7 @@ begin
    select c.*, u.email from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
-End
+GO
 
 CREATE Procedure GetRentDetailsForBill
 ( @IdCustomer int, @IdRent int )  
@@ -142,5 +142,12 @@ begin
 	update videoramaUser 
 	set email = @Email 
 	where idUser = @IdCustomer
-end
+GO
 
+CREATE PROCEDURE DeleteCustomer
+(@IdCustomer int)
+as 
+begin
+	delete from videoramaUser 
+	where idUser = @IdCustomer
+end
