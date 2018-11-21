@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Configuration;
 using Videorama.Models;
+using System;
 
 namespace videorama.Models
 {
@@ -46,11 +47,40 @@ namespace videorama.Models
             {
                 con.Close();
             }
-
-            
-
         }
-        
-        
+
+        // **************** GET CUSOMER BY THIS ID *********************
+        public Customer GetCustomerById(int id)
+        {
+            connection();
+
+            Customer customerFound = new Customer();
+            SqlCommand cmd = new SqlCommand("GetCustomerById", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Id", id);
+
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                customerFound.IdUser = Convert.ToInt32(dr["IdUser"]);
+                customerFound.Email = dr["Email"].ToString();
+                customerFound.Username = dr["Username"].ToString();
+                customerFound.FirstName = dr["Firstname"].ToString();
+                customerFound.LastName = dr["Lastname"].ToString();
+                customerFound.Address = dr["AddressCustomer"].ToString();
+                customerFound.PostalCode = dr["PostalCode"].ToString();
+                customerFound.Town = dr["Town"].ToString();
+                customerFound.Country = dr["Country"].ToString();
+            }
+
+            return customerFound;
+        }
     }
 }

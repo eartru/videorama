@@ -34,6 +34,7 @@
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 @if (Session["IdUser"] != null)
                 {
+                    <li>@Html.ActionLink("Mon profil", "Detail", "Account")</li>
                     <li>@Html.ActionLink("Deconnection", "Logout", "Authentication")</li>
                 }
             </ul>
