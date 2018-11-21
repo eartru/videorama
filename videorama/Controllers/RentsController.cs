@@ -14,7 +14,7 @@ namespace videorama.Controllers
         public int idRent;
 
         // GET: Rents/MyRents
-        public ActionResult MyRents(int id)
+        public ActionResult Rents(int id)
         {
             RentDb dbRent = new RentDb();
             ModelState.Clear();

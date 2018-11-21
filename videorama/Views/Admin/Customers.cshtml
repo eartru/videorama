@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Videorama.Models.Customer>
+
+@{
+    ViewBag.Title = "Clients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registre des clients</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Prénom
+        </th>
+        <th>
+            Nom de famille
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Code postal
+        </th>
+        <th>
+            Adresse
+        </th>
+        <th>
+            Ville
+        </th>
+        <th>
+            Pays
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Town)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.ActionLink("Locations", "Rents", "Rents", new { id = item.IdUser }, null) |
+            @Html.ActionLink("Modifier", "EditCustomer", new { id = item.IdUser }) |
+            @Html.ActionLink("Supprimer", "DeleteCustomer", new { id = item.IdUser })
+        </td>
+    </tr>
+}
+
+</table>

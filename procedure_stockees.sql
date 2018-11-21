@@ -100,6 +100,22 @@ as
    where c.idUser = @IdCustomer
 GO
 
+CREATE Procedure GetCustomers
+as  
+begin  
+   select c.*, u.email from customer c
+   inner join videoramaUser u on c.idUser = u.idUser 
+End
+
+CREATE Procedure GetCustomerDetail
+( @IdCustomer int)
+as  
+begin  
+   select c.*, u.email from customer c
+   inner join videoramaUser u on c.idUser = u.idUser 
+   where c.idUser = @IdCustomer
+End
+
 CREATE Procedure GetRentDetailsForBill
 ( @IdCustomer int, @IdRent int )  
 as  
@@ -113,4 +129,18 @@ as
 	and r.idRent = @IdRent
 GO
 
+CREATE PROCEDURE UpdateCustomer
+(@IdCustomer int, @FirstName varchar(50), @LastName varchar(50), @Email varchar(50), @Address varchar(255),
+ @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))
+as 
+begin
+	update customer 
+	set firstname = @FirstName, lastname = @LastName, 
+	addressCustomer = @Address, postalCode = @PostalCode, town = @Town, country = @Country
+	where idUser = @IdCustomer
+
+	update videoramaUser 
+	set email = @Email 
+	where idUser = @IdCustomer
+end
 
