@@ -117,4 +117,18 @@ End
 
 GO
 
+CREATE PROCEDURE UpdateCustomer
+(@IdCustomer int, @FirstName varchar(50), @LastName varchar(50), @Email varchar(50), @Address varchar(255),
+ @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))
+as 
+begin
+	update customer 
+	set firstname = @FirstName, lastname = @LastName, 
+	addressCustomer = @Address, postalCode = @PostalCode, town = @Town, country = @Country
+	where idUser = @IdCustomer
+
+	update videoramaUser 
+	set email = @Email 
+	where idUser = @IdCustomer
+end
 
