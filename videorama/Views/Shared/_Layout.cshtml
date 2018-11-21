@@ -38,6 +38,7 @@
                 }
                 @if (Request.IsAuthenticated)
                 {
+                    <li>@Html.ActionLink("Mon profil", "Detail", "Account")</li>
                     <li>@Html.ActionLink("Deconnexion", "Logout", "Authentication")</li>
                 }
             </ul>
