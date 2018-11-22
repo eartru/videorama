@@ -9,44 +9,55 @@
     <h2>Inscrivez-vous</h2>
     @using (Html.BeginForm("Register", "Authentication", FormMethod.Post))
     {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
-                @Html.LabelFor(m => m.Username, "Nom d'utilisateur")
-                @Html.TextBoxFor(m => m.Username, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.FirstName, "Prénom")
-                @Html.TextBoxFor(m => m.FirstName, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.LastName, "Nom")
-                @Html.TextBoxFor(m => m.LastName, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", required = "required" })
+                @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Password, "Mot de passe")
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
             <div class="form-group">
-                @Html.LabelFor(m => m.Address, "Adresse")
-                @Html.TextBoxFor(m => m.Address, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.Address)
+                @Html.TextBoxFor(m => m.Address, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.PostalCode, "Code postal")
-                @Html.TextBoxFor(m => m.PostalCode, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.PostalCode)
+                @Html.TextBoxFor(m => m.PostalCode, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Town, "Région")
-                @Html.TextBoxFor(m => m.Town, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.Town)
+                @Html.TextBoxFor(m => m.Town, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Town, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Country, "Pays")
-                @Html.TextBoxFor(m => m.Country, null, new { @class = "form-control", required = "required" })
+                @Html.LabelFor(m => m.Country)
+                @Html.TextBoxFor(m => m.Country, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
             </div>
             <input class="btn btn-primary" type="submit" value="OK" />
         </div>

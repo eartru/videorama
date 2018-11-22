@@ -13,7 +13,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(m => m.UserName, "Nom d'utilisateur")
+            @Html.LabelFor(m => m.UserName)
             @Html.TextBoxFor(m => m.UserName, null, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
         </div>
