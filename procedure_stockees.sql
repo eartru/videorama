@@ -127,6 +127,17 @@ as
 	inner join customer c on c.idUser = r.idCustomer
 	where r.idCustomer = @IdCustomer
 	and r.idRent = @IdRent
+
+End
+
+CREATE Procedure GetCustomerById
+( @Id int )  
+as  
+begin  
+   select * from customer, videoramaUser 
+   where customer.idUser = @Id
+End
+
 GO
 
 CREATE PROCEDURE UpdateCustomer
