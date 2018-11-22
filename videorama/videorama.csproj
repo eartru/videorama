@@ -178,7 +178,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerDb.cs" />
@@ -364,6 +363,8 @@
     <Content Include="Views\Shared\_LayoutAuthentication.cshtml" />
     <Content Include="Views\Admin\EditCustomer.cshtml" />
     <Content Include="Views\Admin\DeleteCustomer.cshtml" />
+    <Content Include="Views\Admin\Rents.cshtml" />
+    <Content Include="Views\Admin\RentDetails.cshtml" />
     <Content Include="Views\Account\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>

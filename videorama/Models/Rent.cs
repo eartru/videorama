@@ -13,7 +13,6 @@ namespace Videorama.Models
         private DateTime rentDate;
         private DateTime returnBackDate;
         private bool inProgress;
-        private Bill bill;
 
         public int IdRent { get; set; }
         public List<Product> Products { get; set; }
@@ -21,6 +20,5 @@ namespace Videorama.Models
         [DataType(DataType.Date)]
         public DateTime ReturnBackDate { get; set; }
         public bool InProgress { get; set; }
-        public Bill Bill { get; set; }
     }
 }

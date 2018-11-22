@@ -54,7 +54,7 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
+        // GET: Admin/DeleteCustomer/5
         public ActionResult DeleteCustomer(int id)
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -62,7 +62,7 @@ namespace videorama.Controllers
             return View(dbCustomer.GetCustomerDetail(id));
         }
 
-        // POST: Admin/Delete/5
+        // POST: Admin/DeleteCustomer/5
         [HttpPost]
         public ActionResult DeleteCustomer(int id, FormCollection collection)
         {
@@ -78,6 +78,39 @@ namespace videorama.Controllers
             else
             {
                 return RedirectToAction("DeleteCustomer", id);
+            }
+        }
+
+        // GET: Admin/Rents
+        public ActionResult Rents()
+        {
+            RentDb dbRent = new RentDb();
+            ModelState.Clear();
+            return View(dbRent.GetRents());
+        }
+
+        // GET: Admin/RentDetails/5
+        public ActionResult RentDetails(int idc, int idr)
+        {
+            RentDb dbRent = new RentDb();
+            ModelState.Clear();
+            return View(dbRent.GetRentDetails(idc, idr));
+        }
+
+        public ActionResult ReturnBack(int idCustomer, int idRent)
+        {
+
+            RentDb dbRent = new RentDb();
+            bool rentValid;
+            rentValid = dbRent.UpdateRentReturnedBack(idRent);
+
+            if (rentValid)
+            {
+                return RedirectToAction("Rents");
+            }
+            else
+            {
+                return RedirectToAction("RentDetails", new { idc = idCustomer, idr = idRent});
             }
         }
     }

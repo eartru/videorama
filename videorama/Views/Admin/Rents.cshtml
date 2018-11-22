@@ -1,0 +1,69 @@
+﻿ @model IEnumerable<Tuple<Videorama.Models.Rent, Videorama.Models.Customer>>
+
+@{
+    ViewBag.Title = "Gestion des locations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#SearchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#RentsTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+
+<h2>Gestion des locations</h2>
+<br />
+
+<div class="col-md-10">
+    <a class="btn btn-primary pull-right" href=@Url.Action("Create")> Créer une nouvelle location</a>
+
+    <input class="form-control" id="SearchInput" type="text" placeholder="Rechercher..">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item1.IdRent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item2.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item2.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item1.ReturnBackDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="RentsTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item1.IdRent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item2.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item2.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item1.ReturnBackDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Détails", "RentDetails", new { idc=item.Item2.IdUser, idr=item.Item1.IdRent })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,3 +1,5 @@
+use videorama;
+
 INSERT INTO videoramaUser VALUES('user', 'user', 'user@test.fr', 0);
 INSERT INTO videoramaUser VALUES('admin', 'admin', 'admin@test.fr', 1);
 INSERT INTO customer VALUES(1, 'Paul', 'Lupin', '30 rue du champs', '38120', 'Saint Egreve', 'France');
@@ -42,13 +44,12 @@ INSERT INTO productCategory VALUES(4, 2);
 INSERT INTO productCategory VALUES(5, 3);
 INSERT INTO productCategory VALUES(4, 4);
 
-INSERT INTO bill VALUES('10/11/2018');
-INSERT INTO rent VALUES('07/11/2018', '27/11/2018', 0, 1, 1);
-INSERT INTO rent VALUES('27/11/2018', '17/11/2018', 1, null, 1);
-INSERT INTO rent VALUES('18/11/2018', '08/12/2018', 1, null, 1);
+INSERT INTO rent VALUES('07/11/2018', '27/11/2018', 0, 1);
+INSERT INTO rent VALUES('27/11/2018', '17/11/2018', 1, 1);
+INSERT INTO rent VALUES('18/11/2018', '08/12/2018', 1, 1);
 
 INSERT INTO rentDetail VALUES(1, 1);
 INSERT INTO rentDetail VALUES(1, 2);
 INSERT INTO rentDetail VALUES(2, 3);
 INSERT INTO rentDetail VALUES(2, 5);
-INSERT INTO rentDetail VALUES(4, 8);
+INSERT INTO rentDetail VALUES(3, 8);
