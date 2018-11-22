@@ -23,7 +23,7 @@
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
         </div>
-        <input class="btn btn-primary" type="submit" value="OK" />
+        <input class="btn btn-primary" type="submit" value="Valider" />
     }
 
     <p>Pas encore de compte ? @Html.ActionLink("Inscrivez-vous !", "Register", "Authentication")</p>
