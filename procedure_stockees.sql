@@ -133,14 +133,6 @@ End
 CREATE Procedure GetCustomerById
 ( @Id int )  
 as  
-begin 
-   select * from customer, videoramaUser 
-   where customer.idUser = @Id
-End
-
-CREATE Procedure GetCustomerById
-( @Id int )  
-as  
 begin  
    select * from customer, videoramaUser 
    where customer.idUser = @Id
