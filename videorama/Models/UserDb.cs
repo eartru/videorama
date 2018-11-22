@@ -37,8 +37,8 @@ namespace videorama.Models
             foreach (DataRow dr in dt.Rows)
             {
                 userFound.IdUser = Convert.ToInt32(dr["IdUser"]);
-                userFound.Email = dr["Email"].ToString();
-                userFound.Password = dr["PasswordUser"].ToString();
+                userFound.Username = dr["Username"].ToString();
+                userFound.IsAdmin = Convert.ToBoolean(dr["IsAdmin"]);
             }
 
             return userFound;
