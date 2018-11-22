@@ -16,7 +16,7 @@ namespace videorama.Models
         }
 
         // **************** CHECK EXISTING USER BY USERNAME AND PASSWORD*********************
-        public User GetUserByUserNameAndPassword(User user)
+        public User GetUserByUserNameAndPassword(string userName, string password)
         {
             connection();
 
@@ -24,8 +24,8 @@ namespace videorama.Models
             SqlCommand cmd = new SqlCommand("GetUserByUserNameAndPassword", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@UserName", user.Username);
-            cmd.Parameters.AddWithValue("@Password", user.Password);
+            cmd.Parameters.AddWithValue("@UserName", userName);
+            cmd.Parameters.AddWithValue("@Password", password);
 
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
