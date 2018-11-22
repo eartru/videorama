@@ -4,6 +4,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+drop database if exists videorama;
+create database videorama;
+
+USE videorama;
+
 drop table if exists rentDetail;
 drop table if exists productCategory;
 drop table if exists casting; 
@@ -11,7 +16,6 @@ drop table if exists product;
 drop table if exists rent;
 drop table if exists customer;
 drop table if exists videoramaUser;
-drop table if exists bill;
 drop table if exists productType;
 drop table if exists category;
 drop table if exists person;
@@ -37,19 +41,14 @@ create table customer
 	CONSTRAINT PK_customerId PRIMARY KEY CLUSTERED (idUser ASC),
 	CONSTRAINT FK_CustomerId FOREIGN KEY (idUser) REFERENCES videoramaUser(idUser) ON DELETE CASCADE);
 
-create table bill
-(	idBill INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-	billDate DATE NOT NULL );
-
 create table rent 
 (	idRent INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	rentDate DATE NOT NULL,
 	returnBackDate DATE NOT NULL,
 	inProgress BIT NOT NULL,
-	idBill INT,
 	idCustomer INT,
-	CONSTRAINT FK_RentBillId FOREIGN KEY (idBill) REFERENCES bill(idBill),
-	CONSTRAINT FK_RentCustomerId FOREIGN KEY (idCustomer) REFERENCES customer(idUser) ON DELETE CASCADE );
+	CONSTRAINT FK_RentCustomerId FOREIGN KEY (idCustomer) REFERENCES customer(idUser));
+-- Pas de "on delete cascade", le magasin veut garder un historique de ses ventes
 
 create table productType
 (	idType INT IDENTITY(1,1) PRIMARY KEY NOT NULL,

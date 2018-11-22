@@ -1,0 +1,51 @@
+﻿@model videorama.ViewModels.BillViewModel
+
+@{
+    ViewBag.Title = "Détails location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Détails location</h2>
+
+<div>
+    <h4>Rent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Rent.IdRent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rent.IdRent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rent.RentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rent.RentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rent.ReturnBackDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rent.ReturnBackDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rent.InProgress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rent.InProgress)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Valider le retour", "ReturnBack", new { idCustomer = Model.Customer.IdUser, idRent = Model.Rent.IdRent })
+    @Html.ActionLink("Retour à la gestion des locations", "Rents")
+</p>
