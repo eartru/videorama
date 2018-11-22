@@ -121,6 +121,16 @@ as
 	where r.idCustomer = @IdCustomer
 	and r.idRent = @IdRent
 go
+End
+
+CREATE Procedure GetCustomerById
+( @Id int )  
+as  
+begin  
+   select * from customer, videoramaUser 
+   where customer.idUser = @Id
+End
+GO
 
 CREATE PROCEDURE UpdateCustomer
 (@IdCustomer int, @FirstName varchar(50), @LastName varchar(50), @Email varchar(50), @Address varchar(255),

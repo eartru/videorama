@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -20,15 +22,15 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult Register(AuthenticationViewModel model)
+        public ActionResult Register(Customer customer)
         {
             if (ModelState.IsValid)
             {
                 CustomerDb dbCustomer = new CustomerDb();
-                bool listProductFound;
-                listProductFound = dbCustomer.AddCustomer(model.Customer);
+                bool isCustomerCreated;
+                isCustomerCreated = dbCustomer.AddCustomer(customer);
 
-                if (listProductFound)
+                if (isCustomerCreated)
                 {
                     return RedirectToAction("Login", "Authentication");
                 }
@@ -40,7 +42,7 @@ namespace videorama.Controllers
             }
             else
             {
-                return View(model);
+                return View();
             }
         }
 
@@ -52,22 +54,27 @@ namespace videorama.Controllers
 
         // POST: Show form to create a new account
         [HttpPost]
-        public ActionResult Login(AuthenticationViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 UserDb dbUser = new UserDb();
                 User userFound;
-                userFound = dbUser.GetUserByUserNameAndPassword(model.User);
+                userFound = dbUser.GetUserByUserNameAndPassword(model.UserName, model.Password);
 
                 if (userFound.IdUser != 0)
                 {
-                    FormsAuthentication.SetAuthCookie(userFound.Username, false);
+                    // L'authentification est réussie, 
+                    // injecter les infos utilisateur dans le cookie d'authentification :
+                    var userClaims = new List<Claim>();
+                    userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userFound.IdUser.ToString()));
+                    userClaims.Add(new Claim(ClaimTypes.Name, model.UserName));
+                    userClaims.Add(new Claim(ClaimTypes.Role, userFound.IsAdmin.ToString()));
 
-                    // Set data to Session
-                    Session["IdUser"] = userFound.IdUser;
-                    Session["UserName"] = userFound.Username;
-                    Session["IsAdmin"] = userFound.IsAdmin;
+                    var claimsIdentity = new ClaimsIdentity(userClaims, DefaultAuthenticationTypes.ApplicationCookie);
+                    var ctx = Request.GetOwinContext();
+                    var authenticationManager = ctx.Authentication;
+                    authenticationManager.SignIn(claimsIdentity);
 
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
@@ -80,22 +87,25 @@ namespace videorama.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Utilisateur.Prenom", "Prénom et/ou mot de passe incorrect(s)");
-                    return View(model);
+                    ModelState.AddModelError(string.Empty, "Le nom d'utilisateur ou le mot de passe est incorrect.");
+                    return View();
                 }
             }
             else
             {
-                return View(model);
+                return View();
             }
 
         }
 
+        [HttpGet]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
-            Session.Abandon();
-            return Redirect("/");
+            var ctx = Request.GetOwinContext();
+            var authenticationManager = ctx.Authentication;
+            authenticationManager.SignOut();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,13 +1,34 @@
-﻿@{
-    ViewBag.Title = "Accueil";
-}
+﻿@using System.Security.Claims
 @model videorama.ViewModels.AccueilViewModel
+@{
+    ViewBag.Title = "Accueil";
+
+    string userName = "toto";
+    string role = "role";
+    string id = "id";
+
+    if (Request.IsAuthenticated)
+    {
+        var claimIdentity = User.Identity as ClaimsIdentity;
+
+        if (claimIdentity != null)
+        {
+            userName = claimIdentity.FindFirst(ClaimTypes.Name).Value;
+            role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
+            id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+        }
+    }
+}
+<p><strong>@userName : @role, id : @id</strong></p>
 
 <div class="container-fluid">
     <div class="row">
         <h2>Bienvenue, user</h2>
         <hr size=2 align=left width="60%" />
     </div>
+
+
+
     <div class="row">
         <div class="col-md-7">
             <h3>Les nouveautés</h3>
