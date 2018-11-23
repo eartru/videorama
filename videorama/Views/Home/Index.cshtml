@@ -1,5 +1,24 @@
 ﻿@using System.Security.Claims
 @model videorama.ViewModels.AccueilViewModel
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#ddlTop").change(function () {
+                var strSelected = "";
+                $("#ddlTop option:selected").each(function () {
+                    strSelected += $(this)[0].value;
+                });
+                $("#dvCategoryResults").load('@(Url.Action("IndexTop",null, Request.Url.Scheme))?categoryId=' + categoryId);
+
+                $.post(url, function (data) {
+                    // do something if necessary
+                });
+            });
+        });
+    </script>
+}
+
 @{
     ViewBag.Title = "Accueil";
 
@@ -55,23 +74,20 @@
             <div class="top-table">
                 <table class="table">
                     <tr>
-                        <th><h4>Top 5 des DVD loués</h4></th>
+                        <th><h4> @Html.DropDownList("ObjList", (IEnumerable<SelectListItem>)ViewBag.Tops, 
+                                new { id = "ddlTop", @class = "form-control" })
+                                des DVD loués</h4></th>
                     </tr>
-                    @foreach (var item in Model.Product)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                        </tr>
-                    }
+                    <div class="dvCategoryResults">
+                        @{Html.RenderPartial("IndexTop", Model);}
+                    </div>
                 </table>
             </div>
         </div>
     </div>
     @if (Request.IsAuthenticated)
     {
-        if (role=="User")
+        if (role == "User")
         {
             if (Model.Rent.Count() >= 1)
             {

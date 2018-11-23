@@ -1,0 +1,10 @@
+﻿@model videorama.ViewModels.AccueilViewModel
+
+@foreach (var item in Model.Product)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+    </tr>
+}

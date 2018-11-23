@@ -29,13 +29,11 @@ namespace videorama.Controllers
                 }
             }
 
-            int nbProducts = 5;
             ProductsDb dbProducts = new ProductsDb();
             RentDb dbRent = new RentDb();
             ModelState.Clear();
             AccueilViewModel vm = new AccueilViewModel
             {
-                Product = dbProducts.GetTopNProducts(nbProducts),
                 NewProducts = dbProducts.GetNewProducts()
             };
             if (Request.IsAuthenticated)
@@ -45,15 +43,32 @@ namespace videorama.Controllers
                     vm.Rent = dbRent.GetRentByCustomer(idUser);
                 }
             }
+
+            List<SelectListItem> ObjList = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "Top 5", Value = "5" },
+                new SelectListItem { Text = "Top 10", Value = "10" },
+                new SelectListItem { Text = "Top 25", Value = "25" },
+                new SelectListItem { Text = "Top 50", Value = "50" },
+
+            };
+            ViewBag.Tops = ObjList;
+
             return View(vm);
         }
 
         // Non utilisé pour le moment, devrait servir pour le dropdown top n des DVD loués
-        [HttpPost]
-        public ActionResult Index(AccueilViewModel MV)
+        public ActionResult IndexTop(int topValue)
         {
-            int SelectedValue = MV.SelectedTop;
-            return View(MV);
+            ProductsDb dbProducts = new ProductsDb();
+            RentDb dbRent = new RentDb();
+            ModelState.Clear();
+            AccueilViewModel vm = new AccueilViewModel
+            {
+                Product = dbProducts.GetTopNProducts(topValue)
+            };
+            // int SelectedValue = MV.SelectedTop;
+            return PartialView(vm);
         }
 
         public ActionResult Search(string SearchString)
