@@ -95,7 +95,7 @@ GO
 CREATE Procedure GetCustomerDetail
 ( @IdCustomer int)
 as  
-   select c.*, u.email from customer c
+   select c.*, u.* from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
 GO
@@ -111,7 +111,7 @@ CREATE Procedure GetCustomerDetail
 ( @IdCustomer int)
 as  
 begin  
-   select c.*, u.email from customer c
+   select c.*, u.* from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
 GO
@@ -142,7 +142,7 @@ GO
 
 CREATE PROCEDURE UpdateCustomer
 (@IdCustomer int, @FirstName varchar(50), @LastName varchar(50), @Email varchar(50), @Address varchar(255),
- @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))
+ @PostalCode varchar(5), @Town varchar(50), @Country varchar(50), @UserName varchar(50))
 as 
 begin
 	update customer 
@@ -151,7 +151,7 @@ begin
 	where idUser = @IdCustomer
 
 	update videoramaUser 
-	set email = @Email 
+	set email = @Email , username = @UserName
 	where idUser = @IdCustomer
 GO
 

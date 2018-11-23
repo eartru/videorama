@@ -1,4 +1,4 @@
-﻿@model Videorama.Models.Customer
+﻿@model videorama.ViewModels.AccountViewModel
 @{
     ViewBag.Title = "Profil";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +8,13 @@
 
 <div class="form-horizontal">
     @Html.ActionLink("Modifier", "Edit", null, new { @class = "btn btn-primary" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

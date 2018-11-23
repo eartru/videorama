@@ -34,10 +34,7 @@ namespace videorama.Controllers
                 {
                     return RedirectToAction("Login", "Authentication");
                 }
-                else
-                {
 
-                }
                 return RedirectToAction("Register", "Authentication");
             }
             else

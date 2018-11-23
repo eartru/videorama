@@ -142,7 +142,8 @@ namespace videorama.Models
                     PostalCode = Convert.ToString(dt.Rows[0]["PostalCode"]),
                     Town = Convert.ToString(dt.Rows[0]["Town"]),
                     Country = Convert.ToString(dt.Rows[0]["Country"]),
-                    Email = Convert.ToString(dt.Rows[0]["Email"])
+                    Email = Convert.ToString(dt.Rows[0]["Email"]),
+                    Username = Convert.ToString(dt.Rows[0]["Username"])
                 };
                 return customer;
             }
@@ -164,6 +165,11 @@ namespace videorama.Models
             cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
             cmd.Parameters.AddWithValue("@Town", customer.Town);
             cmd.Parameters.AddWithValue("@Country", customer.Country);
+
+            if (customer.Username != null)
+            {
+                cmd.Parameters.AddWithValue("@UserName", customer.Username);
+            }
 
             con.Open();
 
