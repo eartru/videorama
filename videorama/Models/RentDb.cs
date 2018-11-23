@@ -38,6 +38,7 @@ namespace Videorama.Models
                     new Tuple<Rent, Customer>(new Rent
                     {
                         IdRent = Convert.ToInt32(dr["IdRent"]),
+                        RentDate = Convert.ToDateTime(dr["RentDate"]),
                         ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
                     },
                     new Customer
@@ -189,7 +190,8 @@ namespace Videorama.Models
             rentDetails.Rent = new Rent
             {
                 IdRent = Convert.ToInt32(dt.Rows[0]["IdRent"]),
-                RentDate = Convert.ToDateTime(dt.Rows[0]["RentDate"])
+                RentDate = Convert.ToDateTime(dt.Rows[0]["RentDate"]),
+                ReturnBackDate = Convert.ToDateTime(dt.Rows[0]["ReturnBackDate"])
             };
             List<Product> listProducts = new List<Product>();
 
