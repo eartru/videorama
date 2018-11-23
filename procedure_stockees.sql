@@ -39,7 +39,7 @@ go
 
 CREATE Procedure  GetRents
 as  
-   Select r.idRent, r.idCustomer, c.firstname, c.lastname, r.returnBackDate
+   Select r.idRent, r.idCustomer, c.firstname, c.lastname, r.returnBackDate, r.rentDate
    from rent r
    INNER JOIN customer c on r.idCustomer = c.idUser
    where inProgress = 1
@@ -113,7 +113,7 @@ CREATE Procedure GetRentDetails
 ( @IdCustomer int, @IdRent int )  
 as  
    select r.idRent, r.idCustomer, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
-	c.country, r.rentDate, p.title, p.price  
+	c.country, r.rentDate, r.returnBackDate, p.title, p.price  
 	from rent r 
 	inner join rentDetail rd on r.idRent = rd.idRent
 	inner join product p on p.idProduct = rd.idProduct

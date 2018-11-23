@@ -1,51 +1,90 @@
 ﻿@model videorama.ViewModels.BillViewModel
+@using System.Security.Claims
 
 @{
     ViewBag.Title = "Détails location";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    string userName = "";
+    string role = "";
+    string id = "";
+    int idUser = 0;
+    bool roleAdmin = false;
 
-<h2>Détails location</h2>
+    if (Request.IsAuthenticated)
+    {
+        var claimIdentity = User.Identity as ClaimsIdentity;
 
-<div>
-    <h4>Rent</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Rent.IdRent)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rent.IdRent)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rent.RentDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rent.RentDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rent.ReturnBackDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rent.ReturnBackDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rent.InProgress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rent.InProgress)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Valider le retour", "ReturnBack", new { idCustomer = Model.Customer.IdUser, idRent = Model.Rent.IdRent })
-    @Html.ActionLink("Retour à la gestion des locations", "Rents")
-</p>
+        if (claimIdentity != null)
+        {
+            userName = claimIdentity.FindFirst(ClaimTypes.Name).Value;
+            role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
+            id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            idUser = Convert.ToInt32(id);
+            roleAdmin = Convert.ToBoolean(role);
+        }
+    }
+}
+@if (Request.IsAuthenticated)
+{
+    if (roleAdmin)
+    {
+        <h3>Détails location n°@Html.DisplayFor(model => model.Rent.IdRent)</h3>
+        <hr />
+        <div class="col-md-7">
+            <a class="btn btn-primary pull-right" href=@Url.Action("ReturnBack", new { idCustomer = Model.Customer.IdUser, idRent = Model.Rent.IdRent })>Valider le retour</a>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rent.IdRent)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rent.IdRent)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rent.RentDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rent.RentDate)
+                </dd>
+                <dt>
+                    Loueur
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Customer.FirstName) @Html.DisplayFor(model => model.Customer.LastName)
+                </dd>
+                <dt>
+                    @Html.DisplayFor(model => model.Customer.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Customer.Address)<br />@Html.DisplayFor(model => model.Customer.PostalCode)
+                    @Html.DisplayFor(model => model.Customer.Town), @Html.DisplayFor(model => model.Customer.Country)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rent.ReturnBackDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rent.ReturnBackDate)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Rent.Products)</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(model => item.Title)</td>
+                    </tr>
+                }
+            </table>
+            <p>
+                @Html.ActionLink("Retour à la gestion des locations", "Rents")
+            </p>
+        </div>
+    }
+}
