@@ -110,7 +110,7 @@ as
 go
 
 CREATE Procedure GetRentDetails
-( @IdCustomer int, @IdRent int )  
+( @IdRent int )  
 as  
    select r.idRent, r.idCustomer, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
 	c.country, r.rentDate, r.returnBackDate, p.title, p.price  
@@ -118,10 +118,8 @@ as
 	inner join rentDetail rd on r.idRent = rd.idRent
 	inner join product p on p.idProduct = rd.idProduct
 	inner join customer c on c.idUser = r.idCustomer
-	where r.idCustomer = @IdCustomer
-	and r.idRent = @IdRent
+	where r.idRent = @IdRent
 go
-End
 
 CREATE Procedure GetCustomerById
 ( @Id int )  

@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<Tuple<Videorama.Models.Rent, Videorama.Models.Customer>>
-@using System.Security.Claims
 
 @{
     ViewBag.Title = "Gestion des locations";
@@ -17,78 +16,52 @@
         });
     </script>
 }
-@{
-    string userName = "";
-    string role = "";
-    string id = "";
-    int idUser = 0;
-    bool roleAdmin = false;
 
-    if (Request.IsAuthenticated)
-    {
-        var claimIdentity = User.Identity as ClaimsIdentity;
+<h2>Gestion des locations</h2>
+<br />
 
-        if (claimIdentity != null)
-        {
-            userName = claimIdentity.FindFirst(ClaimTypes.Name).Value;
-            role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
-            id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            idUser = Convert.ToInt32(id);
-            roleAdmin = Convert.ToBoolean(role);
-        }
-    }
-}
-@if (Request.IsAuthenticated)
-{
-    if (roleAdmin)
-    {
-        <h2>Gestion des locations</h2>
-        <br />
+<div class="col-md-10">
+    <input class="form-control" id="SearchInput" type="text" placeholder="Rechercher..">
 
-        <div class="col-md-10">
-            <input class="form-control" id="SearchInput" type="text" placeholder="Rechercher..">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Item1.IdRent)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Item2.FirstName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Item2.LastName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Item1.ReturnBackDate)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="RentsTable">
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Item1.IdRent)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Item2.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Item2.LastName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Item1.ReturnBackDate)
-                            </td>
-                            <td>
-                                <a class="btn btn-primary" href=@Url.Action("RentDetails", new { idc = item.Item2.IdUser, idr = item.Item1.IdRent })>Détails</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
-}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item1.IdRent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item2.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item2.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Item1.ReturnBackDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="RentsTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item1.IdRent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item2.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item2.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item1.ReturnBackDate)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href=@Url.Action("RentDetails", new {idr = item.Item1.IdRent })>Détails</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

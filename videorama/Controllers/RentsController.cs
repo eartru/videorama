@@ -10,10 +10,8 @@ namespace videorama.Controllers
 {
     public class RentsController : Controller
     {
-        public int idCustomer;
-        public int idRent;
-
         // GET: Rents/Rents
+        [Authorize]
         public ActionResult Rents(int id)
         {
             RentDb dbRent = new RentDb();
@@ -22,13 +20,12 @@ namespace videorama.Controllers
         }
 
         // GET: Rents/ViewPDF
-        public ActionResult DownloadBill(int idC, int idR)
+        [Authorize]
+        public ActionResult DownloadBill(int idR)
         {
-            idCustomer = idC;
-            idRent = idR;
             RentDb dbProducts = new RentDb();
             ModelState.Clear();
-            BillViewModel model = dbProducts.GetRentDetails(idC, idR);
+            BillViewModel model = dbProducts.GetRentDetails(idR);
             return new Rotativa.ViewAsPdf("ViewPDF", model);
         }
     }

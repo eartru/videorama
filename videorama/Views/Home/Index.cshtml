@@ -7,7 +7,6 @@
     string role = "";
     string id = "";
     int idUser = 0;
-    bool roleAdmin = false;
 
     if (Request.IsAuthenticated)
     {
@@ -19,7 +18,6 @@
             role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
             id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             idUser = Convert.ToInt32(id);
-            roleAdmin = Convert.ToBoolean(role);
         }
     }
 }
@@ -73,7 +71,7 @@
     </div>
     @if (Request.IsAuthenticated)
     {
-        if (!roleAdmin)
+        if (role=="User")
         {
             if (Model.Rent.Count() >= 1)
             {
