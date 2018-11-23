@@ -161,14 +161,13 @@ namespace Videorama.Models
             return productsList;
         }
 
-        public BillViewModel GetRentDetails(int idCustomer, int idRent)
+        public BillViewModel GetRentDetails(int idRent)
         {
             connection();
             BillViewModel rentDetails = new BillViewModel();
 
             SqlCommand cmd = new SqlCommand("GetRentDetails", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
             cmd.Parameters.AddWithValue("@IdRent", idRent);
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();

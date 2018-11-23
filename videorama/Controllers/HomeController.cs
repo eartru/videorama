@@ -16,7 +16,6 @@ namespace videorama.Controllers
             string role = "";
             string id = "";
             int idUser = 0;
-            bool roleAdmin = false;
 
             if (Request.IsAuthenticated)
             {
@@ -27,7 +26,6 @@ namespace videorama.Controllers
                     role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
                     id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
                     idUser = Convert.ToInt32(id);
-                    roleAdmin = Convert.ToBoolean(role);
                 }
             }
 
@@ -42,7 +40,7 @@ namespace videorama.Controllers
             };
             if (Request.IsAuthenticated)
             {
-                if(!roleAdmin)
+                if(role == "User")
                 {
                     vm.Rent = dbRent.GetRentByCustomer(idUser);
                 }
@@ -50,25 +48,12 @@ namespace videorama.Controllers
             return View(vm);
         }
 
+        // Non utilisé pour le moment, devrait servir pour le dropdown top n des DVD loués
         [HttpPost]
         public ActionResult Index(AccueilViewModel MV)
         {
             int SelectedValue = MV.SelectedTop;
             return View(MV);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         public ActionResult Search(string SearchString)
