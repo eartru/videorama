@@ -57,13 +57,13 @@ as
 go
 
 CREATE Procedure  GetDistinctRentByCustomer
-( @IdRent int )  
+( @IdCustomer int )  
 as  
     select distinct r.idRent, r.returnBackDate
 	from rent r 
 	INNER JOIN rentDetail rd on r.idRent = rd.idRent 
    INNER JOIN product p on rd.idProduct = p.idProduct
-    where r.idCustomer = @IdRent
+    where r.idCustomer = @IdCustomer and r.inProgress = 1
 go
 
 CREATE Procedure GetNewProducts
