@@ -3,19 +3,31 @@
 
 @section scripts {
     <script>
-        $(document).ready(function () {
-            $("#ddlTop").change(function () {
-                var strSelected = "";
-                $("#ddlTop option:selected").each(function () {
-                    strSelected += $(this)[0].value;
-                });
-                $("#dvCategoryResults").load('@(Url.Action("IndexTop",null, Request.Url.Scheme))?categoryId=' + categoryId);
-
-                $.post(url, function (data) {
-                    // do something if necessary
-                });
+        function CallChangefunc(val) {
+            $.ajax({
+                type: "GET",
+                url: 'IndexTop',
+                data: { topValue: val },
+                success: function (data) {
+                    if (data) {
+                        $('#dataTable').html(data);
+                    }
+                },
+                error: function () {
+                    $.ajax({
+                        type: "GET",
+                        url: 'Home/IndexTop',
+                        data: { topValue: val },
+                        success: function (data) {
+                            if (data) {
+                                $('#dataTable').html(data);
+                            }
+                        }
+                    });
+                }
             });
-        });
+        }
+        $(document).ready(CallChangefunc(5))
     </script>
 }
 
@@ -73,14 +85,21 @@
         <div class="col-md-4">
             <div class="top-table">
                 <table class="table">
-                    <tr>
-                        <th><h4> @Html.DropDownList("ObjList", (IEnumerable<SelectListItem>)ViewBag.Tops, 
-                                new { id = "ddlTop", @class = "form-control" })
-                                des DVD loués</h4></th>
-                    </tr>
-                    <div class="dvCategoryResults">
-                        @{Html.RenderPartial("IndexTop", Model);}
-                    </div>
+                    <thead>
+                        <tr>
+                            <th>
+                                <h4>
+                                    @Html.DropDownList("Sortby", new SelectListItem[]
+                                { new SelectListItem() { Text = "Top 5", Value = "5" },
+                                new SelectListItem() { Text = "Top 10", Value = "10" },
+                                new SelectListItem() { Text = "Top 25", Value = "25" },
+                                new SelectListItem() { Text = "Top 50", Value = "50" }},
+                                new { @onchange="CallChangefunc(this.value)" }) des DVD loués
+                                </h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable"></tbody>
                 </table>
             </div>
         </div>

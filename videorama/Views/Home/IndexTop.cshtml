@@ -4,7 +4,9 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            <a href=@Url.Action("Details", "Products")>
+                @Html.DisplayFor(modelItem => item.Title) 
+            </a>
         </td>
     </tr>
 }

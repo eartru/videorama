@@ -43,17 +43,6 @@ namespace videorama.Controllers
                     vm.Rent = dbRent.GetRentByCustomer(idUser);
                 }
             }
-
-            List<SelectListItem> ObjList = new List<SelectListItem>()
-            {
-                new SelectListItem { Text = "Top 5", Value = "5" },
-                new SelectListItem { Text = "Top 10", Value = "10" },
-                new SelectListItem { Text = "Top 25", Value = "25" },
-                new SelectListItem { Text = "Top 50", Value = "50" },
-
-            };
-            ViewBag.Tops = ObjList;
-
             return View(vm);
         }
 
