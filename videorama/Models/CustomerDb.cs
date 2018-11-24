@@ -4,6 +4,7 @@ using System.Configuration;
 using Videorama.Models;
 using System.Collections.Generic;
 using System;
+using videorama.ViewModels;
 
 namespace videorama.Models
 {
@@ -56,7 +57,7 @@ namespace videorama.Models
             connection();
 
             Customer customerFound = new Customer();
-            SqlCommand cmd = new SqlCommand("GetCustomerById", con);
+            SqlCommand cmd = new SqlCommand("GetCustomerDetail", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@Id", id);
@@ -126,23 +127,29 @@ namespace videorama.Models
             cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
-
+            
             con.Open();
             sd.Fill(dt);
             con.Close();
 
-            customer = new Customer
+            if (dt != null)
             {
-                IdUser = Convert.ToInt32(dt.Rows[0]["IdUser"]),
-                FirstName = Convert.ToString(dt.Rows[0]["Firstname"]),
-                LastName = Convert.ToString(dt.Rows[0]["Lastname"]),
-                Address = Convert.ToString(dt.Rows[0]["AddressCustomer"]),
-                PostalCode = Convert.ToString(dt.Rows[0]["PostalCode"]),
-                Town = Convert.ToString(dt.Rows[0]["Town"]),
-                Country = Convert.ToString(dt.Rows[0]["Country"]),
-                Email = Convert.ToString(dt.Rows[0]["Email"])
-            };
-            return customer;
+                customer = new Customer
+                {
+                    IdUser = Convert.ToInt32(dt.Rows[0]["IdUser"]),
+                    FirstName = Convert.ToString(dt.Rows[0]["Firstname"]),
+                    LastName = Convert.ToString(dt.Rows[0]["Lastname"]),
+                    Address = Convert.ToString(dt.Rows[0]["AddressCustomer"]),
+                    PostalCode = Convert.ToString(dt.Rows[0]["PostalCode"]),
+                    Town = Convert.ToString(dt.Rows[0]["Town"]),
+                    Country = Convert.ToString(dt.Rows[0]["Country"]),
+                    Email = Convert.ToString(dt.Rows[0]["Email"]),
+                    Username = Convert.ToString(dt.Rows[0]["Username"])
+                };
+                return customer;
+            }
+
+            return null;
         }
 
         public bool UpdateCustomer(Customer customer)
@@ -159,6 +166,33 @@ namespace videorama.Models
             cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
             cmd.Parameters.AddWithValue("@Town", customer.Town);
             cmd.Parameters.AddWithValue("@Country", customer.Country);
+            cmd.Parameters.AddWithValue("@UserName", customer.Username);
+            
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public bool UpdateCustomerPasword(PasswordViewModel passwordViewModel)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("UpdateUserPassword", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Id", passwordViewModel.IdUser);
+            cmd.Parameters.AddWithValue("@Password", passwordViewModel.Password);
 
             con.Open();
 

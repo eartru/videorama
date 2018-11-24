@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "DeleteCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Supprimer le compte</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("Id", ViewData["Id"])
+    <div class="form-horizontal">
+        <hr />
+        <p>Merci de confirmer votre volonté de supprimer votre compte</p>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirmer" class="btn btn-primary" />
+                @Html.ActionLink("Annuler", "Detail", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+

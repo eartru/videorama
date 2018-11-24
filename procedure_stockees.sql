@@ -104,13 +104,35 @@ go
 CREATE Procedure GetCustomerDetail
 ( @IdCustomer int)
 as  
-   select c.*, u.email from customer c
+   select c.*, u.* from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
 go
 
+CREATE Procedure GetCustomers
+as  
+begin  
+   select c.*, u.email from customer c
+   inner join videoramaUser u on c.idUser = u.idUser 
+GO
+
+CREATE Procedure GetCustomerDetail
+( @IdCustomer int)
+as  
+begin  
+   select c.*, u.* from customer c
+   inner join videoramaUser u on c.idUser = u.idUser 
+   where c.idUser = @IdCustomer
+GO
+
+CREATE Procedure GetRentDetailsForBill
+( @IdCustomer int, @IdRent int )  
+
+GO
+
 CREATE Procedure GetRentDetails
 ( @IdRent int )  
+
 as  
    select r.idRent, r.idCustomer, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
 	c.country, r.rentDate, r.returnBackDate, p.title, p.price  
@@ -132,7 +154,7 @@ GO
 
 CREATE PROCEDURE UpdateCustomer
 (@IdCustomer int, @FirstName varchar(50), @LastName varchar(50), @Email varchar(50), @Address varchar(255),
- @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))
+ @PostalCode varchar(5), @Town varchar(50), @Country varchar(50), @UserName varchar(50))
 as 
 begin
 	update customer 
@@ -141,10 +163,19 @@ begin
 	where idUser = @IdCustomer
 
 	update videoramaUser 
-	set email = @Email 
+	set email = @Email , username = @UserName
 	where idUser = @IdCustomer
 end
 go
+
+CREATE PROCEDURE UpdateUserPassword
+(@Id int, @Password varchar(255))
+as 
+begin
+	update videoramaUser 
+	set passwordUser = HashBytes('SHA1', @Password)
+	where idUser = @Id
+GO
 
 CREATE PROCEDURE DeleteCustomer
 (@IdCustomer int)
