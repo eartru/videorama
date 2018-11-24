@@ -112,5 +112,55 @@ namespace videorama.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        // Edit password customer
+        public ActionResult EditPassword()
+        {
+            CustomerDb dbCustomer = new CustomerDb();
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id > 0)
+            {
+                PasswordViewModel passwordViewModel = new PasswordViewModel
+                {
+                    IdUser = id
+                };
+
+                return View(passwordViewModel);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // POST : Edit password customer
+        [HttpPost]
+        public ActionResult EditPassword(PasswordViewModel passwordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                CustomerDb dbCustomer = new CustomerDb();
+                bool isPasswordEdited;
+                var w = passwordViewModel;
+
+                isPasswordEdited = dbCustomer.UpdateCustomerPasword(passwordViewModel);
+
+                if (isPasswordEdited)
+                {
+                    var claimIdentity = User.Identity as ClaimsIdentity;
+                    int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    if (id > 0)
+                    {
+                        return RedirectToAction("Detail", "Account");
+                    }
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

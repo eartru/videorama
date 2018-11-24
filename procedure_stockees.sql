@@ -155,6 +155,15 @@ begin
 	where idUser = @IdCustomer
 GO
 
+CREATE PROCEDURE UpdateUserPassword
+(@Id int, @Password varchar(255))
+as 
+begin
+	update videoramaUser 
+	set passwordUser = HashBytes('SHA1', @Password)
+	where idUser = @Id
+GO
+
 CREATE PROCEDURE DeleteCustomer
 (@IdCustomer int)
 as 

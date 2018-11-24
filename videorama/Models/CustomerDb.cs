@@ -4,6 +4,7 @@ using System.Configuration;
 using Videorama.Models;
 using System.Collections.Generic;
 using System;
+using videorama.ViewModels;
 
 namespace videorama.Models
 {
@@ -167,6 +168,32 @@ namespace videorama.Models
             cmd.Parameters.AddWithValue("@Country", customer.Country);
             cmd.Parameters.AddWithValue("@UserName", customer.Username);
             
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public bool UpdateCustomerPasword(PasswordViewModel passwordViewModel)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("UpdateUserPassword", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Id", passwordViewModel.IdUser);
+            cmd.Parameters.AddWithValue("@Password", passwordViewModel.Password);
+
             con.Open();
 
             try
