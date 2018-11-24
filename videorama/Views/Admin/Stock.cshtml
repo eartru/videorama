@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Videorama.Models.Product>
+
+@{
+    ViewBag.Title = "Gestion des stocks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#SearchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#ProductTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+
+<h3>Gestion des stocks</h3>
+<hr />
+<div class="col-md-11">
+
+    <a class="btn btn-primary pull-right" href=@Url.Action("Nouveau Produit", "CreateProduct")>
+        Nouveau produit
+    </a>
+    <input class="form-control" id="SearchInput" type="text" placeholder="Rechercher..">
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeP.TypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+        </tr>
+        <tbody id="ProductTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeP.TypeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stock)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Modifier", "EditProduct", new { id = item.IdProduct }) |
+                        @Html.ActionLink("Supprimer", "DeleteProduct", new { id = item.IdProduct })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

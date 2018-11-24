@@ -17,8 +17,7 @@ namespace Videorama.Models
         private DateTime releaseDate;
         private int stock;
         private double price;
-        private int idType;
-        private Type type;
+        private Type typeP;
 
         public int IdProduct { get; set; }
         public string Title { get; set; }
@@ -29,8 +28,7 @@ namespace Videorama.Models
         public DateTime ReleaseDate { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
-        public int IdType { get; set; }
-        public Type Type { get; set; }
+        public Type TypeP { get; set; }
 
     }
 }

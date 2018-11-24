@@ -23,8 +23,13 @@ namespace Videorama.Models
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@Title", product.Title);
+            cmd.Parameters.AddWithValue("@Synopsis", product.Synopsis);
+            cmd.Parameters.AddWithValue("@Price", product.Price);
+            cmd.Parameters.AddWithValue("@IdType", product.TypeP.IdType);
             cmd.Parameters.AddWithValue("@ReleaseDate", product.ReleaseDate);
             cmd.Parameters.AddWithValue("@Stock", product.Stock);
+            cmd.Parameters.AddWithValue("@Picture", product.Picture);
+
 
             con.Open();
             int i = cmd.ExecuteNonQuery();
@@ -34,6 +39,39 @@ namespace Videorama.Models
                 return true;
             else
                 return false;
+        }
+
+        // ********** VIEW ALL PRODUCTS FOR ADMIN ********************
+        public List<Product> GetAllProducts()
+        {
+            connection();
+            List<Product> productsList = new List<Product>();
+
+            SqlCommand cmd = new SqlCommand("GetAllProducts", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                productsList.Add(
+                    new Product
+                    {
+                        IdProduct = Convert.ToInt32(dr["IdProduct"]),
+                        Title = Convert.ToString(dr["Title"]),
+                        Stock = Convert.ToInt32(dr["Stock"]),
+                        TypeP = new Type
+                        {
+                            IdType = Convert.ToInt32(dr["IdType"]),
+                            TypeName = Convert.ToString(dr["TypeName"])
+                        }
+                    });
+            }
+            return productsList;
         }
 
         // ********** VIEW PRODUCT DETAILS BY TYPE ********************
@@ -65,10 +103,10 @@ namespace Videorama.Models
         }
 
         // ********** VIEW PRODUCT DETAILS BY TYPE ********************
-        public List<Tuple<Product, Type>> GetProductsByType(int type)
+        public List<Product> GetProductsByType(int type)
         {
             connection();
-            List<Tuple<Product, Type>> productsList = new List<Tuple<Product, Type>>();
+            List<Product> productsList = new List<Product>();
 
             SqlCommand cmd = new SqlCommand("GetProductsByType", con);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -83,7 +121,7 @@ namespace Videorama.Models
             foreach (DataRow dr in dt.Rows)
             {
                 productsList.Add(
-                    new Tuple<Product, Type>(new Product
+                    new Product
                     {
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
@@ -91,12 +129,12 @@ namespace Videorama.Models
                         Stock = Convert.ToInt32(dr["Stock"]),
                         Picture = Convert.ToString(dr["Picture"]) == "" ? 
                         Convert.ToString("/Content/Images/visuel_non_disponible.jpeg"): Convert.ToString(dr["Picture"]),
-                        IdType = Convert.ToInt32(dr["IdTYpe"])
-                    }, new Type
-                    {
-                        IdType = Convert.ToInt32(dr["IdType"]),
-                        TypeName = Convert.ToString(dr["TypeName"]),
-                    }));
+                        TypeP = new Type
+                        {
+                            IdType = Convert.ToInt32(dr["IdType"]),
+                            TypeName = Convert.ToString(dr["TypeName"]),
+                        }
+                    });
             }
             return productsList;
         }

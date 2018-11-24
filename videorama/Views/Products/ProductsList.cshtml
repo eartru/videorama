@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Tuple<Videorama.Models.Product, Videorama.Models.Type>>
+﻿@model IEnumerable<Videorama.Models.Product>
 
 @{
     ViewBag.Title = "Liste des " + ViewData["type"];
@@ -13,10 +13,10 @@
             {
                 <div class="align-card">
                     <div class="card" style="width: 18rem;">
-                        <img id="img_new" src="..@String.Format("{0}",item.Item1.Picture)" alt="image">
+                        <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
                         <div class="card-body fit">
-                            @Html.ActionLink(item.Item1.Title, "Details", "Products",
-                                new { id = item.Item1.IdProduct }, null)
+                            @Html.ActionLink(item.Title, "Details", "Products",
+                                new { id = item.IdProduct }, null)
                         </div>
                     </div>
                 </div>

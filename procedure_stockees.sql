@@ -8,6 +8,21 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+CREATE Procedure GetAllProducts
+as  
+   select p.idProduct, p.title, p.stock, pt.idType, pt.typeName
+   from product p
+   INNER JOIN productType pt on p.idType = pt.idType 
+go
+
+CREATE Procedure AddNewProduct
+( @Title varchar, @Synopsis varchar, @Price DECIMAL(9,2), @IdType int,  
+@ReleaseDate Date, @Stock int, @Picture varchar)
+as  
+	INSERT INTO product(title, synopsis, price, releaseDate, stock, picture, idType) 
+	VALUES ( @Title, @Synopsis, @Price, @ReleaseDate, @Stock, @Picture, @IdType);	
+go
+
 CREATE Procedure GetTopNProducts
 ( @NbProducts int )  
 as  

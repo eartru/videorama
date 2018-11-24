@@ -365,6 +365,8 @@
     <Content Include="Views\Admin\RentDetails.cshtml" />
     <Content Include="Views\Account\Detail.cshtml" />
     <Content Include="Views\Home\IndexTop.cshtml" />
+    <Content Include="Views\Admin\Stock.cshtml" />
+    <Content Include="Views\Admin\CreateProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
