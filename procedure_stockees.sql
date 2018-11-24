@@ -16,7 +16,7 @@ as
    INNER JOIN rentDetail rd on p.idProduct = rd.idProduct 
    GROUP BY p.idProduct, p.title
    ORDER BY COUNT(rd.idProduct) desc
-GO
+go
 
 CREATE Procedure GetProductsByType
 ( @IdType int )  
@@ -24,7 +24,7 @@ as
 	select * from product p
 	inner join productType pt on p.idType = pt.idType  
 	where p.idType = @IdType
-GO
+go
 
 CREATE Procedure  GetRentByCustomer
 ( @IdCustomer int )  
@@ -35,7 +35,16 @@ as
    INNER JOIN product p on rd.idProduct = p.idProduct
    where idCustomer = @IdCustomer AND inProgress = 1
    order by r.idRent
-GO
+go
+
+CREATE Procedure  GetRents
+as  
+   Select r.idRent, r.idCustomer, c.firstname, c.lastname, r.returnBackDate, r.rentDate
+   from rent r
+   INNER JOIN customer c on r.idCustomer = c.idUser
+   where inProgress = 1
+   order by r.idRent
+go
 
 CREATE Procedure  GetRentProducts
 ( @IdRent int )  
@@ -45,30 +54,30 @@ as
 	INNER JOIN rentDetail rd on r.idRent = rd.idRent 
    INNER JOIN product p on rd.idProduct = p.idProduct
     where r.idRent = @IdRent
-GO
+go
 
 CREATE Procedure  GetDistinctRentByCustomer
-( @IdRent int )  
+( @IdCustomer int )  
 as  
     select distinct r.idRent, r.returnBackDate
 	from rent r 
 	INNER JOIN rentDetail rd on r.idRent = rd.idRent 
    INNER JOIN product p on rd.idProduct = p.idProduct
-    where r.idCustomer = @IdRent
-GO
+    where r.idCustomer = @IdCustomer and r.inProgress = 1
+go
 
 CREATE Procedure GetNewProducts
 as  
 	Select top 3 idProduct, title, synopsis, picture from product
 	ORDER BY idProduct DESC 
-GO
+go
 
 CREATE Procedure [GetProductByNameAndType]
 ( @IdType int, @Name varchar(50) )  
 as  
    select * from product where idType = @IdType
    and title like '%' + @Name + '%'
-GO
+go
 
 CREATE Procedure [PutCustomer]
 ( @UserName varchar(50), @FristName varchar(50), @Name varchar(50), @Email varchar(50),  @Password varchar(255), @Adress varchar(255), @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))  
@@ -77,20 +86,20 @@ as
 	INSERT INTO videoramaUser (username, passwordUser, email, isAdmin) VALUES ( @UserName, HashBytes('SHA1', @Password), @Email, 'false');	
 	SELECT @new_parent_id = SCOPE_IDENTITY()
 	INSERT INTO customer(idUser, firstname, lastname, addressCustomer, postalCode, town, country) VALUES ( @new_parent_id, @FristName, @Name, @Adress, @PostalCode, @Town, @Country);
-GO
+go
 
 CREATE Procedure [GetUserByUserNameAndPassword]
 ( @UserName varchar(50), @Password varchar(255) )  
 as   
    select * from videoramaUser where username = @UserName
    and passwordUser = HashBytes('SHA1', @Password)
-GO
+go
 
 CREATE Procedure GetCustomers
 as    
    select c.*, u.email from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
-GO
+go
 
 CREATE Procedure GetCustomerDetail
 ( @IdCustomer int)
@@ -98,7 +107,7 @@ as
    select c.*, u.* from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
-GO
+go
 
 CREATE Procedure GetCustomers
 as  
@@ -118,17 +127,21 @@ GO
 
 CREATE Procedure GetRentDetailsForBill
 ( @IdCustomer int, @IdRent int )  
+
+GO
+
+CREATE Procedure GetRentDetails
+( @IdRent int )  
+
 as  
-   select r.idRent, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
-	c.country, r.rentDate, p.title, p.price  
+   select r.idRent, r.idCustomer, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
+	c.country, r.rentDate, r.returnBackDate, p.title, p.price  
 	from rent r 
 	inner join rentDetail rd on r.idRent = rd.idRent
 	inner join product p on p.idProduct = rd.idProduct
 	inner join customer c on c.idUser = r.idCustomer
-	where r.idCustomer = @IdCustomer
-	and r.idRent = @IdRent
-
-End
+	where r.idRent = @IdRent
+go
 
 CREATE Procedure GetCustomerById
 ( @Id int )  
@@ -137,7 +150,6 @@ begin
    select * from customer, videoramaUser 
    where customer.idUser = @Id
 End
-
 GO
 
 CREATE PROCEDURE UpdateCustomer
@@ -153,7 +165,8 @@ begin
 	update videoramaUser 
 	set email = @Email , username = @UserName
 	where idUser = @IdCustomer
-GO
+end
+go
 
 CREATE PROCEDURE UpdateUserPassword
 (@Id int, @Password varchar(255))
@@ -171,3 +184,14 @@ begin
 	delete from videoramaUser 
 	where idUser = @IdCustomer
 end
+go
+
+CREATE PROCEDURE UpdateRentReturnedBack
+(@IdRent int)
+as 
+begin
+	update rent 
+	set inProgress = 0 
+	where idRent = @IdRent
+end
+go

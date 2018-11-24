@@ -15,7 +15,6 @@ namespace Videorama.Models
         private string town;
         private string country;
         private List<Rent> rents;
-        private List<Bill> bills;
 
         [Required]
         [Display(Name="Prénom")]
@@ -36,7 +35,6 @@ namespace Videorama.Models
         [Display(Name = "Pays")]
         public string Country { get; set; }
         public List<Rent> Rents { get; set; }
-        public List<Bill> Bills { get; set; }
 
     }
 }

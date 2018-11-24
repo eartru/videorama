@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Videorama.Models.Customer>
 
 @{
-    ViewBag.Title = "Clients";
+    ViewBag.Title = "Registre des clients";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -33,35 +33,35 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostalCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Town)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Country)
-        </td>
-        <td>
-            @Html.ActionLink("Locations", "Rents", "Rents", new { id = item.IdUser }, null) |
-            @Html.ActionLink("Modifier", "EditCustomer", new { id = item.IdUser }) |
-            @Html.ActionLink("Supprimer", "DeleteCustomer", new { id = item.IdUser })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Town)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.ActionLink("Locations", "Rents", "Rents", new { id = item.IdUser }, null) |
+                @Html.ActionLink("Modifier", "EditCustomer", new { id = item.IdUser }) |
+                @Html.ActionLink("Supprimer", "DeleteCustomer", new { id = item.IdUser })
+            </td>
+        </tr>
+    }
 </table>

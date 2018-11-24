@@ -1,10 +1,25 @@
 ﻿@model IEnumerable<Videorama.Models.Rent>
+@using System.Security.Claims
 
 @{
-    ViewBag.Title = "MyRents";
+    ViewBag.Title = "Locations en cours";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    string id = "";
+    int idUser = 0;
 
+    if (Request.IsAuthenticated)
+    {
+        var claimIdentity = User.Identity as ClaimsIdentity;
+
+        if (claimIdentity != null)
+        {
+            id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            idUser = Convert.ToInt32(id);
+        }
+    }
+}
 <div class="container">
     <div class="row">
         <h2>Locations en cours</h2>
@@ -27,7 +42,7 @@
                         </td>
                         <td>
                             <a href=@Url.Action("DownloadBill", "Rents",
-                        new { idC = 1, idR = item.IdRent }) target="_blank" class="btn btn-primary">
+                        new {idR = item.IdRent }) target="_blank" class="btn btn-primary">
                                 Voir la facture
                             </a>
                         </td>

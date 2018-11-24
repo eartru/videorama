@@ -1,0 +1,12 @@
+﻿@model videorama.ViewModels.AccueilViewModel
+
+@foreach (var item in Model.Product)
+{
+    <tr>
+        <td>
+            <a href=@Url.Action("Details", "Products")>
+                @Html.DisplayFor(modelItem => item.Title) 
+            </a>
+        </td>
+    </tr>
+}

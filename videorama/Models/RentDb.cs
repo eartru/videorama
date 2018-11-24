@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using videorama.ViewModels;
+using System.Data.SqlTypes;
 
 namespace Videorama.Models
 {
@@ -14,6 +15,40 @@ namespace Videorama.Models
         {
             string constring = ConfigurationManager.ConnectionStrings["VideoramaDb"].ToString();
             con = new SqlConnection(constring);
+        }
+
+        // ************** GET ALL RENTS FOR ADMIN *******************
+        public List<Tuple<Rent, Customer>> GetRents()
+        {
+            connection();
+            List<Tuple<Rent, Customer>> rentsList = new List<Tuple<Rent, Customer>>();
+
+            SqlCommand cmd = new SqlCommand("GetRents", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                rentsList.Add(
+                    new Tuple<Rent, Customer>(new Rent
+                    {
+                        IdRent = Convert.ToInt32(dr["IdRent"]),
+                        RentDate = Convert.ToDateTime(dr["RentDate"]),
+                        ReturnBackDate = Convert.ToDateTime(dr["ReturnBackDate"])
+                    },
+                    new Customer
+                    {
+                        IdUser = Convert.ToInt32(dr["IdCustomer"]),
+                        FirstName = Convert.ToString(dr["Firstname"]),
+                        LastName = Convert.ToString(dr["Lastname"]),
+                    }));
+            }
+            return rentsList;
         }
 
         // **************** ADD NEW RENT *********************
@@ -126,14 +161,13 @@ namespace Videorama.Models
             return productsList;
         }
 
-        public BillViewModel GetRentDetailsForBill(int idCustomer, int idRent)
+        public BillViewModel GetRentDetails(int idRent)
         {
             connection();
             BillViewModel rentDetails = new BillViewModel();
 
-            SqlCommand cmd = new SqlCommand("GetRentDetailsForBill", con);
+            SqlCommand cmd = new SqlCommand("GetRentDetails", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@IdCustomer", idCustomer);
             cmd.Parameters.AddWithValue("@IdRent", idRent);
             SqlDataAdapter sd = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
@@ -144,6 +178,7 @@ namespace Videorama.Models
 
             rentDetails.Customer = new Customer
             {
+                IdUser = Convert.ToInt32(dt.Rows[0]["IdCustomer"]),
                 LastName = Convert.ToString(dt.Rows[0]["LastName"]),
                 FirstName = Convert.ToString(dt.Rows[0]["FirstName"]),
                 Address = Convert.ToString(dt.Rows[0]["AddressCustomer"]),
@@ -154,7 +189,8 @@ namespace Videorama.Models
             rentDetails.Rent = new Rent
             {
                 IdRent = Convert.ToInt32(dt.Rows[0]["IdRent"]),
-                RentDate = Convert.ToDateTime(dt.Rows[0]["RentDate"])
+                RentDate = Convert.ToDateTime(dt.Rows[0]["RentDate"]),
+                ReturnBackDate = Convert.ToDateTime(dt.Rows[0]["ReturnBackDate"])
             };
             List<Product> listProducts = new List<Product>();
 
@@ -174,6 +210,31 @@ namespace Videorama.Models
             rentDetails.Total = total;
 
             return rentDetails;
+        }
+
+        public bool UpdateRentReturnedBack(int IdRent)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("UpdateRentReturnedBack", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@IdRent", IdRent);
+
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
     }
 }

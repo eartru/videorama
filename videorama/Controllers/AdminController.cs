@@ -11,6 +11,7 @@ namespace videorama.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        [Authorize(Roles ="Admin")]
         public ActionResult Customers()
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -19,6 +20,7 @@ namespace videorama.Controllers
         }
 
         // GET: Admin/EditCustomer/5
+        [Authorize(Roles = "Admin")]
         public ActionResult EditCustomer(int id)
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -28,6 +30,7 @@ namespace videorama.Controllers
 
         // POST: Admin/EditCustomer/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditCustomer(int id, FormCollection collection)
         {
             Customer customerForm = new Customer();
@@ -54,7 +57,8 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
+        // GET: Admin/DeleteCustomer/5
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteCustomer(int id)
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -62,8 +66,9 @@ namespace videorama.Controllers
             return View(dbCustomer.GetCustomerDetail(id));
         }
 
-        // POST: Admin/Delete/5
+        // POST: Admin/DeleteCustomer/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteCustomer(int id, FormCollection collection)
         {
 
@@ -78,6 +83,41 @@ namespace videorama.Controllers
             else
             {
                 return RedirectToAction("DeleteCustomer", id);
+            }
+        }
+
+        // GET: Admin/Rents
+        [Authorize(Roles = "Admin")]
+        public ActionResult Rents()
+        {
+            RentDb dbRent = new RentDb();
+            ModelState.Clear();
+            return View(dbRent.GetRents());
+        }
+
+        // GET: Admin/RentDetails/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult RentDetails(int idr)
+        {
+            RentDb dbRent = new RentDb();
+            ModelState.Clear();
+            return View(dbRent.GetRentDetails(idr));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult ReturnBack(int idCustomer, int idRent)
+        {
+            RentDb dbRent = new RentDb();
+            bool rentValid;
+            rentValid = dbRent.UpdateRentReturnedBack(idRent);
+
+            if (rentValid)
+            {
+                return RedirectToAction("Rents");
+            }
+            else
+            {
+                return RedirectToAction("RentDetails", new { idc = idCustomer, idr = idRent});
             }
         }
     }

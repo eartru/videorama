@@ -178,7 +178,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerDb.cs" />
@@ -354,8 +353,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
     <Content Include="Views\Authentication\Register.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Products\ProductsList.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
@@ -366,10 +363,13 @@
     <Content Include="Views\Shared\_LayoutAuthentication.cshtml" />
     <Content Include="Views\Admin\EditCustomer.cshtml" />
     <Content Include="Views\Admin\DeleteCustomer.cshtml" />
+    <Content Include="Views\Admin\Rents.cshtml" />
+    <Content Include="Views\Admin\RentDetails.cshtml" />
     <Content Include="Views\Account\Detail.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Account\EditPassword.cshtml" />
     <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Home\IndexTop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

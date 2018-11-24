@@ -66,7 +66,14 @@ namespace videorama.Controllers
                     var userClaims = new List<Claim>();
                     userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userFound.IdUser.ToString()));
                     userClaims.Add(new Claim(ClaimTypes.Name, model.UserName));
-                    userClaims.Add(new Claim(ClaimTypes.Role, userFound.IsAdmin.ToString()));
+                    if(userFound.IsAdmin)
+                    {
+                        userClaims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                    }
+                    else
+                    {
+                        userClaims.Add(new Claim(ClaimTypes.Role, "User"));
+                    }
 
                     var claimsIdentity = new ClaimsIdentity(userClaims, DefaultAuthenticationTypes.ApplicationCookie);
                     var ctx = Request.GetOwinContext();

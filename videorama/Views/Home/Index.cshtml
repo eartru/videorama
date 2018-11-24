@@ -1,11 +1,43 @@
 ﻿@using System.Security.Claims
 @model videorama.ViewModels.AccueilViewModel
+
+@section scripts {
+    <script>
+        function CallChangefunc(val) {
+            $.ajax({
+                type: "GET",
+                url: 'IndexTop',
+                data: { topValue: val },
+                success: function (data) {
+                    if (data) {
+                        $('#dataTable').html(data);
+                    }
+                },
+                error: function () {
+                    $.ajax({
+                        type: "GET",
+                        url: 'Home/IndexTop',
+                        data: { topValue: val },
+                        success: function (data) {
+                            if (data) {
+                                $('#dataTable').html(data);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        $(document).ready(CallChangefunc(5))
+    </script>
+}
+
 @{
     ViewBag.Title = "Accueil";
 
-    string userName = "toto";
-    string role = "role";
-    string id = "id";
+    string userName = "";
+    string role = "";
+    string id = "";
+    int idUser = 0;
 
     if (Request.IsAuthenticated)
     {
@@ -16,18 +48,19 @@
             userName = claimIdentity.FindFirst(ClaimTypes.Name).Value;
             role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
             id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            idUser = Convert.ToInt32(id);
         }
     }
 }
-<p><strong>@userName : @role, id : @id</strong></p>
 
 <div class="container-fluid">
-    <div class="row">
-        <h2>Bienvenue, user</h2>
-        <hr size=2 align=left width="60%" />
-    </div>
-
-
+    @if (Request.IsAuthenticated)
+    {
+        <div class="row">
+            <h2>Bienvenue, @userName</h2>
+            <hr size=2 align=left width="60%" />
+        </div>
+    }
 
     <div class="row">
         <div class="col-md-7">
@@ -52,47 +85,59 @@
         <div class="col-md-4">
             <div class="top-table">
                 <table class="table">
-                    <tr>
-                        <th><h4>Top 5 des DVD loués</h4></th>
-                    </tr>
-                    @foreach (var item in Model.Product)
-                    {
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
+                            <th>
+                                <h4>
+                                    @Html.DropDownList("Sortby", new SelectListItem[]
+                                { new SelectListItem() { Text = "Top 5", Value = "5" },
+                                new SelectListItem() { Text = "Top 10", Value = "10" },
+                                new SelectListItem() { Text = "Top 25", Value = "25" },
+                                new SelectListItem() { Text = "Top 50", Value = "50" }},
+                                new { @onchange="CallChangefunc(this.value)" }) des DVD loués
+                                </h4>
+                            </th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody id="dataTable"></tbody>
                 </table>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-7">
-            <div class="card card-top">
-                <div class="card-header">
-                    <h3>Locations en cours</h3>
-                </div>
-                <div class="card-body">
-                    @foreach (var item in Model.Rent.Take(3))
-                    {
-                        <div class="align-card">
-                            <div class="card" style="width: 18rem;">
-                                <img id="img_new" src="..@String.Format("{0}",item.Item2.Picture)" alt="image">
-                                <div class="card-body fit">
-                                    <p class="card-text">@Html.ActionLink(item.Item2.Title, "Details", "Products", new { id = item.Item2.IdProduct }, null)</p>
-                                </div>
+    @if (Request.IsAuthenticated)
+    {
+        if (role == "User")
+        {
+            if (Model.Rent.Count() >= 1)
+            {
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card card-top">
+                            <div class="card-header">
+                                <h3>Locations en cours</h3>
+                            </div>
+                            <div class="card-body">
+                                @foreach (var item in Model.Rent.Take(3))
+                                {
+                                    <div class="align-card">
+                                        <div class="card" style="width: 18rem;">
+                                            <img id="img_new" src="..@String.Format("{0}", item.Item2.Picture)" alt="image">
+                                            <div class="card-body fit">
+                                                <p class="card-text">@Html.ActionLink(item.Item2.Title, "Details", "Products", new { id = item.Item2.IdProduct }, null)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
-                    }
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">
-            <a href=@Url.Action("Rents", "Rents", new { id = 1 }) class="btn btn-primary">Voir plus</a>
-        </div>
-    </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <a href=@Url.Action("Rents", "Rents", new { id = idUser }) class="btn btn-primary">Voir plus</a>
+                    </div>
+                </div>
+            }
+        }
+    }
 </div>
