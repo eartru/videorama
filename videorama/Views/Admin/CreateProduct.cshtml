@@ -1,19 +1,29 @@
 ﻿@model Videorama.Models.Product
 
 @{
-    ViewBag.Title = "CreateProduct";
+    ViewBag.Title = "Créer un produit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section scripts {
 
-<h2>CreateProduct</h2>
+    <script>
+        $(document).ready(function(){
+            $("#IdType").change(function(){
+                var typeText=$("#idType option:selected").text();
+                $("#hidType").val(typeText);
+            });
+        });
+    </script>
+}
+
+<h3>Créer un produit</h3>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Product</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -36,8 +46,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Picture, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
+                <input type="file" name="Picture" id="Picture" class="form-control" /><br><br>
+                @ViewBag.Message
             </div>
         </div>
 
@@ -45,14 +55,14 @@
             @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger", @type = "date" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                 @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -66,6 +76,19 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.TypeP.IdType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Hidden("hidType")
+                @Html.DropDownList("IdType", new SelectListItem[]
+                                { new SelectListItem() { Text = "Film", Value = "1" },
+                                new SelectListItem() { Text = "Série", Value = "2" },
+                                new SelectListItem() { Text = "Déssin Animé", Value = "3" }}, 
+                                "Select", new { style = "width:250px", @class = "form-control" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -76,7 +99,3 @@
 <div>
     @Html.ActionLink("Retour à la gestion des stocks", "Stock")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

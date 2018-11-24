@@ -13,6 +13,6 @@ namespace videorama.ViewModels
         public List<Product> Products { get; set; }
         public Customer Customer { get; set; }
         public Rent Rent { get; set; }
-        public double Total { get; set; }
+        public decimal Total { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -140,18 +141,33 @@ namespace videorama.Controllers
         // POST: Products/CreateProduct
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateProduct(FormCollection collection)
+        public ActionResult CreateProduct(FormCollection collection, HttpPostedFileBase file)
         {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/Content/Images"),
+                                               Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    ViewBag.Message = "Fichier importé";
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
+            {
+                ViewBag.Message = "Vous n'avez pas spécifié de fichier.";
+            }
+
             Product productForm = new Product();
             productForm.Title = Request.Form["Title"];
             productForm.Synopsis = Request.Form["Synopsis"];
-            productForm.Price = Convert.ToDouble(Request.Form["Price"]);
-            productForm.ReleaseDate = Convert.ToDateTime(Request.Form["ReleaseDate"]);
-            productForm.Picture = Request.Form["Picture"];
-            productForm.TypeP.IdType = Convert.ToInt32(Request.Form["IdType"]);
-            productForm.Stock = Convert.ToInt32(Request.Form["Stock"]);
-            productForm.Casting = new List<Person>();
-            productForm.Categories = new List<Category>();
+            productForm.Price = Convert.ToDecimal(collection["Price"].Replace('.', ','));
+            productForm.ReleaseDate = Convert.ToDateTime(collection["ReleaseDate"]);
+            productForm.Picture = collection["Picture"];
+            productForm.TypeP.IdType = Convert.ToInt32(Request.Form["hidType"]);
+            productForm.Stock = Convert.ToInt32(collection["Stock"]);
 
 
             ProductsDb dbProduct = new ProductsDb();
