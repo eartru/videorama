@@ -79,7 +79,7 @@ namespace videorama.Controllers
             {
                 CustomerDb dbCustomer = new CustomerDb();
                 bool isCustomerEdited;
-
+                
                 Customer customer = new Customer
                 {
                     IdUser = customerViewModel.IdUser,

@@ -165,12 +165,8 @@ namespace videorama.Models
             cmd.Parameters.AddWithValue("@PostalCode", customer.PostalCode);
             cmd.Parameters.AddWithValue("@Town", customer.Town);
             cmd.Parameters.AddWithValue("@Country", customer.Country);
-
-            if (customer.Username != null)
-            {
-                cmd.Parameters.AddWithValue("@UserName", customer.Username);
-            }
-
+            cmd.Parameters.AddWithValue("@UserName", customer.Username);
+            
             con.Open();
 
             try
