@@ -162,5 +162,38 @@ namespace videorama.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        // GET: Delect the account
+        public ActionResult Delete()
+        {           
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            if (id > 0)
+            {
+                ViewData["Id"] = id;
+                return View();
+            }
+
+            return RedirectToAction("Detail", "Account");
+        }
+
+        // POST: Delect the account
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+
+            CustomerDb dbCustomer = new CustomerDb();
+            bool customerValid;
+            customerValid = dbCustomer.DeleteCustomer(Convert.ToInt32(collection["Id"]));
+
+            if (customerValid)
+            {
+                return RedirectToAction("Register", "Authentication");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

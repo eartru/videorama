@@ -64,4 +64,6 @@
             @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @readonly = "readonly" })
         </div>
     </div>
+
+    <p>@Html.ActionLink("Supprimer", "Delete", null, new { @class = "btn btn-danger" })</p>
 </div>
