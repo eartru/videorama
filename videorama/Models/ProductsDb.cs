@@ -131,7 +131,7 @@ namespace Videorama.Models
             return productsList;
         }
 
-        // ********** VIEW PRODUCT DETAILS BY TYPE ********************
+        // ********** VIEW PRODUCT MORE IMPORTANT INFO BY HIS TYPE ********************
         public List<Product> SearchProductByNameAndType(int type, string name)
         {
             connection();
@@ -160,6 +160,62 @@ namespace Videorama.Models
                     });
             }
             return productsList;
+        }
+        
+        // ********** VIEW ALL PRODUCT DETAILS BY HIS ID ********************
+        public Tuple<Product, List<Person>> GetProductsDetail(int id)
+        {
+            connection();
+            Product product = new Product();
+            List<Person> personList = new List<Person>();
+            Tuple<Product, List<Person>> tuple = new Tuple<Product, List<Person>>(null, null);
+
+            SqlCommand cmd = new SqlCommand("GetProductDetail", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdProduct", id);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            con.Open();
+            sd.Fill(dt);
+            con.Close();
+
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    personList.Add(new Person
+                    {
+                        FirstName = Convert.ToString(dr["Firstname"]),
+                        LastName = Convert.ToString(dr["LastName"]),
+                        Profession = new Profession
+                        {
+                            Title = Convert.ToString(dr["ProfessionTitle"])
+                        }
+                    });
+
+                    tuple = new Tuple<Product, List<Person>>(
+                        new Product
+                        {
+                            IdProduct = Convert.ToInt32(dr["IdProduct"]),
+                            Title = Convert.ToString(dr["ProductTitle"]),
+                            Picture = Convert.ToString(dr["Picture"]),
+                            Synopsis = Convert.ToString(dr["Synopsis"]),
+                            ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
+                            Price = Convert.ToInt32(dr["Price"]),
+                            Stock = Convert.ToInt32(dr["Stock"])
+                        },
+                        personList
+                    );
+                }
+                
+
+                return tuple;
+                  
+            }
+                
+            
+            return null;
         }
     }
 }
