@@ -32,10 +32,16 @@ INSERT INTO person VALUES('Jennifer', 'Anniston', '', 1);
 INSERT INTO person VALUES('Peter', 'Sauder', '', 4);
 
 INSERT INTO casting VALUES(1, 1);
+INSERT INTO casting VALUES(1, 2);
+INSERT INTO casting VALUES(1, 4);
 INSERT INTO casting VALUES(2, 3);
 INSERT INTO casting VALUES(3, 3);
 INSERT INTO casting VALUES(5, 2);
 INSERT INTO casting VALUES(4, 4);
+INSERT INTO casting VALUES(6, 1);
+INSERT INTO casting VALUES(7, 1);
+INSERT INTO casting VALUES(8, 1);
+INSERT INTO casting VALUES(8, 4);
 
 INSERT INTO productCategory VALUES(1, 4);
 INSERT INTO productCategory VALUES(2, 1);

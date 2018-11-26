@@ -151,3 +151,12 @@ textarea {
     display: flex;
     flex-direction: column;
 }
+
+/* Detail product */
+.price-detail {
+    background-color: #5bc0de;
+    padding: 6px 12px;
+    border-radius: 5px;
+    color: #fff;
+    margin-right: 20px;
+}

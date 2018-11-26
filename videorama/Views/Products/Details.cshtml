@@ -8,35 +8,39 @@
 <h2>@Html.DisplayName(Model.Item1.Title)</h2>
 <hr />
 <div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-        <img id="img_new" src="../..@String.Format("{0}", Model.Item1.Picture)" alt="image">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <img class="img-responsive" src="../..@String.Format("{0}", Model.Item1.Picture)" alt="image">
 
-        <p>De :</p>
-        @foreach (var person in Model.Item2)
-        {
-            if (person.Profession.Title.ToString() != "Acteur")
+        <p>
+            <span>De :</span>
+            @foreach (var person in Model.Item2)
             {
-                <p>@Html.DisplayName(person.FirstName) @Html.DisplayName(person.LastName)</p>
+                if (person.Profession.Title.ToString() != "Acteur")
+                {
+                    <span>@person.FirstName @person.LastName</span>@(Model.Item2[Model.Item2.Count - 1] != person ? ", " : "")
+                }
             }
-        }
-        <p>Avec :</p>
-        @foreach (var person in Model.Item2)
-        {
-            if (person.Profession.Title.ToString() == "Acteur")
+        </p>
+        <p>
+            <span>Avec :</span>
+            @foreach (var person in Model.Item2)
             {
-                <p>@Html.DisplayName(person.FirstName) @Html.DisplayName(person.LastName)</p>
+                if (person.Profession.Title.ToString() == "Acteur")
+                {
+                    <span>@person.FirstName @person.LastName</span>@(Model.Item2[Model.Item2.Count - 1] != person ? ", " : "")
+                }
             }
-        }
+        </p>
 
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
         <h3>Synopsis</h3>
-        @Html.DisplayName(Model.Item1.Synopsis)
+        @Html.Raw(Model.Item1.Synopsis)
         <h3>Date de sortie</h3>
         @Html.DisplayName(Model.Item1.ReleaseDate.ToString())
+        <div>
+            <span type="button" class="price-detail">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
+            @Html.ActionLink("Ajouter au panier", "Edit", new { id = Model.Item1.IdProduct }, new { @class = "btn btn-primary"  })
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        @Html.ActionLink("Retour à la liste", "ProductsList")
-    </p>
 </div>
