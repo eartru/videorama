@@ -9,6 +9,7 @@
 <hr />
 <div class="col-md-7">
     <a class="btn btn-primary pull-right" href=@Url.Action("ReturnBack", new { idCustomer = Model.Customer.IdUser, idRent = Model.Rent.IdRent })>Valider le retour</a>
+    @ViewBag.message
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Rent.IdRent)

@@ -23,6 +23,24 @@ as
 	VALUES ( @Title, @Synopsis, @Price, @ReleaseDate, @Stock, @Picture, @IdType);	
 go
 
+CREATE Procedure UpdateProduct
+( @IdProduct int, @Title varchar(255), @Synopsis varchar(2000), @Price DECIMAL(9,2), @IdType int,  
+@ReleaseDate Date, @Stock int, @Picture varchar(255))
+as  
+	Update product set title= @Title, synopsis=@Synopsis, price=@Price, releaseDate=@ReleaseDate,
+	stock=@Stock, picture=@Picture, idType=@IdType
+	where idProduct = @IdProduct
+go
+
+CREATE PROCEDURE DeleteProduct
+(@IdProduct int)
+as 
+begin
+	delete from product 
+	where idProduct = @IdProduct
+end
+go
+
 CREATE Procedure GetTopNProducts
 ( @NbProducts int )  
 as  

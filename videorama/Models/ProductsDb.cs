@@ -49,6 +49,65 @@ namespace Videorama.Models
             }
         }
 
+        // **************** ADD NEW PRODUCT *********************
+        public bool UpdateProduct(Product product)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("UpdateProduct", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@IdProduct", product.IdProduct);
+            cmd.Parameters.AddWithValue("@Title", product.Title);
+            cmd.Parameters.AddWithValue("@Synopsis", product.Synopsis);
+            string prix = product.Price.ToString().Replace(',', '.');
+            cmd.Parameters.AddWithValue("@Price", prix);
+            cmd.Parameters.AddWithValue("@IdType", product.TypeP.IdType);
+            cmd.Parameters.AddWithValue("@ReleaseDate", product.ReleaseDate);
+            cmd.Parameters.AddWithValue("@Stock", product.Stock);
+            cmd.Parameters.AddWithValue("@Picture", product.Picture);
+
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public bool DeleteProduct(int idProduct)
+        {
+            connection();
+            SqlCommand cmd = new SqlCommand("DeleteProduct", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@IdProduct", idProduct);
+
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         // ********** VIEW ALL PRODUCTS FOR ADMIN ********************
         public List<Product> GetAllProducts()
         {

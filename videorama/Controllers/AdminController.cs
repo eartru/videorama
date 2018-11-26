@@ -177,41 +177,45 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/EditStock/5
+        // GET: Admin/EditProduct/5
         [Authorize(Roles = "Admin")]
-        public ActionResult EditStock(int id)
+        public ActionResult EditProduct(int id)
         {
             ProductsDb dbProduct = new ProductsDb();
             ModelState.Clear();
-            return View(dbProduct.GetAllProducts());
+            return View();
         }
 
-        // POST: Admin/EditStock/5
+        // POST: Admin/EditProduct/5
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult EditStock(int id, FormCollection collection)
+        public ActionResult EditProduct(int id, FormCollection collection)
         {
-            Customer customerForm = new Customer();
-            customerForm.IdUser = id;
-            customerForm.FirstName = Request.Form["FirstName"];
-            customerForm.LastName = Request.Form["LastName"];
-            customerForm.Email = Request.Form["Email"];
-            customerForm.Address = Request.Form["Address"];
-            customerForm.PostalCode = Request.Form["PostalCode"];
-            customerForm.Town = Request.Form["Town"];
-            customerForm.Country = Request.Form["Country"];
-
-            CustomerDb dbCustomer = new CustomerDb();
-            bool customerValid;
-            customerValid = dbCustomer.UpdateCustomer(customerForm);
-
-            if (customerValid)
+            Product productForm = new Product()
             {
-                return RedirectToAction("Customers");
+                IdProduct = id,
+                Title = Request.Form["Title"],
+                Synopsis = Request.Form["Synopsis"],
+                Price = Convert.ToDecimal(Request.Form["Price"].Replace('.', ',')),
+                ReleaseDate = Convert.ToDateTime(Request.Form["ReleaseDate"]),
+                Picture = Request.Form["Picture"],
+                Stock = Convert.ToInt32(Request.Form["Stock"]),
+                TypeP = new Videorama.Models.Type()
+                {
+                    IdType = Convert.ToInt32(Request.Form["IdType"])
+                }
+            };
+
+            ProductsDb dbProduct = new ProductsDb();
+            bool productValid;
+            productValid = dbProduct.UpdateProduct(productForm);
+            if (productValid)
+            {
+                return RedirectToAction("Stock");
             }
             else
             {
-                return RedirectToAction("EditCustomer", id);
+                return RedirectToAction("EditProduct");
             }
         }
 
@@ -219,9 +223,9 @@ namespace videorama.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteProduct(int id)
         {
-            CustomerDb dbCustomer = new CustomerDb();
+            ProductsDb dbProduct = new ProductsDb();
             ModelState.Clear();
-            return View(dbCustomer.GetCustomerDetail(id));
+            return View();
         }
 
         // POST: Admin/DeleteProduct/5
@@ -229,18 +233,17 @@ namespace videorama.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteProduct(int id, FormCollection collection)
         {
+            ProductsDb dbProduct = new ProductsDb();
+            bool productValid;
+            productValid = dbProduct.DeleteProduct(id);
 
-            CustomerDb dbCustomer = new CustomerDb();
-            bool customerValid;
-            customerValid = dbCustomer.DeleteCustomer(id);
-
-            if (customerValid)
+            if (productValid)
             {
-                return RedirectToAction("Customers");
+                return RedirectToAction("Stock");
             }
             else
             {
-                return RedirectToAction("DeleteCustomer", id);
+                return RedirectToAction("DeleteProduct", id);
             }
         }
     }
