@@ -20,6 +20,12 @@ namespace videorama.Controllers
             return View(dbProducts.GetProductsByType(type));
         }
 
+        // GET: Products/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
         // GET: Products search result
         public ActionResult ProductsSearchResult(int type, string name)
         {

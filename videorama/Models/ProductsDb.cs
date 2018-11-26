@@ -24,7 +24,8 @@ namespace Videorama.Models
 
             cmd.Parameters.AddWithValue("@Title", product.Title);
             cmd.Parameters.AddWithValue("@Synopsis", product.Synopsis);
-            cmd.Parameters.AddWithValue("@Price", product.Price);
+            string prix = product.Price.ToString().Replace(',', '.');
+            cmd.Parameters.AddWithValue("@Price", prix);
             cmd.Parameters.AddWithValue("@IdType", product.TypeP.IdType);
             cmd.Parameters.AddWithValue("@ReleaseDate", product.ReleaseDate);
             cmd.Parameters.AddWithValue("@Stock", product.Stock);
@@ -32,13 +33,20 @@ namespace Videorama.Models
 
 
             con.Open();
-            int i = cmd.ExecuteNonQuery();
-            con.Close();
 
-            if (i >= 1)
+            try
+            {
+                cmd.ExecuteNonQuery();
                 return true;
-            else
+            }
+            catch (SqlException ex)
+            {
                 return false;
+            }
+            finally
+            {
+                con.Close();
+            }
         }
 
         // ********** VIEW ALL PRODUCTS FOR ADMIN ********************

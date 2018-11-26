@@ -141,35 +141,29 @@ namespace videorama.Controllers
         // POST: Products/CreateProduct
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult CreateProduct(FormCollection collection, HttpPostedFileBase file)
+        public ActionResult CreateProduct(FormCollection collection, HttpPostedFileBase Picture)
         {
-            if (file != null && file.ContentLength > 0)
-                try
-                {
-                    string path = Path.Combine(Server.MapPath("~/Content/Images"),
-                                               Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                    ViewBag.Message = "Fichier importé";
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
-                }
-            else
-            {
-                ViewBag.Message = "Vous n'avez pas spécifié de fichier.";
+            if (Picture != null && Picture.ContentLength > 0)
+            { 
+                string path = Path.Combine(Server.MapPath("~/Content/Images/"),
+                                           Path.GetFileName(Picture.FileName));
+                Picture.SaveAs(path);
             }
 
-            Product productForm = new Product();
-            productForm.Title = Request.Form["Title"];
-            productForm.Synopsis = Request.Form["Synopsis"];
-            productForm.Price = Convert.ToDecimal(collection["Price"].Replace('.', ','));
-            productForm.ReleaseDate = Convert.ToDateTime(collection["ReleaseDate"]);
-            productForm.Picture = collection["Picture"];
-            productForm.TypeP.IdType = Convert.ToInt32(Request.Form["hidType"]);
-            productForm.Stock = Convert.ToInt32(collection["Stock"]);
-
-
+            Product productForm = new Product()
+            {
+                Title = Request.Form["Title"],
+                Synopsis = Request.Form["Synopsis"],
+                Price = Convert.ToDecimal(Request.Form["Price"].Replace('.', ',')),
+                ReleaseDate = Convert.ToDateTime(Request.Form["ReleaseDate"]),
+                Picture = Request.Form["Picture"],
+                    Stock = Convert.ToInt32(Request.Form["Stock"]),
+                TypeP = new Videorama.Models.Type()
+                {
+                    IdType = Convert.ToInt32(Request.Form["IdType"])
+                }
+            };
+ 
             ProductsDb dbProduct = new ProductsDb();
             bool productValid;
             productValid = dbProduct.AddProduct(productForm);

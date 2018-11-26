@@ -70,7 +70,7 @@
                 <ul class="list-unstyled">
                     <li class="media">
                         <div class="media-left">
-                            <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
+                            <img id="img_new" src="../Content/Images/@String.Format("{0}",item.Picture)" alt="image">
                         </div>
                         <div class="media-body">
                             <a>
@@ -121,7 +121,7 @@
                                 {
                                     <div class="align-card">
                                         <div class="card" style="width: 18rem;">
-                                            <img id="img_new" src="..@String.Format("{0}", item.Item2.Picture)" alt="image">
+                                            <img id="img_new" src="../Content/Images/@String.Format("{0}", item.Item2.Picture)" alt="image">
                                             <div class="card-body fit">
                                                 <p class="card-text">@Html.ActionLink(item.Item2.Title, "Details", "Products", new { id = item.Item2.IdProduct }, null)</p>
                                             </div>

@@ -16,8 +16,8 @@ as
 go
 
 CREATE Procedure AddNewProduct
-( @Title varchar, @Synopsis varchar, @Price DECIMAL(9,2), @IdType int,  
-@ReleaseDate Date, @Stock int, @Picture varchar)
+( @Title varchar(255), @Synopsis varchar(2000), @Price DECIMAL(9,2), @IdType int,  
+@ReleaseDate Date, @Stock int, @Picture varchar(255))
 as  
 	INSERT INTO product(title, synopsis, price, releaseDate, stock, picture, idType) 
 	VALUES ( @Title, @Synopsis, @Price, @ReleaseDate, @Stock, @Picture, @IdType);	

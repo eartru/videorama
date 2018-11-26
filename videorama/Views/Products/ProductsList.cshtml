@@ -13,7 +13,7 @@
             {
                 <div class="align-card">
                     <div class="card" style="width: 18rem;">
-                        <img id="img_new" src="..@String.Format("{0}",item.Picture)" alt="image">
+                        <img id="img_new" src="../Content/Images/@String.Format("{0}",item.Picture)" alt="image">
                         <div class="card-body fit">
                             @Html.ActionLink(item.Title, "Details", "Products",
                                 new { id = item.IdProduct }, null)

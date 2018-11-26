@@ -19,7 +19,7 @@
 <h3>Créer un produit</h3>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("CreateProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -47,7 +47,6 @@
             @Html.LabelFor(model => model.Picture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="Picture" id="Picture" class="form-control" /><br><br>
-                @ViewBag.Message
             </div>
         </div>
 
@@ -76,21 +75,20 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TypeP.IdType, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TypeP.TypeName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Hidden("hidType")
                 @Html.DropDownList("IdType", new SelectListItem[]
                                 { new SelectListItem() { Text = "Film", Value = "1" },
                                 new SelectListItem() { Text = "Série", Value = "2" },
-                                new SelectListItem() { Text = "Déssin Animé", Value = "3" }}, 
-                                "Select", new { style = "width:250px", @class = "form-control" })
+                                new SelectListItem() { Text = "Déssin Animé", Value = "3" }}
+                                , new { style = "width:250px", @class = "form-control" })
             </div>
         </div>
 
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Créer" class="btn btn-default" />
             </div>
         </div>
     </div>
