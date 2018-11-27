@@ -17,22 +17,38 @@ namespace Videorama.Models
         private List<Person> casting;
         private DateTime releaseDate;
         private int stock;
-        private double price;
-        private int idType;
-        private Type type;
+        private decimal price;
+        private Type typeP;
 
+        [Display(Name = "Id produit")]
         public int IdProduct { get; set; }
+        [Required]
+        [Display(Name = "Titre")]
         public string Title { get; set; }
+        [Required]
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Synopsis")]
         public string Synopsis { get; set; }
+        [Display(Name = "Affiche")]
         public string Picture { get; set; }
+        [Display(Name = "Catégories")]
         public List<Category> Categories { get; set; }
+        [Display(Name = "Casting")]
         public List<Person> Casting { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
+        [DataType(DataType.Date)]
+        [Required]
+        [Display(Name = "Date de sortie")]
         public DateTime ReleaseDate { get; set; }
+        [Required]
+        [Display(Name = "Stock")]
         public int Stock { get; set; }
-        public double Price { get; set; }
-        public int IdType { get; set; }
-        public Type Type { get; set; }
+        [Required]
+        [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})$", ErrorMessage = "Valid Decimal number with maximum 2 decimal places.")]
+        [Display(Name = "Prix")]
+        public decimal Price { get; set; }
+        [Required]
+        [Display(Name = "Type")]
+        public Type TypeP { get; set; }
 
     }
 }

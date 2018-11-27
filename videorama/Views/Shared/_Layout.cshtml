@@ -80,18 +80,22 @@
                         </li>
                         @if (Request.IsAuthenticated)
                         {
-                            if (role=="User")
+                            if (role == "User")
                             {
                                 <li>
                                     @Html.ActionLink("Mes locations", "Rents", "Rents", new { id = idUser }, null)
                                 </li>
                             }
-                            if (role=="Admin") {
+                            if (role == "Admin")
+                            {
                                 <li>
                                     @Html.ActionLink("Registre des clients", "Customers", "Admin")
                                 </li>
                                 <li>
                                     @Html.ActionLink("Gestion des locations", "Rents", "Admin")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Gestion des stocks", "Stock", "Admin")
                                 </li>
                             }
                         }

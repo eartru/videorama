@@ -15,8 +15,8 @@ namespace videorama.Controllers
         {
             ProductsDb dbProducts = new ProductsDb();
             ModelState.Clear();
-            List<Tuple<Product, Videorama.Models.Type>> list = dbProducts.GetProductsByType(type);
-            string typeName = list[0].Item2.TypeName;
+            List<Product> list = dbProducts.GetProductsByType(type);
+            string typeName = list[0].TypeP.TypeName;
             ViewData["type"] = typeName;
             return View(dbProducts.GetProductsByType(type));
         }
@@ -30,73 +30,7 @@ namespace videorama.Controllers
             return View(dbProducts.GetProductsDetail(id));
         }
 
-        // GET: Products/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Products/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Products/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Products/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Products/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Products serach result
+        // GET: Products search result
         public ActionResult ProductsSearchResult(int type, string name)
         {
             ModelState.Clear();

@@ -194,17 +194,17 @@ namespace Videorama.Models
             };
             List<Product> listProducts = new List<Product>();
 
-            double total = 0;
+            decimal total = 0;
             foreach (DataRow dr in dt.Rows)
             {
                 listProducts.Add(
                     new Product
                     {
                         Title = Convert.ToString(dr["Title"]),
-                        Price = Convert.ToDouble(dr["Price"])
+                        Price = Convert.ToDecimal(dr["Price"])
                     }
                 );
-                total += Convert.ToDouble(dr["Price"]);
+                total += Convert.ToDecimal(dr["Price"]);
             }
             rentDetails.Products = listProducts;
             rentDetails.Total = total;
