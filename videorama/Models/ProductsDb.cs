@@ -156,7 +156,7 @@ namespace Videorama.Models
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                        Stock = Convert.ToInt32(dr["Stock"])
+                        Price = Convert.ToDouble(dr["Price"])
                     });
             }
             return productsList;

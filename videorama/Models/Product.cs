@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,6 +27,7 @@ namespace Videorama.Models
         public string Picture { get; set; }
         public List<Category> Categories { get; set; }
         public List<Person> Casting { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime ReleaseDate { get; set; }
         public int Stock { get; set; }
         public double Price { get; set; }
