@@ -1,73 +1,46 @@
-﻿@model Videorama.Models.Product
+﻿@model Tuple<Videorama.Models.Product, List<Videorama.Models.Person>>
 
 @{
     ViewBag.Title = "Détails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Détails</h2>
+<h2>@Html.DisplayName(Model.Item1.Title)</h2>
 <hr />
 <div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProduct)
-        </dt>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+        <img class="img-responsive" src="../..@String.Format("{0}", Model.Item1.Picture)" alt="image">
 
-        <dd>
-            @Html.DisplayFor(model => model.IdProduct)
-        </dd>
+        <p>
+            <span>De :</span>
+            @foreach (var person in Model.Item2)
+            {
+                if (person.Profession.Title.ToString() != "Acteur")
+                {
+                    <span>@person.FirstName @person.LastName</span>@(Model.Item2[Model.Item2.Count - 1] != person ? ", " : "")
+                }
+            }
+        </p>
+        <p>
+            <span>Avec :</span>
+            @foreach (var person in Model.Item2)
+            {
+                if (person.Profession.Title.ToString() == "Acteur")
+                {
+                    <span>@person.FirstName @person.LastName</span>@(Model.Item2[Model.Item2.Count - 1] != person ? ", " : "")
+                }
+            }
+        </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Synopsis)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Synopsis)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Stock)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Stock)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-    </dl>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+        <h3>Synopsis</h3>
+        @Html.Raw(Model.Item1.Synopsis)
+        <h3>Date de sortie</h3>
+        @Html.DisplayName(Model.Item1.ReleaseDate.ToString())
+        <div>
+            <span type="button" class="price-detail">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
+            @Html.ActionLink("Ajouter au panier", "Edit", new { id = Model.Item1.IdProduct }, new { @class = "btn btn-primary"  })
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Retour à la liste", "ProductsList")
-</p>

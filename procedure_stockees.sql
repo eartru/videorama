@@ -112,6 +112,19 @@ as
    and title like '%' + @Name + '%'
 go
 
+CREATE Procedure  GetProductDetail
+( @IdProduct int )  
+as  
+   Select product.idProduct, product.title as productTitle, product.picture, product.releaseDate, product.synopsis, product.price, product.releaseDate, product.stock,
+   person.firstname, person.lastname,
+   profession.title as professionTitle
+   from product
+   INNER JOIN casting on product.idProduct = casting.idProduct
+   INNER JOIN person on casting.idPerson = person.idPerson
+   INNER JOIN profession on person.idProfession = profession.idProfession
+   where product.idProduct = @IdProduct
+go
+
 CREATE Procedure [PutCustomer]
 ( @UserName varchar(50), @FristName varchar(50), @Name varchar(50), @Email varchar(50),  @Password varchar(255), @Adress varchar(255), @PostalCode varchar(5), @Town varchar(50), @Country varchar(50))  
 as  

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using videorama.ViewModels;
 using Videorama.Models;
 
 namespace videorama.Controllers
@@ -23,7 +24,10 @@ namespace videorama.Controllers
         // GET: Products/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            ProductsDb dbProducts = new ProductsDb();
+            ModelState.Clear();
+
+            return View(dbProducts.GetProductsDetail(id));
         }
 
         // GET: Products search result
