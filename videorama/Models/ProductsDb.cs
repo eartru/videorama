@@ -202,7 +202,7 @@ namespace Videorama.Models
                             Picture = Convert.ToString(dr["Picture"]),
                             Synopsis = Convert.ToString(dr["Synopsis"]),
                             ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                            Price = Convert.ToInt32(dr["Price"]),
+                            Price = Convert.ToDouble(dr["Price"]),
                             Stock = Convert.ToInt32(dr["Stock"])
                         },
                         personList
