@@ -5,8 +5,38 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#add-basket').click(function (e) {
+                e.preventDefault();
+
+                currentProductId = document.getElementById('idProduct').value;             
+                retrievedData = localStorage.getItem("productList");
+                idsInLocalStorage = JSON.parse(retrievedData);              
+
+                // CHeck if the product is yet in the basket
+                if (idsInLocalStorage != null) {
+                    console.log(idsInLocalStorage.includes(currentProductId));
+                    if (!idsInLocalStorage.includes(currentProductId)) {
+                        idsInLocalStorage.push(currentProductId);
+                        localStorage.setItem('productList', JSON.stringify(idsInLocalStorage));
+                    }
+                } else {
+                    var array = [currentProductId];
+                    localStorage.setItem('productList', JSON.stringify(array));
+                }
+            });
+        });
+
+
+    </script>
+}
+
+
 <h2>@Html.DisplayName(Model.Item1.Title)</h2>
 <hr />
+@Html.HiddenFor(model => model.Item1.IdProduct, new { @id = "idProduct" })
 <div>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <img class="img-responsive" src="../..@String.Format("{0}", Model.Item1.Picture)" alt="image">
@@ -40,7 +70,9 @@
         @Html.DisplayName(Model.Item1.ReleaseDate.ToString())
         <div>
             <span type="button" class="price-detail">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
-            @Html.ActionLink("Ajouter au panier", "Edit", new { id = Model.Item1.IdProduct }, new { @class = "btn btn-primary"  })
+            <button type="button" class="btn btn-primary" id="add-basket">
+                Ajouter au panier
+            </button>
         </div>
     </div>
 </div>
