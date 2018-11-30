@@ -241,3 +241,30 @@ begin
 	where idRent = @IdRent
 end
 go
+
+CREATE TYPE dbo.ProductAndRentList
+AS TABLE
+(
+  IdProduct INT,
+  IdRent INT
+);
+GO
+
+CREATE Procedure AddNewRent
+( @GetDate Date, @IdCustomer int)
+as 
+	DECLARE @rent_id INT 
+	INSERT INTO rent(rentDate, getDate, returnBackDate, inProgress, idCustomer) 
+	VALUES ( CAST(GETDATE() As date ), @GetDate, DATEADD(day, 15, CAST(GETDATE() AS DATE)), 1, @IdCustomer);	
+	
+	SELECT @rent_id = SCOPE_IDENTITY();
+	RETURN @rent_id;
+go
+
+CREATE Procedure AddProductInRent
+( @List AS dbo.ProductAndRentList READONLY)
+as 
+	INSERT INTO rentDetail(idProduct, idRent)
+	SELECT IdProduct, IdRent
+	FROM @List 
+go

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using videorama.ViewModels;
 using Videorama.Models;
@@ -27,6 +24,25 @@ namespace videorama.Controllers
             ModelState.Clear();
             BillViewModel model = dbProducts.GetRentDetails(idR);
             return new Rotativa.ViewAsPdf("ViewPDF", model);
+        }
+        
+        // GET: Select the date to return the location
+        [Authorize]
+        public ActionResult ChooseGetDate()
+        {
+            return View();
+        }
+
+        // GET: Select the date to return the location
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddRent(DateTime date)
+        {
+            RentDb dbRent = new RentDb();
+
+            bool rent = dbRent.AddRent(date);
+
+            return View();
         }
     }
 }

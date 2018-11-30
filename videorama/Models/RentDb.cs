@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using videorama.ViewModels;
 using System.Data.SqlTypes;
+using System.Security.Claims;
 
 namespace Videorama.Models
 {
@@ -52,13 +53,16 @@ namespace Videorama.Models
         }
 
         // **************** ADD NEW RENT *********************
-        public bool AddRent(Rent rent)
+        public bool AddRent(DateTime getDate)
         {
             connection();
-            SqlCommand cmd = new SqlCommand("AddNewProduct", con);
+            SqlCommand cmd = new SqlCommand("AddNewRent", con);
             cmd.CommandType = CommandType.StoredProcedure;
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            int idUser = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            cmd.Parameters.AddWithValue("@InProgress", rent.InProgress);
+            cmd.Parameters.AddWithValue("@GetDate", getDate);
+            cmd.Parameters.AddWithValue("@IdCustomer", idUser);
 
             con.Open();
             int i = cmd.ExecuteNonQuery();

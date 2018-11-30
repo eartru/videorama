@@ -1,0 +1,49 @@
+﻿@model List<Videorama.Models.Product>
+
+@{
+    ViewBag.Title = "Basket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal price = 0;
+}
+
+<h2>Panier</h2>
+
+<div>
+    <h4>Nombre de produits dans votre panier : @Model.Count()</h4>
+    <hr />
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Désignation</th>
+                <th>Prix</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                price += Convert.ToDecimal(product.Price);
+                <tr>
+                    <td>@Html.DisplayName(product.Title)</td>
+
+                    <td>@Html.DisplayName(product.Price.ToString())</td>
+                    <td>@Html.ActionLink("Retirer", "RremoveProductBasket", new { idProduct = product.IdProduct }, new { @class = "btn btn-danger" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="col-md-offset-6 col-md-6">
+        <strong>Total :</strong> @price €
+    </div>
+    @if (price > 0)
+    {
+        <div class="col-md-offset-9 col-md-3">
+            <div>
+                @Html.ActionLink("Annuler le panier", "RemoveAllProductBasket", "Products", null, new { @class = "btn btn-danger" })
+            </div>
+            <div>
+                @Html.ActionLink("Valider la location", "ChooseGetDate", "Rents", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    }
+</div>
