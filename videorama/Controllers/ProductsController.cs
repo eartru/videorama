@@ -104,6 +104,31 @@ namespace videorama.Controllers
             return View(listProductFound);
         }
 
+        // GET: Create the Rent th all products in the basket
+        [Authorize]
+        [HttpPost]
+        public ActionResult Basket(FormCollection collection)
+        {
+            RentDb dbRent = new RentDb();
+            var w = Convert.ToDateTime(collection["getRentDate"]);
+            bool rent = false;
+
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            int idUser = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var productList = claimIdentity.FindAll(ClaimTypes.UserData);
+
+            if (collection["getRentDate"] != null){
+                rent = dbRent.AddRent(Convert.ToDateTime(collection["getRentDate"]), idUser, productList);
+            }
+
+            if (rent)
+            {
+                return RedirectToAction("RemoveAllProductBasket");
+            }
+
+            return RedirectToAction("Basket");
+        }
+
         // GET: Remove specific product in basket
         [Authorize]
         public ActionResult RremoveProductBasket(string idProduct)

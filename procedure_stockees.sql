@@ -242,29 +242,18 @@ begin
 end
 go
 
-CREATE TYPE dbo.ProductAndRentList
-AS TABLE
-(
-  IdProduct INT,
-  IdRent INT
-);
-GO
-
 CREATE Procedure AddNewRent
 ( @GetDate Date, @IdCustomer int)
 as 
-	DECLARE @rent_id INT 
-	INSERT INTO rent(rentDate, getDate, returnBackDate, inProgress, idCustomer) 
+	INSERT INTO rent(rentDate, getRentDate, returnBackDate, inProgress, idCustomer) 
 	VALUES ( CAST(GETDATE() As date ), @GetDate, DATEADD(day, 15, CAST(GETDATE() AS DATE)), 1, @IdCustomer);	
 	
-	SELECT @rent_id = SCOPE_IDENTITY();
-	RETURN @rent_id;
+	SELECT idRent FROM rent WHERE idRent = SCOPE_IDENTITY();
 go
 
 CREATE Procedure AddProductInRent
-( @List AS dbo.ProductAndRentList READONLY)
+( @IdProduct int, @IdRent int)
 as 
 	INSERT INTO rentDetail(idProduct, idRent)
-	SELECT IdProduct, IdRent
-	FROM @List 
+	VALUES (@IdProduct, @IdRent)
 go

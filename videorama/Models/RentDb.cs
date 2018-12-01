@@ -6,6 +6,7 @@ using System.Configuration;
 using videorama.ViewModels;
 using System.Data.SqlTypes;
 using System.Security.Claims;
+using System.Web.Mvc;
 
 namespace Videorama.Models
 {
@@ -52,26 +53,56 @@ namespace Videorama.Models
             return rentsList;
         }
 
-        // **************** ADD NEW RENT *********************
-        public bool AddRent(DateTime getDate)
+        // **************** ADD NEW RENT WiTH PRODUCT *********************
+        public bool AddRent(DateTime getRentDate, int idUser, System.Collections.Generic.IEnumerable<System.Security.Claims.Claim> productList)
         {
             connection();
             SqlCommand cmd = new SqlCommand("AddNewRent", con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            var claimIdentity = User.Identity as ClaimsIdentity;
-            int idUser = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            cmd.CommandType = CommandType.StoredProcedure;          
 
-            cmd.Parameters.AddWithValue("@GetDate", getDate);
+            cmd.Parameters.AddWithValue("@GetDate", getRentDate);
             cmd.Parameters.AddWithValue("@IdCustomer", idUser);
 
+            SqlDataAdapter sd = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
             con.Open();
-            int i = cmd.ExecuteNonQuery();
+            sd.Fill(dt);
             con.Close();
 
-            if (i >= 1)
-                return true;
-            else
-                return false;
+            if (dt != null)
+            {
+                int idNewRent = Convert.ToInt32(dt.Rows[0]["IdRent"]);               
+
+                foreach(var idProduct in productList)
+                {
+                    if (idProduct.Value != "")
+                    {
+                        SqlCommand cmd2 = new SqlCommand("AddProductInRent", con);
+                        cmd2.CommandType = CommandType.StoredProcedure;
+                        cmd2.Parameters.AddWithValue("@IdRent", idNewRent);
+                        cmd2.Parameters.AddWithValue("@IdProduct", Convert.ToInt32(idProduct.Value));
+
+                        con.Open();
+
+                        try
+                        {
+                            cmd2.ExecuteNonQuery();
+                        }
+                        catch (SqlException ex)
+                        {
+                            return false;
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+                    }                   
+                }
+
+            }
+
+            return true;
         }
 
         // ********** VIEW RENTS BY CUSTOMER ********************
