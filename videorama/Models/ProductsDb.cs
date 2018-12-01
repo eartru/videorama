@@ -261,7 +261,7 @@ namespace Videorama.Models
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                        Price = Convert.ToDouble(dr["Price"])
+                        Price = Convert.ToDecimal(dr["Price"])
                     });
             }
             return productsList;
@@ -307,7 +307,7 @@ namespace Videorama.Models
                             Picture = Convert.ToString(dr["Picture"]),
                             Synopsis = Convert.ToString(dr["Synopsis"]),
                             ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                            Price = Convert.ToDouble(dr["Price"]),
+                            Price = Convert.ToDecimal(dr["Price"]),
                             Stock = Convert.ToInt32(dr["Stock"])
                         },
                         personList

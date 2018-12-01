@@ -16,6 +16,7 @@
         string role = "";
         string id = "";
         int idUser = 0;
+        int productInBasket = 0;
 
         if (Request.IsAuthenticated)
         {
@@ -27,6 +28,7 @@
                 role = claimIdentity.FindFirst(ClaimTypes.Role).Value;
                 id = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
                 idUser = Convert.ToInt32(id);
+                productInBasket = claimIdentity.FindAll(ClaimTypes.UserData).Count() - 1;
             }
         }
     }
@@ -51,6 +53,8 @@
             </div>
 
             <ul class="nav navbar-nav">
+                <li><a href="@Url.Action("Basket", "Products")">Panier <span class="badge">@productInBasket</span></a>
+                </li>
                 @if (!Request.IsAuthenticated)
                 {
                     <li>@Html.ActionLink("Connexion", "Login", "Authentication")</li>
@@ -113,5 +117,12 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+        function sendLocalStorage() {
+            idsInLocalStorage = localStorage.getItem("productList");
+            var targetUrl = '/Products/Basket/?idsInLocalStorage=' + JSON.parse(idsInLocalStorage);
+            window.location = targetUrl;
+        };
+    </script>
 </body>
 </html>
