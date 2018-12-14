@@ -1,4 +1,5 @@
-﻿.table-products {
+﻿/* CSS for rents */
+.table-products {
     margin-left: 20px;
 }
 
@@ -6,12 +7,7 @@
     margin: unset;
 }
 
-.logo {
-    display: block;
-    width: 120px;
-    padding-top: 5px;
-}
-
+/* CSS for index */
 .card-body.fit{
     width: 120px;
 }
@@ -24,14 +20,6 @@
     float: left;
     padding: 2px;
     overflow: auto;
-}
-
-.sidebar {
-    background-color: #4688C9;
-}
-
-.navbar-inverse .navbar-nav > li > a {
-    color: white;
 }
 
 .top-table {
@@ -56,6 +44,7 @@ h4 {
     text-align: justify;
 }
 
+/* CSS for the navbar */
 #nav_bar {
     background-color: #4688C9;
     border-color: #4688C9;
@@ -79,10 +68,16 @@ h4 {
     align-items: stretch;
 }
 
-#sidebar.active {
-    margin-right: 250px;
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
 }
 
+.logo {
+    display: block;
+    width: 120px;
+    padding-top: 5px;
+    margin-left: 40px;
+}
 
 body {
     padding-top: 50px;
@@ -109,20 +104,26 @@ textarea {
     max-width: 280px;
 }
 
-
-
 /*
     Css for the left navbar
 */
 #sidebar {
     background-color: #4688C9;
+}
 
+.sidebar {
+    background-color: #4688C9;
 }
 
 #sidebar_second {
     background-color: #fff;
     margin-top: 20px;
 }
+
+#sidebar.active {
+    margin-right: 250px;
+}
+
 
 @media only screen and (max-width: 768px) {
     #sidebar_second {
@@ -137,6 +138,7 @@ textarea {
 .search-bar {
     display: inline-flex;
     align-items: baseline;
+    margin-top: 8px;
 }
 
 .row-content-layout {

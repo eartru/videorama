@@ -195,7 +195,7 @@ namespace Videorama.Models
                         ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
                         Stock = Convert.ToInt32(dr["Stock"]),
                         Picture = Convert.ToString(dr["Picture"]) == "" ? 
-                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg"): Convert.ToString(dr["Picture"]),
+                        Convert.ToString("visuel_non_disponible.jpeg"): Convert.ToString(dr["Picture"]),
                         TypeP = new Type
                         {
                             IdType = Convert.ToInt32(dr["IdType"]),
@@ -230,7 +230,7 @@ namespace Videorama.Models
                         Title = Convert.ToString(dr["Title"]),
                         Synopsis = Convert.ToString(dr["Synopsis"]).Substring(0,255),
                         Picture = Convert.ToString(dr["Picture"]) == "" ?
-                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
+                        Convert.ToString("visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
                     });
             }
             return productsList;
@@ -261,7 +261,7 @@ namespace Videorama.Models
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                        Price = Convert.ToDouble(dr["Price"])
+                        Price = Convert.ToDecimal(dr["Price"])
                     });
             }
             return productsList;
@@ -307,7 +307,7 @@ namespace Videorama.Models
                             Picture = Convert.ToString(dr["Picture"]),
                             Synopsis = Convert.ToString(dr["Synopsis"]),
                             ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
-                            Price = Convert.ToDouble(dr["Price"]),
+                            Price = Convert.ToDecimal(dr["Price"]),
                             Stock = Convert.ToInt32(dr["Stock"])
                         },
                         personList
