@@ -134,7 +134,7 @@ namespace Videorama.Models
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         Picture = Convert.ToString(dr["Picture"]) == "" ?
-                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
+                        Convert.ToString("visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
                     }));
             }
             return rentsList;
@@ -190,7 +190,7 @@ namespace Videorama.Models
                         IdProduct = Convert.ToInt32(dr["IdProduct"]),
                         Title = Convert.ToString(dr["Title"]),
                         Picture = Convert.ToString(dr["Picture"]) == "" ?
-                        Convert.ToString("/Content/Images/visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
+                        Convert.ToString("visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"])
                     });
             }
             return productsList;
