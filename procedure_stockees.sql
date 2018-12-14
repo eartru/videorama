@@ -160,6 +160,7 @@ as
 begin  
    select c.*, u.email from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
+end
 GO
 
 CREATE Procedure GetCustomerDetail
@@ -169,11 +170,20 @@ begin
    select c.*, u.* from customer c
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
+end
 GO
 
 CREATE Procedure GetRentDetailsForBill
 ( @IdCustomer int, @IdRent int )  
-
+as  
+    select r.idRent, c.firstname, c.lastname, c.addressCustomer, c.postalCode, c.town,
+ 	c.country, r.rentDate, p.title, p.price  
+ 	from rent r 
+ 	inner join rentDetail rd on r.idRent = rd.idRent
+ 	inner join product p on p.idProduct = rd.idProduct
+ 	inner join customer c on c.idUser = r.idCustomer
+ 	where r.idCustomer = @IdCustomer
+	and r.idRent = @IdRent
 GO
 
 CREATE Procedure GetRentDetails
@@ -221,6 +231,7 @@ begin
 	update videoramaUser 
 	set passwordUser = HashBytes('SHA1', @Password)
 	where idUser = @Id
+end
 GO
 
 CREATE PROCEDURE DeleteCustomer
