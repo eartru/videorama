@@ -373,6 +373,7 @@
     <Content Include="Views\Admin\Stock.cshtml" />
     <Content Include="Views\Admin\CreateProduct.cshtml" />
     <Content Include="Views\Admin\DeleteProduct.cshtml" />
+    <Content Include="Views\Products\Basket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

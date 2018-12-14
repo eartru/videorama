@@ -7,6 +7,7 @@
 
 <h2>@Html.DisplayName(Model.Item1.Title)</h2>
 <hr />
+@Html.HiddenFor(model => model.Item1.IdProduct, new { @id = "idProduct" })
 <div>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
         <img class="img-responsive" src="../Content/Images/@String.Format("{0}", Model.Item1.Picture)" alt="image">
@@ -40,7 +41,14 @@
         @Html.DisplayName(Model.Item1.ReleaseDate.ToString())
         <div>
             <span type="button" class="price-detail">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
-            @Html.ActionLink("Ajouter au panier", "Edit", new { id = Model.Item1.IdProduct }, new { @class = "btn btn-primary"  })
+            @if (Request.IsAuthenticated)
+            {
+                @Html.ActionLink("Ajouter au panier", "AddProductBasket", "Products", new { idProduct = Model.Item1.IdProduct }, new { @class = "btn btn-primary" })
+            }
+            @if (!Request.IsAuthenticated)
+            {
+                <span>Pour commander un produit, vous devez être connecté</span>
+            }
         </div>
     </div>
 </div>
