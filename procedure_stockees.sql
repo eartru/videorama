@@ -241,3 +241,19 @@ begin
 	where idRent = @IdRent
 end
 go
+
+CREATE Procedure AddNewRent
+( @GetDate Date, @IdCustomer int)
+as 
+	INSERT INTO rent(rentDate, getRentDate, returnBackDate, inProgress, idCustomer) 
+	VALUES ( CAST(GETDATE() As date ), @GetDate, DATEADD(day, 15, CAST(GETDATE() AS DATE)), 1, @IdCustomer);	
+	
+	SELECT idRent FROM rent WHERE idRent = SCOPE_IDENTITY();
+go
+
+CREATE Procedure AddProductInRent
+( @IdProduct int, @IdRent int)
+as 
+	INSERT INTO rentDetail(idProduct, idRent)
+	VALUES (@IdProduct, @IdRent)
+go

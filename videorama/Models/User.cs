@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 
 namespace Videorama.Models
@@ -14,6 +15,7 @@ namespace Videorama.Models
         private string password;
         private bool isAdmin;
 
+        public static ClaimsIdentity Identity { get; internal set; }
         [Required]
         public int IdUser { get; set; }
         [Required]
