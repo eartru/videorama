@@ -267,7 +267,7 @@ namespace Videorama.Models
             return productsList;
         }
         
-        // ********** VIEW ALL PRODUCT DETAILS BY HIS ID ********************
+        // ********** VIEW ALL PRODUCT DETAILS BY ITS ID ********************
         public Tuple<Product, List<Person>> GetProductsDetail(int id)
         {
             connection();
@@ -304,7 +304,8 @@ namespace Videorama.Models
                         {
                             IdProduct = Convert.ToInt32(dr["IdProduct"]),
                             Title = Convert.ToString(dr["ProductTitle"]),
-                            Picture = Convert.ToString(dr["Picture"]),
+                            Picture = Convert.ToString(dr["Picture"]) == "" ?
+                            Convert.ToString("visuel_non_disponible.jpeg") : Convert.ToString(dr["Picture"]),
                             Synopsis = Convert.ToString(dr["Synopsis"]),
                             ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
                             Price = Convert.ToDecimal(dr["Price"]),
