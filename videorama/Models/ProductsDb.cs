@@ -328,7 +328,7 @@ namespace Videorama.Models
         {
             connection();
 
-            SqlCommand cmd = new SqlCommand("GetProductDetail", con);
+            SqlCommand cmd = new SqlCommand("RemoveStock", con);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@IdProduct", id);
 
