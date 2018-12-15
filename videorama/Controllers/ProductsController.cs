@@ -46,7 +46,7 @@ namespace videorama.Controllers
         }
 
         // GET: Add products in basket
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult AddProductBasket(string idProduct)
         {
             bool isFound = false;
@@ -77,6 +77,7 @@ namespace videorama.Controllers
         }
 
         // GET: Show products in basket
+        [Authorize(Roles = "User")]
         public ActionResult Basket()
         {
             var claimIdentity = User.Identity as ClaimsIdentity;
@@ -104,33 +105,50 @@ namespace videorama.Controllers
             return View(listProductFound);
         }
 
-        // GET: Create the Rent th all products in the basket
-        [Authorize]
+        // GET: Create the Rent with all products in the basket
+        [Authorize(Roles = "User")]
         [HttpPost]
         public ActionResult Basket(FormCollection collection)
         {
             RentDb dbRent = new RentDb();
-            var w = Convert.ToDateTime(collection["getRentDate"]);
+            ProductsDb dbProduct = new ProductsDb();
             bool rent = false;
+            bool isRemove = false;
+            bool resultat = false;
 
             var claimIdentity = User.Identity as ClaimsIdentity;
             int idUser = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
             var productList = claimIdentity.FindAll(ClaimTypes.UserData);
 
-            if (collection["getRentDate"] != null){
-                rent = dbRent.AddRent(Convert.ToDateTime(collection["getRentDate"]), idUser, productList);
+            if (collection["getRentDate"] != null)
+            {
+                foreach (var product in productList)
+                {
+                    if(product.Value != "")
+                    {
+                        isRemove = dbProduct.RemoveStock(Convert.ToInt32(product.Value));
+                        resultat = isRemove;
+                        if (isRemove == false)
+                        {
+                            break;
+                        }
+                    }
+                    
+                }
             }
 
-            if (rent)
+            if (resultat)
             {
-                return RedirectToAction("RemoveAllProductBasket");
-            }
+                rent = dbRent.AddRent(Convert.ToDateTime(collection["getRentDate"]), idUser, productList);
+                RemoveAllProductBasket();
+                return RedirectToAction("Rents", "Rents", new { id = idUser });
+            }                    
 
             return RedirectToAction("Basket");
         }
 
         // GET: Remove specific product in basket
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult RremoveProductBasket(string idProduct)
         {
             var authenticationManager = HttpContext.GetOwinContext().Authentication;
@@ -158,10 +176,19 @@ namespace videorama.Controllers
 
             return RedirectToAction("Basket");
         }
-        
+
         // GET: Remove all products in basket
-        [Authorize]
-        public ActionResult RemoveAllProductBasket()
+        [Authorize(Roles = "User")]
+        public ActionResult RemoveAllProduct()
+        {
+            RemoveAllProductBasket();
+
+            return RedirectToAction("Basket");
+        }
+
+        // GET: Remove all products in basket
+        [Authorize(Roles = "User")]
+        public bool RemoveAllProductBasket()
         {
             var authenticationManager = HttpContext.GetOwinContext().Authentication;
             var user = User as ClaimsPrincipal;
@@ -183,7 +210,7 @@ namespace videorama.Controllers
                 new AuthenticationProperties { IsPersistent = true }
             );
 
-            return RedirectToAction("Basket");
+            return true;
         }
     }
 }

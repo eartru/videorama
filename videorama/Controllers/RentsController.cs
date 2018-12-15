@@ -8,7 +8,7 @@ namespace videorama.Controllers
     public class RentsController : Controller
     {
         // GET: Rents/Rents
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Rents(int id)
         {
             RentDb dbRent = new RentDb();
@@ -17,7 +17,7 @@ namespace videorama.Controllers
         }
 
         // GET: Rents/ViewPDF
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult DownloadBill(int idR)
         {
             RentDb dbProducts = new RentDb();

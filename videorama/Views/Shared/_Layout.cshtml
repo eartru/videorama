@@ -61,8 +61,15 @@
                 }
                 @if (Request.IsAuthenticated)
                 {
-                    <li class="nav-item"><a href="@Url.Action("Basket", "Products")">Panier 
-                        <span class="badge">@productInBasket</span></a></li>
+                    if (role == "User")
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Basket", "Products")">
+                                Panier
+                                <span class="badge">@productInBasket</span>
+                            </a>
+                        </li>
+                    }
                     <li class="nav-item">@Html.ActionLink("Mon profil", "Detail", "Account")</li>
                     <li class="nav-item">@Html.ActionLink("Deconnexion", "Logout", "Authentication")</li>
                 }
