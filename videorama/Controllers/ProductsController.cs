@@ -139,7 +139,8 @@ namespace videorama.Controllers
             if (resultat)
             {
                 rent = dbRent.AddRent(Convert.ToDateTime(collection["getRentDate"]), idUser, productList);
-                return RedirectToAction("RemoveAllProductBasket");
+                RemoveAllProductBasket();
+                return RedirectToAction("Rents", "Rents", new { id = idUser });
             }                    
 
             return RedirectToAction("Basket");
@@ -174,10 +175,19 @@ namespace videorama.Controllers
 
             return RedirectToAction("Basket");
         }
-        
+
         // GET: Remove all products in basket
         [Authorize]
-        public ActionResult RemoveAllProductBasket()
+        public ActionResult RemoveAllProduct()
+        {
+            RemoveAllProductBasket();
+
+            return RedirectToAction("Basket");
+        }
+
+        // GET: Remove all products in basket
+        [Authorize]
+        public bool RemoveAllProductBasket()
         {
             var authenticationManager = HttpContext.GetOwinContext().Authentication;
             var user = User as ClaimsPrincipal;
@@ -199,7 +209,7 @@ namespace videorama.Controllers
                 new AuthenticationProperties { IsPersistent = true }
             );
 
-            return RedirectToAction("Basket");
+            return true;
         }
     }
 }
