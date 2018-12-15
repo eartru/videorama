@@ -250,3 +250,12 @@ as
 	INSERT INTO rentDetail(idProduct, idRent)
 	VALUES (@IdProduct, @IdRent)
 go
+
+CREATE Procedure RemoveStock
+( @IdProduct int)
+as 
+	/*DECLARE @current_stock INT;
+	@current_stock = SELECT stock FROM product WHERE idProduct = @IdProduct;*/
+	Update product set stock = stock - 1
+	WHERE idProduct = @IdProduct
+go

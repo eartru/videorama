@@ -323,5 +323,30 @@ namespace Videorama.Models
             
             return null;
         }
+
+        public bool RemoveStock(int id)
+        {
+            connection();
+
+            SqlCommand cmd = new SqlCommand("GetProductDetail", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@IdProduct", id);
+
+            con.Open();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }

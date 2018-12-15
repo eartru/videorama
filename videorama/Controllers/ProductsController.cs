@@ -110,19 +110,24 @@ namespace videorama.Controllers
         public ActionResult Basket(FormCollection collection)
         {
             RentDb dbRent = new RentDb();
-            var w = Convert.ToDateTime(collection["getRentDate"]);
+            ProductsDb dbProduct = new ProductsDb;
             bool rent = false;
 
             var claimIdentity = User.Identity as ClaimsIdentity;
             int idUser = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
             var productList = claimIdentity.FindAll(ClaimTypes.UserData);
 
-            if (collection["getRentDate"] != null){
+            if (collection["getRentDate"] != null)
+            {
                 rent = dbRent.AddRent(Convert.ToDateTime(collection["getRentDate"]), idUser, productList);
             }
 
             if (rent)
             {
+                foreach (var product in productList)
+                {
+                    dbProduct.RemoveStock(product);
+                }
                 return RedirectToAction("RemoveAllProductBasket");
             }
 
