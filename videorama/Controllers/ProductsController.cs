@@ -46,7 +46,7 @@ namespace videorama.Controllers
         }
 
         // GET: Add products in basket
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult AddProductBasket(string idProduct)
         {
             bool isFound = false;
@@ -77,6 +77,7 @@ namespace videorama.Controllers
         }
 
         // GET: Show products in basket
+        [Authorize(Roles = "User")]
         public ActionResult Basket()
         {
             var claimIdentity = User.Identity as ClaimsIdentity;
@@ -104,8 +105,8 @@ namespace videorama.Controllers
             return View(listProductFound);
         }
 
-        // GET: Create the Rent th all products in the basket
-        [Authorize]
+        // GET: Create the Rent with all products in the basket
+        [Authorize(Roles = "User")]
         [HttpPost]
         public ActionResult Basket(FormCollection collection)
         {
@@ -147,7 +148,7 @@ namespace videorama.Controllers
         }
 
         // GET: Remove specific product in basket
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult RremoveProductBasket(string idProduct)
         {
             var authenticationManager = HttpContext.GetOwinContext().Authentication;
@@ -177,7 +178,7 @@ namespace videorama.Controllers
         }
 
         // GET: Remove all products in basket
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult RemoveAllProduct()
         {
             RemoveAllProductBasket();
@@ -186,7 +187,7 @@ namespace videorama.Controllers
         }
 
         // GET: Remove all products in basket
-        [Authorize]
+        [Authorize(Roles = "User")]
         public bool RemoveAllProductBasket()
         {
             var authenticationManager = HttpContext.GetOwinContext().Authentication;
