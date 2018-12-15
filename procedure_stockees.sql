@@ -119,9 +119,9 @@ as
    person.firstname, person.lastname,
    profession.title as professionTitle
    from product
-   INNER JOIN casting on product.idProduct = casting.idProduct
-   INNER JOIN person on casting.idPerson = person.idPerson
-   INNER JOIN profession on person.idProfession = profession.idProfession
+   LEFT OUTER JOIN casting on product.idProduct = casting.idProduct
+   LEFT OUTER JOIN person on casting.idPerson = person.idPerson
+   LEFT OUTER JOIN profession on person.idProfession = profession.idProfession
    where product.idProduct = @IdProduct
 go
 
@@ -154,24 +154,6 @@ as
    inner join videoramaUser u on c.idUser = u.idUser 
    where c.idUser = @IdCustomer
 go
-
-CREATE Procedure GetCustomers
-as  
-begin  
-   select c.*, u.email from customer c
-   inner join videoramaUser u on c.idUser = u.idUser 
-end
-GO
-
-CREATE Procedure GetCustomerDetail
-( @IdCustomer int)
-as  
-begin  
-   select c.*, u.* from customer c
-   inner join videoramaUser u on c.idUser = u.idUser 
-   where c.idUser = @IdCustomer
-end
-GO
 
 CREATE Procedure GetRentDetailsForBill
 ( @IdCustomer int, @IdRent int )  

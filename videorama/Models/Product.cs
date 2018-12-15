@@ -35,15 +35,15 @@ namespace Videorama.Models
         public List<Category> Categories { get; set; }
         [Display(Name = "Casting")]
         public List<Person> Casting { get; set; }
-        [DataType(DataType.Date)]
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Date de sortie")]
         public DateTime ReleaseDate { get; set; }
         [Required]
         [Display(Name = "Stock")]
         public int Stock { get; set; }
         [Required]
-        [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})$", ErrorMessage = "Valid Decimal number with maximum 2 decimal places.")]
+        [RegularExpression(@"^[0-9]+(\.[0-9]{1,2})$", ErrorMessage = "Nombre valide avec maximum 2 décimales")]
         [Display(Name = "Prix")]
         public decimal Price { get; set; }
         [Required]

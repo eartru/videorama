@@ -6,6 +6,17 @@
 }
 
 <h2>@Html.DisplayName(Model.Item1.Title)</h2>
+<div>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Ajouter au panier", "AddProductBasket", "Products", new { idProduct = Model.Item1.IdProduct }, new { @class = "btn btn-primary pull-right ml-8" })
+    }
+    @if (!Request.IsAuthenticated)
+    {
+        <span>Pour commander un produit, vous devez être connecté</span>
+    }
+    <span type="button" class="price-detail pull-right">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
+</div>
 <hr />
 @Html.HiddenFor(model => model.Item1.IdProduct, new { @id = "idProduct" })
 <div>
@@ -39,16 +50,5 @@
         @Html.Raw(Model.Item1.Synopsis)
         <h3>Date de sortie</h3>
         @Html.DisplayName(Model.Item1.ReleaseDate.ToString())
-        <div>
-            <span type="button" class="price-detail">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
-            @if (Request.IsAuthenticated)
-            {
-                @Html.ActionLink("Ajouter au panier", "AddProductBasket", "Products", new { idProduct = Model.Item1.IdProduct }, new { @class = "btn btn-primary" })
-            }
-            @if (!Request.IsAuthenticated)
-            {
-                <span>Pour commander un produit, vous devez être connecté</span>
-            }
-        </div>
     </div>
 </div>
