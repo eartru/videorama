@@ -25,6 +25,7 @@ namespace Videorama.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Mot de passe")]
+        [StringLength(255, MinimumLength = 4, ErrorMessage = "4 caractères minimum")]
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
 
