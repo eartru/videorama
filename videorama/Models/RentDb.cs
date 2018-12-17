@@ -19,7 +19,10 @@ namespace Videorama.Models
             con = new SqlConnection(constring);
         }
 
-        // ************** GET ALL RENTS FOR ADMIN *******************
+        /// <summary>
+        /// Get all rents for admin
+        /// </summary>
+        /// <returns>List<Tuple<Rent, Customer>></returns>
         public List<Tuple<Rent, Customer>> GetRents()
         {
             connection();
@@ -53,7 +56,13 @@ namespace Videorama.Models
             return rentsList;
         }
 
-        // **************** ADD NEW RENT WiTH PRODUCT *********************
+        /// <summary>
+        /// Add new rent with product
+        /// </summary>
+        /// <param name="getRentDate"></param>
+        /// <param name="idUser"></param>
+        /// <param name="productList"></param>
+        /// <returns></returns>
         public bool AddRent(DateTime getRentDate, int idUser, System.Collections.Generic.IEnumerable<System.Security.Claims.Claim> productList)
         {
             connection();
@@ -105,7 +114,11 @@ namespace Videorama.Models
             return true;
         }
 
-        // ********** VIEW RENTS BY CUSTOMER ********************
+        /// <summary>
+        /// Get rent by customer
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <returns>List<Tuple<Rent, Product>></returns>
         public List<Tuple<Rent, Product>> GetRentByCustomer(int idCustomer)
         {
             connection();
@@ -140,6 +153,11 @@ namespace Videorama.Models
             return rentsList;
         }
 
+        /// <summary>
+        /// Get rent by customer
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <returns>List<Tuple<Rent, Product>></returns>
         public List<Rent> GetDistinctRentByCustomer(int idCustomer)
         {
             connection();
@@ -167,6 +185,11 @@ namespace Videorama.Models
             return rentsList;
         }
 
+        /// <summary>
+        /// Get all products for a rent
+        /// </summary>
+        /// <param name="idRent"></param>
+        /// <returns>List<Product></returns>
         public List<Product> GetRentProducts(int idRent)
         {
             connection();
@@ -196,6 +219,11 @@ namespace Videorama.Models
             return productsList;
         }
 
+        /// <summary>
+        /// Get rent details
+        /// </summary>
+        /// <param name="idRent"></param>
+        /// <returns>BillViewModel</returns>
         public BillViewModel GetRentDetails(int idRent)
         {
             connection();
@@ -247,6 +275,11 @@ namespace Videorama.Models
             return rentDetails;
         }
 
+        /// <summary>
+        /// Update the status for en rent -> returned
+        /// </summary>
+        /// <param name="IdRent"></param>
+        /// <returns>bool</returns>
         public bool UpdateRentReturnedBack(int IdRent)
         {
             connection();

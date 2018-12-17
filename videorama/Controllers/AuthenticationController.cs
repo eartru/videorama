@@ -14,13 +14,20 @@ namespace videorama.Controllers
 {
     public class AuthenticationController : Controller
     {
-        // GET: Show form to create a new account
+        /// <summary>
+        /// Show register page
+        /// </summary>
+        /// <returns>View</returns>
         public ActionResult Register()
         {
             return View();
         }
 
-        // POST: Show form to create a new account
+        /// <summary>
+        /// Save in DB data for a new account
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns>View|Redirect</returns>
         [HttpPost]
         public ActionResult Register(Customer customer)
         {
@@ -43,13 +50,22 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Show form to login
+        /// <summary>
+        /// Show login page
+        /// </summary>
+        /// <returns>View</returns>
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: Show form to create a new account
+        /// <summary>
+        /// Send request to the DB to compare login and pwd
+        /// with login and psw in the DB
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns>View|Redirect</returns>
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
@@ -61,12 +77,12 @@ namespace videorama.Controllers
 
                 if (userFound.IdUser != 0)
                 {
-                    // L'authentification est réussie, 
-                    // injecter les infos utilisateur dans le cookie d'authentification :
+                    // Authentication is OK, 
+                    // Save the user data in an auth cookie
                     var userClaims = new List<Claim>();
                     userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userFound.IdUser.ToString()));
                     userClaims.Add(new Claim(ClaimTypes.Name, model.UserName));
-                    userClaims.Add(new Claim(ClaimTypes.UserData, ""));
+                    userClaims.Add(new Claim(ClaimTypes.UserData, ""));// Init a field for the product id, use it for the basket
                     if (userFound.IsAdmin)
                     {
                         userClaims.Add(new Claim(ClaimTypes.Role, "Admin"));
@@ -76,6 +92,7 @@ namespace videorama.Controllers
                         userClaims.Add(new Claim(ClaimTypes.Role, "User"));
                     }
 
+                    // Save the auth cookie
                     var claimsIdentity = new ClaimsIdentity(userClaims, DefaultAuthenticationTypes.ApplicationCookie);
                     var ctx = Request.GetOwinContext();
                     var authenticationManager = ctx.Authentication;
@@ -103,9 +120,14 @@ namespace videorama.Controllers
 
         }
 
+        /// <summary>
+        /// Logout the connected account
+        /// </summary>
+        /// <returns>Redirect</returns>
         [HttpGet]
         public ActionResult Logout()
         {
+            // Remove all user data to the auth cookie
             var ctx = Request.GetOwinContext();
             var authenticationManager = ctx.Authentication;
             authenticationManager.SignOut();
