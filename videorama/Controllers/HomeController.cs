@@ -11,6 +11,13 @@ namespace videorama.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Show the index page.
+        /// The content depends on whether the user is connected or not
+        /// The page contains the new products and the top n of rented products for anyone
+        /// It shows the products currently rented by someone if he's connected
+        /// </summary>
+        /// <returns>View</returns>
         public ActionResult Index()
         {
             string role = "";
@@ -46,7 +53,14 @@ namespace videorama.Controllers
             return View(vm);
         }
 
-        // Non utilisé pour le moment, devrait servir pour le dropdown top n des DVD loués
+        /// <summary>
+        /// Show in a partial view the result of top n rented products
+        /// In the index page, the user choose top 5, 10, 25 etc 
+        /// and then the partial view ask the the ressult to the database 
+        /// depending on the user demand
+        /// </summary>
+        /// <param name="topValue"></param>
+        /// <returns>PartialView</returns>
         public ActionResult IndexTop(int topValue)
         {
             ProductsDb dbProducts = new ProductsDb();
@@ -56,10 +70,15 @@ namespace videorama.Controllers
             {
                 Product = dbProducts.GetTopNProducts(topValue)
             };
-            // int SelectedValue = MV.SelectedTop;
             return PartialView(vm);
         }
 
+        /// <summary>
+        /// Redirect to the controller products, action ProductsSearchResult,
+        /// which display the result of the search depending on type and SearchString
+        /// </summary>
+        /// <param name="SearchString"></param>
+        /// <returns>RedirectToAction</returns>
         public ActionResult Search(string SearchString)
         {
             string selectType;

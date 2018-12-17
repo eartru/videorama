@@ -7,7 +7,11 @@ namespace videorama.Controllers
 {
     public class RentsController : Controller
     {
-        // GET: Rents/Rents
+        /// <summary>
+        /// Display the rents concerning the user connected
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "User")]
         public ActionResult Rents(int id)
         {
@@ -16,7 +20,14 @@ namespace videorama.Controllers
             return View(dbRent.GetDistinctRentByCustomer(id));
         }
 
-        // GET: Rents/ViewPDF
+        /// <summary>
+        /// Display a PDF with the information of the customer
+        /// and the products for one rent selected.
+        /// The PDF is open in a new tab from the rents page.
+        /// Rotativa is a package to help displaying PDF.
+        /// </summary>
+        /// <param name="idR"></param>
+        /// <returns></returns>
         [Authorize(Roles = "User")]
         public ActionResult DownloadBill(int idR)
         {
