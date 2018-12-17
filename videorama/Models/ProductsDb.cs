@@ -15,7 +15,11 @@ namespace Videorama.Models
             con = new SqlConnection(constring);
         }
 
-        // **************** ADD NEW PRODUCT *********************
+        /// <summary>
+        /// Add new product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>bool</returns>
         public bool AddProduct(Product product)
         {
             connection();
@@ -49,7 +53,11 @@ namespace Videorama.Models
             }
         }
 
-        // **************** ADD NEW PRODUCT *********************
+        /// <summary>
+        /// Update new product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>bool</returns>
         public bool UpdateProduct(Product product)
         {
             connection();
@@ -83,6 +91,11 @@ namespace Videorama.Models
             }
         }
 
+        /// <summary>
+        /// Remove specific product
+        /// </summary>
+        /// <param name="idProduct"></param>
+        /// <returns>bool</returns>
         public bool DeleteProduct(int idProduct)
         {
             connection();
@@ -108,7 +121,10 @@ namespace Videorama.Models
             }
         }
 
-        // ********** VIEW ALL PRODUCTS FOR ADMIN ********************
+        /// <summary>
+        /// Get all products for the admin
+        /// </summary>
+        /// <returns>List<Product></returns>
         public List<Product> GetAllProducts()
         {
             connection();
@@ -141,7 +157,11 @@ namespace Videorama.Models
             return productsList;
         }
 
-        // ********** VIEW PRODUCT DETAILS BY TYPE ********************
+        /// <summary>
+        /// Get product the most rented
+        /// </summary>
+        /// <param name="nb"></param>
+        /// <returns>List<Product></returns>
         public List<Product> GetTopNProducts(int nb)
         {
             connection();
@@ -169,7 +189,11 @@ namespace Videorama.Models
             return productsList;
         }
 
-        // ********** VIEW PRODUCT DETAILS BY TYPE ********************
+        /// <summary>
+        /// Get product details by type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>List<Product></returns>
         public List<Product> GetProductsByType(int type)
         {
             connection();
@@ -206,7 +230,10 @@ namespace Videorama.Models
             return productsList;
         }
 
-        // ********** VIEW NEW PRODUCTS ********************
+        /// <summary>
+        /// Get the new products
+        /// </summary>
+        /// <returns>List<Product></returns>
         public List<Product> GetNewProducts()
         {
             connection();
@@ -236,7 +263,12 @@ namespace Videorama.Models
             return productsList;
         }
 
-        // ********** VIEW PRODUCT MORE IMPORTANT INFO BY HIS TYPE ********************
+        /// <summary>
+        /// Get products more importatn info by his type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns>List<Product></returns>
         public List<Product> SearchProductByNameAndType(int type, string name)
         {
             connection();
@@ -266,8 +298,12 @@ namespace Videorama.Models
             }
             return productsList;
         }
-        
-        // ********** VIEW ALL PRODUCT DETAILS BY ITS ID ********************
+
+        /// <summary>
+        /// Get all products detail by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Tyuple<Product, List<Person>></returns>
         public Tuple<Product, List<Person>> GetProductsDetail(int id)
         {
             connection();
@@ -324,6 +360,11 @@ namespace Videorama.Models
             return null;
         }
 
+        /// <summary>
+        /// Down the product stock
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool</returns>
         public bool RemoveStock(int id)
         {
             connection();

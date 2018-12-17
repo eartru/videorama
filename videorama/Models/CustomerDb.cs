@@ -17,7 +17,11 @@ namespace videorama.Models
             con = new SqlConnection(constring);
         }
 
-        // **************** ADD NEW CUSTORMER *********************
+        /// <summary>
+        /// Add new customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns>bool</returns>
         public bool AddCustomer(Customer customer)
         {
             connection();
@@ -51,7 +55,11 @@ namespace videorama.Models
             }
         }
 
-        // **************** GET CUSOMER BY THIS ID *********************
+        /// <summary>
+        /// Get customer by this id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Customer</returns>
         public Customer GetCustomerById(int id)
         {
             connection();
@@ -85,6 +93,10 @@ namespace videorama.Models
             return customerFound;
         }
 
+        /// <summary>
+        /// Get all customers
+        /// </summary>
+        /// <returns>List<Customer></returns>
         public List<Customer> GetCustomers()
         {
             connection();
@@ -117,6 +129,11 @@ namespace videorama.Models
             return customersList;
         }
 
+        /// <summary>
+        /// Get the detail of a specific customer
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <returns>Customer</returns>
         public Customer GetCustomerDetail(int idCustomer)
         {
             connection();
@@ -152,6 +169,11 @@ namespace videorama.Models
             return null;
         }
 
+        /// <summary>
+        /// Update a specific customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns>bool</returns>
         public bool UpdateCustomer(Customer customer)
         {
             connection();
@@ -185,6 +207,11 @@ namespace videorama.Models
             }
         }
 
+        /// <summary>
+        /// Update the password of a specific customer
+        /// </summary>
+        /// <param name="passwordViewModel"></param>
+        /// <returns>bool</returns>
         public bool UpdateCustomerPasword(PasswordViewModel passwordViewModel)
         {
             connection();
@@ -211,6 +238,11 @@ namespace videorama.Models
             }
         }
 
+        /// <summary>
+        /// Remove specific customer
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <returns>bool</returns>
         public bool DeleteCustomer(int idCustomer)
         {
             connection();

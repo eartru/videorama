@@ -13,7 +13,11 @@ namespace videorama.Controllers
 {
     public class ProductsController : Controller
     {
-        // GET: Products
+        /// <summary>
+        /// Show view with the list of product with a given product type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>View</returns>
         public ActionResult ProductsList(int type)
         {
             ProductsDb dbProducts = new ProductsDb();
@@ -24,7 +28,11 @@ namespace videorama.Controllers
             return View(dbProducts.GetProductsByType(type));
         }
 
-        // GET: Products/Details/5
+        /// <summary>
+        /// Show detail of a specific product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         public ActionResult Details(int id)
         {
             ProductsDb dbProducts = new ProductsDb();
@@ -33,7 +41,12 @@ namespace videorama.Controllers
             return View(dbProducts.GetProductsDetail(id));
         }
 
-        // GET: Products search result
+        /// <summary>
+        /// Show a list of product, it's the result of the search bar
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <returns>View</returns>
         public ActionResult ProductsSearchResult(int type, string name)
         {
             ModelState.Clear();
@@ -45,7 +58,12 @@ namespace videorama.Controllers
             return View(listProductFound);
         }
 
-        // GET: Add products in basket
+        /// <summary>
+        /// Add a selected product in the basket
+        /// Only the user can do it
+        /// </summary>
+        /// <param name="idProduct"></param>
+        /// <returns>Redirect</returns>
         [Authorize(Roles = "User")]
         public ActionResult AddProductBasket(string idProduct)
         {
@@ -64,8 +82,11 @@ namespace videorama.Controllers
                 }
             }
 
+            // If not yet in the basket, add it
             if (!isFound)
             {
+                // Add the product id in a new the auth cookie
+                // Create a new auth cookie, because can't edit the existing auth cookie
                 claimIdentity.AddClaim(new Claim(ClaimTypes.UserData, idProduct));
                 authenticationManager.AuthenticationResponseGrant = new AuthenticationResponseGrant(
                     new ClaimsPrincipal(claimIdentity),
@@ -76,12 +97,16 @@ namespace videorama.Controllers
             return RedirectToAction("Details", new { id = idProduct });
         }
 
-        // GET: Show products in basket
+        /// <summary>
+        /// Show the basket
+        /// Only the user can do it
+        /// </summary>
+        /// <returns>View</returns>
         [Authorize(Roles = "User")]
         public ActionResult Basket()
         {
             var claimIdentity = User.Identity as ClaimsIdentity;
-            var idstYet = claimIdentity.FindAll(ClaimTypes.UserData);
+            var idstYet = claimIdentity.FindAll(ClaimTypes.UserData);// List of the products id
 
             ModelState.Clear();
             
@@ -89,10 +114,13 @@ namespace videorama.Controllers
             List<Product> listProductFound = new List<Product>(); 
             Product productFound;
 
+            // Search all products id in the auth cookie
             foreach(var id in idstYet)
             {
+                // Don't take the first because it's ""
                 if (id.Value != "")
                 {
+                    // Find the product in DB
                     productFound = dbProducts.GetProductsDetail(Convert.ToInt32(id.Value)).Item1;
                     if (productFound != null)
                     {
@@ -105,9 +133,14 @@ namespace videorama.Controllers
             return View(listProductFound);
         }
 
-        // GET: Create the Rent with all products in the basket
+        /// <summary>
+        /// In DB : Create the Rent with all products in the basket
+        /// Only the user can do it
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns>Redirect</returns>
         [Authorize(Roles = "User")]
-        [HttpPost]
+         [HttpPost]
         public ActionResult Basket(FormCollection collection)
         {
             RentDb dbRent = new RentDb();
@@ -126,6 +159,7 @@ namespace videorama.Controllers
                 {
                     if(product.Value != "")
                     {
+                        // Down the product's stock in DB
                         isRemove = dbProduct.RemoveStock(Convert.ToInt32(product.Value));
                         resultat = isRemove;
                         if (isRemove == false)
@@ -137,17 +171,23 @@ namespace videorama.Controllers
                 }
             }
 
+            // Create the rent in DB with the date when the customer will get the products in the shop
             if (resultat)
             {
                 rent = dbRent.AddRent(Convert.ToDateTime(collection["getRentDate"]), idUser, productList);
-                RemoveAllProductBasket();
+                RemoveAllProductBasket();// Remove all products in basket
                 return RedirectToAction("Rents", "Rents", new { id = idUser });
             }                    
 
             return RedirectToAction("Basket");
         }
 
-        // GET: Remove specific product in basket
+        /// <summary>
+        /// Remove specific product in basket
+        /// Only the user can do it
+        /// </summary>
+        /// <param name="idProduct"></param>
+        /// <returns>Redirect</returns>
         [Authorize(Roles = "User")]
         public ActionResult RremoveProductBasket(string idProduct)
         {
@@ -177,7 +217,11 @@ namespace videorama.Controllers
             return RedirectToAction("Basket");
         }
 
-        // GET: Remove all products in basket
+        /// <summary>
+        /// Call a function to remove all product in basket
+        /// Only the user can do it
+        /// </summary>
+        /// <returns>Redirect</returns>
         [Authorize(Roles = "User")]
         public ActionResult RemoveAllProduct()
         {
@@ -186,7 +230,11 @@ namespace videorama.Controllers
             return RedirectToAction("Basket");
         }
 
-        // GET: Remove all products in basket
+        /// <summary>
+        /// Remove all products in basket
+        /// Only the user can do it
+        /// </summary>
+        /// <returns>Redirect</returns>
         [Authorize(Roles = "User")]
         public bool RemoveAllProductBasket()
         {

@@ -15,7 +15,12 @@ namespace videorama.Models
             con = new SqlConnection(constring);
         }
 
-        // **************** CHECK EXISTING USER BY USERNAME AND PASSWORD*********************
+        /// <summary>
+        /// Check existing user by userName and password
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns>User</returns>
         public User GetUserByUserNameAndPassword(string userName, string password)
         {
             connection();

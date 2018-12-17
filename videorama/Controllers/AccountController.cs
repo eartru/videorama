@@ -13,7 +13,10 @@ namespace videorama.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        // Show informations current loged account
+        /// <summary>
+        /// Show view with informations current loged account
+        /// </summary>
+        /// <returns>View|Redirect</returns>
         public ActionResult Detail()
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -42,7 +45,10 @@ namespace videorama.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // Edit current account
+        /// <summary>
+        /// Show view to edit the current account
+        /// </summary>
+        /// <returns>View|Redirect</returns>
         public ActionResult Edit()
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -71,7 +77,11 @@ namespace videorama.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // POST: Edit current account
+        /// <summary>
+        /// Send data to the DB for update the account with new data
+        /// </summary>
+        /// <param name="customerViewModel"></param>
+        /// <returns>Redirect</returns>
         [HttpPost]
         public ActionResult Edit(AccountViewModel customerViewModel)
         {
@@ -113,7 +123,10 @@ namespace videorama.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // Edit password customer
+        /// <summary>
+        /// Show view to edit password current account
+        /// </summary>
+        /// <returns>View|Redirect</returns>
         public ActionResult EditPassword()
         {
             CustomerDb dbCustomer = new CustomerDb();
@@ -133,7 +146,11 @@ namespace videorama.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // POST : Edit password customer
+        /// <summary>
+        /// Save the new password in the DB
+        /// </summary>
+        /// <param name="passwordViewModel"></param>
+        /// <returns>Redirect</returns>
         [HttpPost]
         public ActionResult EditPassword(PasswordViewModel passwordViewModel)
         {
@@ -163,7 +180,10 @@ namespace videorama.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Delect the account
+        /// <summary>
+        /// View to delete the current account
+        /// </summary>
+        /// <returns>View|Redirect</returns>
         public ActionResult Delete()
         {           
             var claimIdentity = User.Identity as ClaimsIdentity;
@@ -177,7 +197,12 @@ namespace videorama.Controllers
             return RedirectToAction("Detail", "Account");
         }
 
-        // POST: Delect the account
+        /// <summary>
+        /// Remove the account in DB
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns>Redirect</returns>
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
