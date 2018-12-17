@@ -11,7 +11,13 @@ namespace videorama.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
+
+        /// <summary>
+        /// Get all customers in database.
+        /// Authorize only for administrator
+        /// GET: Admin/Customers
+        /// </summary>
+        /// <returns>View</returns>
         [Authorize(Roles ="Admin")]
         public ActionResult Customers()
         {
@@ -20,7 +26,14 @@ namespace videorama.Controllers
             return View(dbCustomer.GetCustomers());
         }
 
-        // GET: Admin/EditCustomer/5
+        /// <summary>
+        /// Get information about a customer by his ID in a form,
+        /// so that the admin can edit knowing what was before.
+        /// Authorize only for administrator
+        /// GET: Admin/EditCustomer/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult EditCustomer(int id)
         {
@@ -29,7 +42,15 @@ namespace videorama.Controllers
             return View(dbCustomer.GetCustomerDetail(id));
         }
 
-        // POST: Admin/EditCustomer/5
+        /// <summary>
+        /// Send new information about a customer, edited in the view 
+        /// and retrieve in a FormCollection.
+        /// Authorize only for administrator
+        /// POST: Admin/EditCustomer/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns>RedirectToAction</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult EditCustomer(int id, FormCollection collection)
@@ -58,7 +79,13 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/DeleteCustomer/5
+        /// <summary>
+        /// Get information about a customer before deleting
+        /// Authorize only for administrator
+        /// GET: Admin/DeleteCustomer/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteCustomer(int id)
         {
@@ -67,7 +94,14 @@ namespace videorama.Controllers
             return View(dbCustomer.GetCustomerDetail(id));
         }
 
-        // POST: Admin/DeleteCustomer/5
+        /// <summary>
+        /// Send request to delete a customer with his id in parameter.
+        /// Authorize only for administrator
+        /// POST: Admin/DeleteCustomer/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns>RedirectToAction</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteCustomer(int id, FormCollection collection)
@@ -87,7 +121,12 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/Rents
+        /// <summary>
+        /// Get all rents which are currently in progress
+        /// Authorize only for administrator
+        /// GET: Admin/Rents
+        /// </summary>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Rents()
         {
@@ -96,7 +135,13 @@ namespace videorama.Controllers
             return View(dbRent.GetRents());
         }
 
-        // GET: Admin/RentDetails/5
+        /// <summary>
+        /// Get information about a rent by its id for any customer.
+        /// Authorize only for administrator
+        /// GET: Admin/RentDetails/id
+        /// </summary>
+        /// <param name="idr"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult RentDetails(int idr)
         {
@@ -105,6 +150,14 @@ namespace videorama.Controllers
             return View(dbRent.GetRentDetails(idr));
         }
 
+        /// <summary>
+        /// Send a request to database to update the field inProgress for a rent by its ID,
+        /// this will set inProgress to 0. 
+        /// Authorize only for administrator
+        /// </summary>
+        /// <param name="idCustomer"></param>
+        /// <param name="idRent"></param>
+        /// <returns>RedirectToAction</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult ReturnBack(int idCustomer, int idRent)
         {
@@ -122,7 +175,12 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/Stock
+        /// <summary>
+        /// Get all products in database to manage them.
+        /// Authorize only for administrator
+        /// GET: Admin/Stock
+        /// </summary>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult Stock()
         {
@@ -131,14 +189,28 @@ namespace videorama.Controllers
             return View(dbProduct.GetAllProducts());
         }
 
-        // GET: Products/CreateProduct
+        /// <summary>
+        /// Returns a view with a form to create a new product.
+        /// Authorize only for administrator
+        /// GET: Products/CreateProduct
+        /// </summary>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult CreateProduct()
         {
             return View();
         }
 
-        // POST: Products/CreateProduct
+        /// <summary>
+        /// Send a request to database to add a new product with the information from the form.
+        /// The form contains a picture selected by the user on his desk and when the POST request
+        /// is send, the picture is saved on the server at a specific path.
+        /// Authorize only for administrator
+        /// POST: Products/CreateProduct
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="Picture"></param>
+        /// <returns>RedirectToAction</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult CreateProduct(FormCollection collection, HttpPostedFileBase Picture)
@@ -177,16 +249,31 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/EditProduct/5
+        /// <summary>
+        /// Get information about a product by its ID in a form,
+        /// so that the admin can edit knowing what was before.
+        /// Authorize only for administrator
+        /// GET: Admin/EditProduct/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult EditProduct(int id)
         {
-            ProductsDb dbProduct = new ProductsDb();
+            ProductsDb dbProducts = new ProductsDb();
             ModelState.Clear();
-            return View();
+
+            return View(dbProducts.GetProductsDetail(id));
         }
 
-        // POST: Admin/EditProduct/5
+        /// <summary>
+        /// Send edited information from the form to update a product in the database
+        /// Authorize only for administrator
+        /// POST: Admin/EditProduct/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns>RedirectToAction</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult EditProduct(int id, FormCollection collection)
@@ -219,16 +306,29 @@ namespace videorama.Controllers
             }
         }
 
-        // GET: Admin/DeleteProduct/5
+        /// <summary>
+        /// Get information for a product by its id before deleting
+        /// Authorize only for administrator
+        /// GET: Admin/DeleteProduct/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>View</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteProduct(int id)
         {
             ProductsDb dbProduct = new ProductsDb();
             ModelState.Clear();
-            return View();
+            return View(dbProduct.GetProductsDetail(id));
         }
 
-        // POST: Admin/DeleteProduct/5
+        /// <summary>
+        /// Send request to delete a product with its id in parameter.
+        /// Authorize only for administrator
+        /// POST: Admin/DeleteProduct/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collection"></param>
+        /// <returns>RedirectToAction</returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteProduct(int id, FormCollection collection)
