@@ -37,6 +37,7 @@ namespace Videorama.Models
         public List<Person> Casting { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date de sortie")]
         public DateTime ReleaseDate { get; set; }
         [Required]
