@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -278,12 +279,10 @@ namespace videorama.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditProduct(int id, FormCollection collection)
         {
-            var w = collection["Item1.Picture"];
-            var wBis = Request.Form["Item1.Picture"];
             Product productForm = new Product()
             {
                 IdProduct = id,
-                Title = Request.Form["Item1.Title"],
+                Title = Request.Form["Item1.Title"],              
                 Synopsis = Request.Form["Item1.Synopsis"],
                 Price = Convert.ToDecimal(Request.Form["Item1.Price"].Replace('.', ',')),
                 ReleaseDate = Convert.ToDateTime(Request.Form["Item1.ReleaseDate"]),
@@ -291,7 +290,7 @@ namespace videorama.Controllers
                 Stock = Convert.ToInt32(Request.Form["Item1.Stock"]),
                 TypeP = new Videorama.Models.Type()
                 {
-                    IdType = Convert.ToInt32(Request.Form["IdType"])
+                    IdType = Convert.ToInt32(Request.Form["Item1.TypeP"])
                 }
             };
 

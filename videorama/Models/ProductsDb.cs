@@ -67,12 +67,12 @@ namespace Videorama.Models
             cmd.Parameters.AddWithValue("@IdProduct", product.IdProduct);
             cmd.Parameters.AddWithValue("@Title", product.Title);
             cmd.Parameters.AddWithValue("@Synopsis", product.Synopsis);
-            string prix = product.Price.ToString().Replace(',', '.');
-            cmd.Parameters.AddWithValue("@Price", prix);
+            //string prix = product.Price.ToString().Replace(',', '.');
+            cmd.Parameters.AddWithValue("@Price", product.Price);
             cmd.Parameters.AddWithValue("@IdType", product.TypeP.IdType);
             cmd.Parameters.AddWithValue("@ReleaseDate", product.ReleaseDate);
             cmd.Parameters.AddWithValue("@Stock", product.Stock);
-            cmd.Parameters.AddWithValue("@Picture", product.Picture);
+            cmd.Parameters.AddWithValue("@Picture", (product.Picture != null) ? product.Picture  : "null");
 
             con.Open();
 
@@ -83,6 +83,7 @@ namespace Videorama.Models
             }
             catch (SqlException ex)
             {
+                var x = ex;
                 return false;
             }
             finally
@@ -345,7 +346,11 @@ namespace Videorama.Models
                             Synopsis = Convert.ToString(dr["Synopsis"]),
                             ReleaseDate = Convert.ToDateTime(dr["ReleaseDate"]),
                             Price = Convert.ToDecimal(dr["Price"]),
-                            Stock = Convert.ToInt32(dr["Stock"])
+                            Stock = Convert.ToInt32(dr["Stock"]),
+                            TypeP = new Videorama.Models.Type()
+                            {
+                                IdType = Convert.ToInt32(dr["IdType"])
+                            }
                         },
                         personList
                     );

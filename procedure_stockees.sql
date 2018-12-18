@@ -115,7 +115,7 @@ go
 CREATE Procedure  GetProductDetail
 ( @IdProduct int )  
 as  
-   Select product.idProduct, product.title as productTitle, product.picture, product.releaseDate, product.synopsis, product.price, product.releaseDate, product.stock,
+   Select product.idProduct, product.title as productTitle, product.picture, product.releaseDate, product.synopsis, product.price, product.releaseDate, product.stock, product.idType,
    person.firstname, person.lastname,
    profession.title as professionTitle
    from product
