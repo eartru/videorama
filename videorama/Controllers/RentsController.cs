@@ -27,7 +27,6 @@ namespace videorama.Controllers
         /// </summary>
         /// <param name="idR"></param>
         /// <returns></returns>
-        [Authorize(Roles = "User")]
         public ActionResult DownloadBill(int idR)
         {
             RentDb dbProducts = new RentDb();

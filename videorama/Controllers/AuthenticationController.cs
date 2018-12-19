@@ -146,11 +146,16 @@ namespace videorama.Controllers
             UserDb dbUser = new UserDb();
             User userFound = new User();
             userFound = dbUser.GetUserByUserName(Username);
-
+            int id = 0;
+            string userName = "";
             CustomerDb dbCustomer = new CustomerDb();
             var claimIdentity = User.Identity as ClaimsIdentity;
-            int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
-            string userName = Convert.ToString(claimIdentity.FindFirst(ClaimTypes.Name).Value);
+
+            if (claimIdentity.GetUserId() != null)
+            {
+                id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+                userName = Convert.ToString(claimIdentity.FindFirst(ClaimTypes.Name).Value);
+            }
 
             // Check if the account is the same of account edited by the admin
             if (IdUser != null && userFound.IdUser == IdUser)
@@ -184,11 +189,16 @@ namespace videorama.Controllers
             UserDb dbUser = new UserDb();
             User userFound = new User();
             userFound = dbUser.GetUserByEmail(Email);
-
+            int id = 0;
+            string email = "";
             CustomerDb dbCustomer = new CustomerDb();
             var claimIdentity = User.Identity as ClaimsIdentity;
-            int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
-            string email = Convert.ToString(claimIdentity.FindFirst(ClaimTypes.Email).Value);
+
+            if (claimIdentity.GetUserId() != null)
+            {
+                id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+                email = Convert.ToString(claimIdentity.FindFirst(ClaimTypes.Email).Value);
+            }
 
             // Check if the  account is the same of account edited by the admin
             if (IdUser != null && userFound.IdUser == IdUser)
