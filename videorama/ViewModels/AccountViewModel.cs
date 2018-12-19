@@ -13,10 +13,8 @@ namespace videorama.ViewModels
         public int IdUser { get; set; }
         [Required]
         [Display(Name = "Nom d'utilisateur")]
-        [Remote("IsUserNameExist", "Authentication", ErrorMessage = "Ce nom d\'utilisateur existe déjà")]
         public string Username { get; set; }
         [Required]
-        [Remote("IsEmailExist", "Authentication", ErrorMessage = "Cet email existe déjà")]
         public string Email { get; set; }
         [Required]
         [Display(Name = "Prénom")]
