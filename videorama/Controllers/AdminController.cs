@@ -65,6 +65,7 @@ namespace videorama.Controllers
             customerForm.PostalCode = Request.Form["PostalCode"];
             customerForm.Town = Request.Form["Town"];
             customerForm.Country = Request.Form["Country"];
+            customerForm.Username = Request.Form["Username"];
 
             CustomerDb dbCustomer = new CustomerDb();
             bool customerValid;

@@ -81,7 +81,8 @@ namespace videorama.Controllers
                     // Save the user data in an auth cookie
                     var userClaims = new List<Claim>();
                     userClaims.Add(new Claim(ClaimTypes.NameIdentifier, userFound.IdUser.ToString()));
-                    userClaims.Add(new Claim(ClaimTypes.Name, model.UserName));
+                    userClaims.Add(new Claim(ClaimTypes.Name, userFound.Username));
+                    userClaims.Add(new Claim(ClaimTypes.Email, userFound.Email));
                     userClaims.Add(new Claim(ClaimTypes.UserData, ""));// Init a field for the product id, use it for the basket
                     if (userFound.IsAdmin)
                     {
@@ -140,20 +141,37 @@ namespace videorama.Controllers
         /// </summary>
         /// <param name="Username"></param>
         /// <returns>Json</returns>
-        public JsonResult IsUserNameExist(string Username)
+        public JsonResult IsUserNameExist(string Username, int? IdUser)
         {
-             UserDb dbUser = new UserDb();
-             User userFound = new User();
-             userFound = dbUser.GetUserByUserName(Username);
-             System.Diagnostics.Debug.WriteLine(Username);
-             if (userFound.Username != null)
-             {
-                 return Json(false, JsonRequestBehavior.AllowGet);
-             }
-             else
-             {
-                 return Json(true, JsonRequestBehavior.AllowGet);
-             }
+            UserDb dbUser = new UserDb();
+            User userFound = new User();
+            userFound = dbUser.GetUserByUserName(Username);
+
+            CustomerDb dbCustomer = new CustomerDb();
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            string userName = Convert.ToString(claimIdentity.FindFirst(ClaimTypes.Name).Value);
+
+            // Check if the account is the same of account edited by the admin
+            if (IdUser != null && userFound.IdUser == IdUser)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            // Check if the edit userName is the same of the connected account
+            if (id > 0 && userFound.Username == userName)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            if (userFound.Username != null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
         }
 
         /// <summary>
@@ -161,20 +179,37 @@ namespace videorama.Controllers
         /// </summary>
         /// <param name="Email"></param>
         /// <returns>Json</returns>
-        public JsonResult IsEmailExist(string Email)
+        public JsonResult IsEmailExist(string Email, int? IdUser)
         {
-             UserDb dbUser = new UserDb();
-             User userFound = new User();
-             userFound = dbUser.GetUserByEmail(Email);
-             System.Diagnostics.Debug.WriteLine(Email);
-             if (userFound.Username != null)
-             {
-                 return Json(false, JsonRequestBehavior.AllowGet);
-             }
-             else
-             {
-                 return Json(true, JsonRequestBehavior.AllowGet);
-             }
+            UserDb dbUser = new UserDb();
+            User userFound = new User();
+            userFound = dbUser.GetUserByEmail(Email);
+
+            CustomerDb dbCustomer = new CustomerDb();
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            int id = Convert.ToInt32(claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            string email = Convert.ToString(claimIdentity.FindFirst(ClaimTypes.Email).Value);
+
+            // Check if the  account is the same of account edited by the admin
+            if (IdUser != null && userFound.IdUser == IdUser)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            // Check if the edit email is the same of the connected account
+            if (id > 0 && userFound.Email == email)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            if (userFound.Username != null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

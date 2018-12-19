@@ -44,6 +44,7 @@ namespace videorama.Models
                 userFound.IdUser = Convert.ToInt32(dr["IdUser"]);
                 userFound.Username = dr["Username"].ToString();
                 userFound.IsAdmin = Convert.ToBoolean(dr["IsAdmin"]);
+                userFound.Email = dr["Email"].ToString();
             }
 
             return userFound;
@@ -108,6 +109,7 @@ namespace videorama.Models
                 userFound.IdUser = Convert.ToInt32(dr["IdUser"]);
                 userFound.Username = dr["Username"].ToString();
                 userFound.IsAdmin = Convert.ToBoolean(dr["IsAdmin"]);
+                userFound.Email = dr["Email"].ToString();
             }
 
             return userFound;

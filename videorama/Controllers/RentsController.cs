@@ -12,7 +12,6 @@ namespace videorama.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>View</returns>
-        [Authorize(Roles = "User")]
         public ActionResult Rents(int id)
         {
             RentDb dbRent = new RentDb();
