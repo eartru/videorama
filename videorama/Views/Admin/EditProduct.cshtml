@@ -91,9 +91,9 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Item1.TypeP, new List<SelectListItem>
                 {
-                    new SelectListItem() { Text = "Film", Value="1"},
-                    new SelectListItem() { Text = "Série", Value="2"},
-                    new SelectListItem() { Selected= true, Text = "Dessins animés", Value = "3" }
+                    new SelectListItem() { Selected= boolType1, Text = "Film", Value="1"},
+                    new SelectListItem() { Selected= boolType2, Text = "Série", Value="2"},
+                    new SelectListItem() { Selected= boolType3, Text = "Dessins animés", Value = "3" }
                 })
             </div>
         </div>
