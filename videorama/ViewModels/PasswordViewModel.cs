@@ -12,7 +12,7 @@ namespace videorama.ViewModels
         public int IdUser { get; set; }
         [Required]
         [Display(Name = "Mot de passe")]
-        //[MinLength(5, ErrorMessage = "Le mot de passe doit faire 5 caractères minimum")]
+        [StringLength(255, MinimumLength = 4, ErrorMessage = "4 caractères minimum")]
         public string Password { get; set; }
     }
 }

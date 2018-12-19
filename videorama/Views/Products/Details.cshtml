@@ -9,11 +9,19 @@
 <div>
     @if (Request.IsAuthenticated)
     {
-        @Html.ActionLink("Ajouter au panier", "AddProductBasket", "Products", new { idProduct = Model.Item1.IdProduct }, new { @class = "btn btn-primary pull-right ml-8" })
+        if (Model.Item1.Stock > 0)
+        {
+            @Html.ActionLink("Ajouter au panier", "AddProductBasket", "Products", new { idProduct = Model.Item1.IdProduct }, new { @class = "btn btn-primary pull-right ml-8" })
+        }
+        else
+        {
+            <span class="text-warning">Produit indisponible pour le moment</span>
+        }
+
     }
     @if (!Request.IsAuthenticated)
     {
-        <span>Pour commander un produit, vous devez être connecté</span>
+        <span class="text-warning">Pour commander un produit, vous devez être connecté</span>
     }
     <span type="button" class="price-detail pull-right">@Html.DisplayName(Model.Item1.Price.ToString()) €</span>
 </div>

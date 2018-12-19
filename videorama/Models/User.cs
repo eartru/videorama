@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Videorama.Models
 {
@@ -20,8 +21,10 @@ namespace Videorama.Models
         public int IdUser { get; set; }
         [Required]
         [Display(Name = "Nom d'utilisateur")]
+        [Remote("IsUserNameExist", "Authentication", ErrorMessage = "Ce nom d\'utilisateur existe déjà")]
         public string Username { get; set; }
         [Required]
+        [Remote("IsEmailExist", "Authentication", ErrorMessage = "Cet email existe déjà")]
         public string Email { get; set; }
         [Required]
         [Display(Name = "Mot de passe")]

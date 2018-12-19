@@ -134,5 +134,47 @@ namespace videorama.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        /// <summary>
+        /// Send json request to check a user in DB exist with this userName
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <returns>Json</returns>
+        public JsonResult IsUserNameExist(string Username)
+        {
+             UserDb dbUser = new UserDb();
+             User userFound = new User();
+             userFound = dbUser.GetUserByUserName(Username);
+             System.Diagnostics.Debug.WriteLine(Username);
+             if (userFound.Username != null)
+             {
+                 return Json(false, JsonRequestBehavior.AllowGet);
+             }
+             else
+             {
+                 return Json(true, JsonRequestBehavior.AllowGet);
+             }
+        }
+
+        /// <summary>
+        /// Send json request to check a user in DB exist with this email
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns>Json</returns>
+        public JsonResult IsEmailExist(string Email)
+        {
+             UserDb dbUser = new UserDb();
+             User userFound = new User();
+             userFound = dbUser.GetUserByEmail(Email);
+             System.Diagnostics.Debug.WriteLine(Email);
+             if (userFound.Username != null)
+             {
+                 return Json(false, JsonRequestBehavior.AllowGet);
+             }
+             else
+             {
+                 return Json(true, JsonRequestBehavior.AllowGet);
+             }
+        }
     }
 }

@@ -115,7 +115,7 @@ go
 CREATE Procedure  GetProductDetail
 ( @IdProduct int )  
 as  
-   Select product.idProduct, product.title as productTitle, product.picture, product.releaseDate, product.synopsis, product.price, product.releaseDate, product.stock,
+   Select product.idProduct, product.title as productTitle, product.picture, product.releaseDate, product.synopsis, product.price, product.releaseDate, product.stock, product.idType,
    person.firstname, person.lastname,
    profession.title as professionTitle
    from product
@@ -139,6 +139,18 @@ CREATE Procedure [GetUserByUserNameAndPassword]
 as   
    select * from videoramaUser where username = @UserName
    and passwordUser = HashBytes('SHA1', @Password)
+go
+
+CREATE Procedure GetUserByUserName
+( @UserName varchar(50))  
+as   
+   select * from videoramaUser where username = @UserName
+go
+
+CREATE Procedure GetUserByEmail
+( @Email varchar(50))
+as   
+   select * from videoramaUser where email = @Email
 go
 
 CREATE Procedure GetCustomers

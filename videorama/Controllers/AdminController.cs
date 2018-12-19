@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -281,15 +282,15 @@ namespace videorama.Controllers
             Product productForm = new Product()
             {
                 IdProduct = id,
-                Title = Request.Form["Title"],
-                Synopsis = Request.Form["Synopsis"],
-                Price = Convert.ToDecimal(Request.Form["Price"].Replace('.', ',')),
-                ReleaseDate = Convert.ToDateTime(Request.Form["ReleaseDate"]),
-                Picture = Request.Form["Picture"],
-                Stock = Convert.ToInt32(Request.Form["Stock"]),
+                Title = Request.Form["Item1.Title"],              
+                Synopsis = Request.Form["Item1.Synopsis"],
+                Price = Convert.ToDecimal(Request.Form["Item1.Price"].Replace('.', ',')),
+                ReleaseDate = Convert.ToDateTime(Request.Form["Item1.ReleaseDate"]),
+                Picture = Request.Form["Item1.Picture"],
+                Stock = Convert.ToInt32(Request.Form["Item1.Stock"]),
                 TypeP = new Videorama.Models.Type()
                 {
-                    IdType = Convert.ToInt32(Request.Form["IdType"])
+                    IdType = Convert.ToInt32(Request.Form["Item1.TypeP"])
                 }
             };
 
