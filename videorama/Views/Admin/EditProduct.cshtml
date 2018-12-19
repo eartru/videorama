@@ -25,6 +25,11 @@
 {
     boolType3 = true;
 }
+
+@Html.Raw(boolType1)
+@Html.Raw(boolType2)
+@Html.Raw(boolType3)
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -76,7 +81,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Item1.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Item1.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Item1.ReleaseDate, new { htmlAttributes = new { @class = "form-control", Value = Model.Item1.ReleaseDate.ToString("yyyy-MM-dd") } })
                 @Html.ValidationMessageFor(model => model.Item1.ReleaseDate, "", new { @class = "text-danger", @type = "date" })
             </div>
         </div>
@@ -86,9 +91,9 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Item1.TypeP, new List<SelectListItem>
                 {
-                    new SelectListItem() {Selected = boolType1, Text = "Film", Value="1"},
-                    new SelectListItem() {Selected = boolType2, Text = "Série", Value="2"},
-                    new SelectListItem() {Selected = boolType3, Text = "Dessins animés", Value = "3" }
+                    new SelectListItem() { Text = "Film", Value="1"},
+                    new SelectListItem() { Text = "Série", Value="2"},
+                    new SelectListItem() { Selected= true, Text = "Dessins animés", Value = "3" }
                 })
             </div>
         </div>
