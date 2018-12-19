@@ -141,6 +141,18 @@ as
    and passwordUser = HashBytes('SHA1', @Password)
 go
 
+CREATE Procedure GetUserByUserName
+( @UserName varchar(50))  
+as   
+   select * from videoramaUser where username = @UserName
+go
+
+CREATE Procedure GetUserByEmail
+( @Email varchar(50))
+as   
+   select * from videoramaUser where email = @Email
+go
+
 CREATE Procedure GetCustomers
 as    
    select c.*, u.email from customer c
